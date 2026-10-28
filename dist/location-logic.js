@@ -1,6 +1,7 @@
 // Compatibilidad entre la escena y el lugar, conservando los índices guardados.
 const locationGroups=[
-{words:['yate','carguero','furgón blindado'],places:[]},
+{words:['yate','carguero'],places:['puerto','muelle','embarcadero','embarcadero de pescadores','zona de contenedores','terminal de carga'],coastal:true},
+{words:['furgón blindado'],places:[]},
 {words:['farmacia','farmacéutico'],places:['farmacia']},
 {words:['licorería'],places:['licorería']},
 {words:['badulaque'],places:['tienda','supermercado']},
@@ -27,7 +28,7 @@ const locationGroups=[
 ];
 function mentionedWord(text,word){const escaped=norm(word).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');return new RegExp('(?:^|[^a-z])'+escaped+'(?:$|[^a-z])').test(norm(text));}
 function locationRule(action){const explicit=locationGroups.find(g=>g.words.some(w=>mentionedWord(action,w)));if(explicit)return explicit;const limit=places.indexOf('en Paleto Bay');const candidates=places.slice(0,limit<0?places.length:limit).map(p=>p.replace(/^(en |junto a |bajo )(un |una |el |la |los |las )?/,'' )).filter(w=>w.length>3&&!['calle','zona rural','carretera secundaria','camino de tierra'].includes(w)).sort((a,b)=>b.length-a.length);const match=candidates.find(w=>mentionedWord(action,w));return match?{words:[match],places:[match]}:null;}
-function compatiblePlaceIndices(action){const rule=locationRule(action);if(!rule)return places.map((_,i)=>i);const geographicStart=places.indexOf('en Paleto Bay');return places.map((p,i)=>({p,i})).filter(({p,i})=>(geographicStart>=0&&i>=geographicStart)||rule.places.some(w=>norm(p)===norm('en un '+w)||norm(p)===norm('en una '+w))).map(x=>x.i);}
+function compatiblePlaceIndices(action){const rule=locationRule(action);if(!rule)return places.map((_,i)=>i);const geographicStart=places.indexOf('en Paleto Bay');return places.map((p,i)=>({p,i})).filter(({p,i})=>(geographicStart>=0&&i>=geographicStart&&(!rule.coastal||['Paleto Bay','Procopio Beach','Cape Catfish','El Gordo Lighthouse','North Chumash','Chumash','Pacific Bluffs','Pacific Ocean','Los Santos','La Puerta','Banning','Elysian Island','Terminal','Port of Los Santos','Vespucci','Vespucci Beach','Vespucci Canals','Del Perro Beach','Del Perro Pier','Cayo Perico'].some(name=>p==='en '+name)))||rule.places.some(w=>norm(p.replace(/^en (?:un |una |el |la )?/,''))===norm(w))).map(x=>x.i);}
 let lastLocationRule='';const locationHint=document.createElement('div');locationHint.id='location-hint';locationHint.className='hint';$('place').parentElement.after(locationHint);
 function syncCompatiblePlaces(){const action=$('situation').value===''?'':situations[+$('situation').value]?.[0]||'';const allowed=compatiblePlaceIndices(action),key=allowed.join(',');const selected=$('place').value;let cleared=false;if(selected!==''&&!allowed.includes(+selected)){ $('place').value='';cleared=true; }
 if(key!==lastLocationRule){const current=$('place').value,placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Sin seleccionar';$('place').replaceChildren(placeholder,...allowed.map(i=>{const o=document.createElement('option');o.value=String(i);o.textContent=places[i];return o}));$('place').value=current;lastLocationRule=key;}
