@@ -16,7 +16,8 @@ bridgeStatus.className = "hint";
 bridgeStatus.setAttribute("role", "status");
 bridgeStatus.setAttribute("aria-live", "polite");
 bridgeStatus.hidden = true;
-document.querySelector(".copy-bottom").append(executeButton, bridgeStatus);
+document.querySelector(".copy-bottom .actions").append(executeButton);
+document.querySelector(".copy-bottom").append(bridgeStatus);
 function refreshExecuteState() {
   executeButton.disabled =
     !bridgeConnected ||
@@ -67,6 +68,8 @@ executeButton.onclick = async () => {
   const text = $("output")
     .textContent.trim()
     .replace(/[\r\n\t]+/g, " ");
+  if (!window.confirm("¿Quieres enviar este entorno a FiveM? Se ejecutará en el servidor donde estás conectado.\n\n" + text)) return;
+  if (!bridgeConnected || bridgeBusy) return;
   bridgeBusy = true;
   refreshExecuteState();
   bridgeStatus.textContent = "Enviando a FiveM…";

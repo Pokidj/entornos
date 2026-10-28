@@ -1439,3 +1439,11 @@ button:disabled {
 .download-bridge:hover { background: #ad3e4b; }
 .download-bridge:focus-visible { outline: 2px solid #c8b478; outline-offset: 3px; }
 @media (max-width: 600px) { .bridge-download { padding: 18px; flex-direction: column; align-items: stretch; gap: 16px; margin-top: 16px; } .download-bridge { width: 100%; } }
+
+.copy-bottom .actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.copy-bottom .actions:has(#execute-fivem:not([hidden])) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.copy-bottom .actions #execute-fivem { margin: 0; height: 50px; min-height: 50px; padding: 10px; width: 100%; font-size: 14px; }
+#copy-hint.copied { color: #83d6a0; }
+.copy-toast { position: fixed; z-index: 100; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 32px); width: max-content; padding: 13px 18px; border: 1px solid #558a65; border-radius: 10px; background: #203b2a; color: #a2edbb; box-shadow: 0 6px 24px #0006; font-size: 14px; text-align: center; }
+.copy-toast[hidden] { display: none; }
+@media(max-width: 600px) { .copy-bottom .actions #execute-fivem, .copy-bottom .actions #copy { font-size: 12px; padding: 10px 7px; } }

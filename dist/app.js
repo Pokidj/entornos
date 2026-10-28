@@ -1355,10 +1355,25 @@ function generate() {
   $("status").textContent = "";
 }
 
+let copiedText = '';
+let copyToastTimer;
+function updateCopyHint() {
+  const copied = copiedText !== '' && $('output').textContent.trim() === copiedText;
+  $('copy-hint').textContent = copied ? 'Tu entorno se ha copiado en el portapapeles.' : 'Tu entorno se copiará en el portapapeles.';
+  $('copy-hint').classList.toggle('copied', copied);
+}
+function notifyCopied() {
+  const toast = $('copy-toast');
+  toast.textContent = '✓ Entorno copiado al portapapeles';
+  toast.hidden = false;
+  clearTimeout(copyToastTimer);
+  copyToastTimer = setTimeout(() => { toast.hidden = true; }, 4000);
+}
 function count() {
   const text = $("output").textContent;
   $("count").textContent = text.length + " caracteres";
   $("copy").disabled = !text.trim();
+  updateCopyHint();
 }
 $("form").onsubmit = (e) => {
   e.preventDefault();
@@ -1383,14 +1398,20 @@ $("copy").onclick = async () => {
   if (!text) return;
   try {
     await navigator.clipboard.writeText(text);
-    $("status").textContent = "Copiado. Listo para pegar en el servidor.";
+    copiedText = text;
+    updateCopyHint();
+    notifyCopied();
+    $("status").textContent = "";
   } catch {
     const range = document.createRange();
     range.selectNodeContents($("output"));
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
-    $("status").textContent = "Texto seleccionado. Pulsa Ctrl+C para copiar.";
+    copiedText = "";
+    updateCopyHint();
+    $("copy-hint").textContent = "No se pudo copiar automáticamente. Texto seleccionado: pulsa Ctrl+C.";
+    $("status").textContent = "";
   }
 };
 fetch("vehicles.json")
