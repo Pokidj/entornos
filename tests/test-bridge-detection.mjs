@@ -21,6 +21,7 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
   let mode = "offline",
     executions = 0;
   w.HTMLElement.prototype.scrollIntoView = function () {};
+  w.confirm = () => true;
   w.Request = localOption
     ? class {
         constructor(url, options) {
@@ -66,7 +67,10 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
         ok: true,
         json: async () => ({ ok: true, ready: false, sent: false }),
       };
-    if (url.endsWith("/execute")) executions++;
+    if (url.endsWith("/execute")) {
+      executions++;
+      throw Object.assign(new Error('aborted'), {name:'AbortError'});
+    }
     throw new Error("unexpected request");
   };
   for (const script of d.querySelectorAll("script[src]"))
@@ -143,6 +147,11 @@ assert(
   "detection works without AbortSignal.timeout",
 );
 assert.equal(b.executions(), 0);
+b.d.getElementById('output').textContent='/entorno Prueba de tiempo agotado';
+await b.w.syncPreparedDraft();
+await b.d.getElementById('execute-fivem').onclick();
+assert.match(b.d.getElementById('bridge-status').textContent,/No se pudo confirmar.*Comprueba el juego/);
+assert.equal(b.executions(),1,'only explicit mocked execute attempts a send');
 b.dom.window.close();
 console.log(
   "PASS: manual connection, timeout fallback, loopback compatibility, blocked requests, HTTP 403, unexpected service and reconnect; no game commands sent.",

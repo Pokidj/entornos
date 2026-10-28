@@ -287,7 +287,7 @@ async function syncPreparedDraft() {
     }
   } catch (error) {
     prepareError =
-      error.name === "TimeoutError" || error instanceof TypeError
+      error.name === "TimeoutError" || error.name === "AbortError" || error instanceof TypeError
         ? "No se ha podido preparar el atajo. Revisa el puente."
         : error.message;
   } finally {
@@ -395,7 +395,7 @@ executeButton.onclick = async () => {
       "Enviado a la consola. Prepara un entorno nuevo para volver a enviar.";
   } catch (error) {
     bridgeStatus.textContent =
-      error.name === "TimeoutError" || error instanceof TypeError
+      error.name === "TimeoutError" || error.name === "AbortError" || error instanceof TypeError
         ? "No se pudo confirmar el envío. Comprueba el juego antes de repetir."
         : error.message || "No se ha podido conectar con el puente.";
   } finally {
