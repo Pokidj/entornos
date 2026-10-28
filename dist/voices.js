@@ -1,38 +1,570 @@
 // Variaciones de testigos ficticios. No alteran los datos de la escena.
-const voicePools={
-n:{start:['¡Ayuda, por favor, que no sé qué hacer!','¡Por Dios, que alguien me atienda!','¿Me escuchan? Necesito ayuda ahora mismo.','Estoy temblando, perdonen si no me explico bien.','¡Ay, madre mía, la que se está liando!','No sé ni por dónde empezar, pero escuchen esto.','¡Que venga alguien, por favor!','¿Hay alguien al otro lado? Esto no me gusta nada.','Intento mantener la calma, pero no puedo.','¡Ayuda por Diossss, vengan ya!','Me da miedo hasta hablar, pero tengo que avisar.','¡Socorro! No sé a quién más llamar.','Por favor, no me cuelguen, escuchen un momento.','¡No me lo puedo creer, esto está pasando de verdad!','Perdonen, estoy de los nervios.','Necesito que me hagan caso, es urgente.','¡Madre mía, madre mía! Escuchen lo que está pasando.','Estoy intentando hablar bajito, atiéndanme, por favor.','¡Que alguien haga algo, por favor!','¿Emergencias? No sé cómo explicar esto.'],reaction:['Se me ha puesto el corazón a mil.','¿Pero qué está pasando aquí?','No sé si quedarme quieto o marcharme.','¡Qué angustia, de verdad!','Estoy que no me sale ni la voz.','No me esperaba encontrarme con esto.','¡Me va a dar algo!','No sé cómo va a acabar esto.','Tengo un nudo en el estómago.','No me dejen esperando, por favor.'],end:['¡VENGAN YA, POR FAVOR!','¡Ayudaaaa, manden a alguien!','¡Por Dios, envíen una patrulla!','¡Vengan a echar un vistazo antes de que vaya a más!','¡Necesito que venga alguien, por favor!','¡Hagan algo, se lo suplico!','¡No tarden, por favor!','¡Que venga la policía, por Dios!','¡Manden ayuda cuanto antes!','¡Atiendan esto, por favor!']},
-s:{start:['Buenas, llamo para informar de un incidente.','Quisiera avisar de algo que estoy presenciando.','Disculpen, necesito que comprueben una situación.','Les llamo porque hay algo que deberían revisar.','Soy una persona de la zona y quiero dar un aviso.','Un momento, por favor, quiero comunicar lo que estoy viendo.','Espero haber llamado al número correcto. Quiero informar de lo siguiente.','Les aviso desde aquí de una situación en curso.','Buenas, necesito comunicar un incidente.','Quiero dejar constancia de lo que estoy observando.','¿Pueden atender este aviso, por favor?','Llamo como testigo de lo siguiente.','Hay una situación que requiere que se acerquen.','Me gustaría que enviaran a alguien a comprobar esto.','Les cuento los detalles que puedo distinguir.','Necesito hablar con alguien que pueda enviar una patrulla.'],reaction:['Eso es lo que alcanzo a observar.','No puedo aportar más detalles de momento.','Les traslado únicamente lo que veo.','Prefiero avisar para que lo comprueben.','Considero que deberían revisar lo que ocurre.','Les agradecería que atendieran el aviso.'],end:['¿Pueden enviar una patrulla a comprobarlo?','Por favor, envíen a alguien a echar un vistazo.','Quedo a la espera de que atiendan el aviso.','Les agradecería que se acercaran cuanto antes.','¿Pueden hacerse cargo de esta situación?','Por favor, comprueben lo que está ocurriendo.','Espero que puedan atenderlo pronto.','Solicito que se acerque una patrulla.']},
-c:{start:['¡Buenas noches para quien las tenga! Miren la que hay montada.','¡Joder, vaya panorama! Escuchen esto.','A ver, que yo no quiero líos, pero esto ya es demasiado.','¿Pero qué cojones está pasando aquí?','Miren, soy un vecino y estoy hasta las narices.','¡Oigan, que esto parece un puto circo!','Hola, soy Brenda, una vecina de la zona. ¡Vaya tela con esta gente!','¡La madre que me parió, lo que hay que ver!','Yo venía tan tranquilo y me encuentro con esto.','¡Esto ya es el colmo! Atiendan un momento.','Buenas para ustedes, porque yo estoy que trino.','¡Menuda panda! Escuchen lo que estoy viendo.','A ver si me hacen caso, que esto no es normal.','¡Me cago en la leche! No me lo puedo creer.','Soy un vecino y ya no puedo más con estas historias.','¡Joder, no se puede estar tranquilo ni un rato!','¿En serio? ¿Otra vez con estas mierdas? Escuchen.','¡Qué puta vergüenza! Vengan a ver esto.','Yo solo quería pasar un rato tranquilo, pero miren.','¡Vaya día de mierda, de verdad! Les cuento.','¿Alguien puede poner orden de una vez?','Perdonen las formas, pero estoy hasta el gorro.','¡Ay, mi madre, la que están liando estos!','Hola, soy un vecino. No me hace ninguna gracia lo que estoy viendo.'],reaction:['¡Qué cojones hago yo ahora!','Me han amargado el rato, de verdad.','¡No hay derecho, joder!','Así no hay quien viva tranquilo.','¡Tiene cojones la cosa!','Yo no sé qué tiene esta gente en la cabeza.','Es que me hierve la sangre.','¡Vaya tela, vaya puta tela!','No me meto porque no quiero acabar peor.','Uno intenta ir a lo suyo y ni eso le dejan.','¡Qué ganas de tocar las narices!','Estoy que me subo por las paredes.'],end:['¡VENID YA, JODER!','¡Manden a alguien de una vez, por favor!','¡Vengan a poner un poco de orden!','¡Hagan algo, que esto es un cachondeo!','¡A ver si se puede vivir tranquilo de una vez!','¡Vengan a echar un vistazo, que yo paso de meterme!','¡No me dejen aquí con este panorama!','¡Que venga una patrulla, por favor!','¡Echen un vistazo, que esto no pinta bien!','¡Por favor, que alguien se acerque!','¡Atienda alguien esto, coño!','¡Vengan, que estoy harto ya!']}
+const voicePools = {
+  n: {
+    start: [
+      "¡Ayuda, por favor, que no sé qué hacer!",
+      "¡Por Dios, que alguien me atienda!",
+      "¿Me escuchan? Necesito ayuda ahora mismo.",
+      "Estoy temblando, perdonen si no me explico bien.",
+      "¡Ay, madre mía, la que se está liando!",
+      "No sé ni por dónde empezar, pero escuchen esto.",
+      "¡Que venga alguien, por favor!",
+      "¿Hay alguien al otro lado? Esto no me gusta nada.",
+      "Intento mantener la calma, pero no puedo.",
+      "¡Ayuda por Diossss, vengan ya!",
+      "Me da miedo hasta hablar, pero tengo que avisar.",
+      "¡Socorro! No sé a quién más llamar.",
+      "Por favor, no me cuelguen, escuchen un momento.",
+      "¡No me lo puedo creer, esto está pasando de verdad!",
+      "Perdonen, estoy de los nervios.",
+      "Necesito que me hagan caso, es urgente.",
+      "¡Madre mía, madre mía! Escuchen lo que está pasando.",
+      "Estoy intentando hablar bajito, atiéndanme, por favor.",
+      "¡Que alguien haga algo, por favor!",
+      "¿Emergencias? No sé cómo explicar esto.",
+    ],
+    reaction: [
+      "Se me ha puesto el corazón a mil.",
+      "¿Pero qué está pasando aquí?",
+      "No sé si quedarme quieto o marcharme.",
+      "¡Qué angustia, de verdad!",
+      "Estoy que no me sale ni la voz.",
+      "No me esperaba encontrarme con esto.",
+      "¡Me va a dar algo!",
+      "No sé cómo va a acabar esto.",
+      "Tengo un nudo en el estómago.",
+      "No me dejen esperando, por favor.",
+    ],
+    end: [
+      "¡VENGAN YA, POR FAVOR!",
+      "¡Ayudaaaa, manden a alguien!",
+      "¡Por Dios, envíen una patrulla!",
+      "¡Vengan a echar un vistazo antes de que vaya a más!",
+      "¡Necesito que venga alguien, por favor!",
+      "¡Hagan algo, se lo suplico!",
+      "¡No tarden, por favor!",
+      "¡Que venga la policía, por Dios!",
+      "¡Manden ayuda cuanto antes!",
+      "¡Atiendan esto, por favor!",
+    ],
+  },
+  s: {
+    start: [
+      "Buenas, llamo para informar de un incidente.",
+      "Quisiera avisar de algo que estoy presenciando.",
+      "Disculpen, necesito que comprueben una situación.",
+      "Les llamo porque hay algo que deberían revisar.",
+      "Soy una persona de la zona y quiero dar un aviso.",
+      "Un momento, por favor, quiero comunicar lo que estoy viendo.",
+      "Espero haber llamado al número correcto. Quiero informar de lo siguiente.",
+      "Les aviso desde aquí de una situación en curso.",
+      "Buenas, necesito comunicar un incidente.",
+      "Quiero dejar constancia de lo que estoy observando.",
+      "¿Pueden atender este aviso, por favor?",
+      "Llamo como testigo de lo siguiente.",
+      "Hay una situación que requiere que se acerquen.",
+      "Me gustaría que enviaran a alguien a comprobar esto.",
+      "Les cuento los detalles que puedo distinguir.",
+      "Necesito hablar con alguien que pueda enviar una patrulla.",
+    ],
+    reaction: [
+      "Eso es lo que alcanzo a observar.",
+      "No puedo aportar más detalles de momento.",
+      "Les traslado únicamente lo que veo.",
+      "Prefiero avisar para que lo comprueben.",
+      "Considero que deberían revisar lo que ocurre.",
+      "Les agradecería que atendieran el aviso.",
+    ],
+    end: [
+      "¿Pueden enviar una patrulla a comprobarlo?",
+      "Por favor, envíen a alguien a echar un vistazo.",
+      "Quedo a la espera de que atiendan el aviso.",
+      "Les agradecería que se acercaran cuanto antes.",
+      "¿Pueden hacerse cargo de esta situación?",
+      "Por favor, comprueben lo que está ocurriendo.",
+      "Espero que puedan atenderlo pronto.",
+      "Solicito que se acerque una patrulla.",
+    ],
+  },
+  c: {
+    start: [
+      "¡Buenas noches para quien las tenga! Miren la que hay montada.",
+      "¡Joder, vaya panorama! Escuchen esto.",
+      "A ver, que yo no quiero líos, pero esto ya es demasiado.",
+      "¿Pero qué cojones está pasando aquí?",
+      "Miren, soy un vecino y estoy hasta las narices.",
+      "¡Oigan, que esto parece un puto circo!",
+      "Hola, soy Brenda, una vecina de la zona. ¡Vaya tela con esta gente!",
+      "¡La madre que me parió, lo que hay que ver!",
+      "Yo venía tan tranquilo y me encuentro con esto.",
+      "¡Esto ya es el colmo! Atiendan un momento.",
+      "Buenas para ustedes, porque yo estoy que trino.",
+      "¡Menuda panda! Escuchen lo que estoy viendo.",
+      "A ver si me hacen caso, que esto no es normal.",
+      "¡Me cago en la leche! No me lo puedo creer.",
+      "Soy un vecino y ya no puedo más con estas historias.",
+      "¡Joder, no se puede estar tranquilo ni un rato!",
+      "¿En serio? ¿Otra vez con estas mierdas? Escuchen.",
+      "¡Qué puta vergüenza! Vengan a ver esto.",
+      "Yo solo quería pasar un rato tranquilo, pero miren.",
+      "¡Vaya día de mierda, de verdad! Les cuento.",
+      "¿Alguien puede poner orden de una vez?",
+      "Perdonen las formas, pero estoy hasta el gorro.",
+      "¡Ay, mi madre, la que están liando estos!",
+      "Hola, soy un vecino. No me hace ninguna gracia lo que estoy viendo.",
+    ],
+    reaction: [
+      "¡Qué cojones hago yo ahora!",
+      "Me han amargado el rato, de verdad.",
+      "¡No hay derecho, joder!",
+      "Así no hay quien viva tranquilo.",
+      "¡Tiene cojones la cosa!",
+      "Yo no sé qué tiene esta gente en la cabeza.",
+      "Es que me hierve la sangre.",
+      "¡Vaya tela, vaya puta tela!",
+      "No me meto porque no quiero acabar peor.",
+      "Uno intenta ir a lo suyo y ni eso le dejan.",
+      "¡Qué ganas de tocar las narices!",
+      "Estoy que me subo por las paredes.",
+    ],
+    end: [
+      "¡VENID YA, JODER!",
+      "¡Manden a alguien de una vez, por favor!",
+      "¡Vengan a poner un poco de orden!",
+      "¡Hagan algo, que esto es un cachondeo!",
+      "¡A ver si se puede vivir tranquilo de una vez!",
+      "¡Vengan a echar un vistazo, que yo paso de meterme!",
+      "¡No me dejen aquí con este panorama!",
+      "¡Que venga una patrulla, por favor!",
+      "¡Echen un vistazo, que esto no pinta bien!",
+      "¡Por favor, que alguien se acerque!",
+      "¡Atienda alguien esto, coño!",
+      "¡Vengan, que estoy harto ya!",
+    ],
+  },
 };
 
 // 80 aperturas por tono: 240 en total.
-const openingFragments={
-n:{a:['¡Ayuda, por favor!','¡Por Dios, atiéndanme!','¿Me escucha alguien?','¡Madre mía, necesito ayuda!','¡Socorro, no me cuelguen!','Perdonen, me cuesta hablar.','¡Ay, que me va a dar algo!','Necesito avisar de algo urgente.','Estoy intentando mantener la calma.','Por favor, escuchen hasta el final.'],b:['Estoy viendo algo que me tiene temblando.','No sé cómo reaccionar ante lo que está pasando.','Necesito que venga alguien a comprobar esto.','No me esperaba encontrarme con esta situación.','Tengo el corazón a mil con lo que estoy viendo.','No sé a quién más llamar para contar esto.','Estoy de los nervios, voy a intentar explicarlo.','Les cuento lo que alcanzo a ver desde aquí.']},
-s:{a:['Buenas, quisiera dar un aviso.','Disculpen, llamo como testigo.','Necesito comunicar un incidente.','Quisiera que atendieran esta llamada.','Me pongo en contacto para informar de una situación.','Les llamo para solicitar que se acerquen.','Buenas, quiero dejar constancia de algo.','¿Pueden tomar nota de este aviso?','Tengo información sobre lo que está ocurriendo.','Quisiera hablar con alguien que pueda atender esto.'],b:['Les voy a describir lo que estoy observando.','Me limitaré a los detalles que puedo distinguir.','Creo que deberían enviar a alguien a comprobarlo.','Voy a explicarles la situación tal como la veo.','Prefiero avisar para que puedan revisarlo.','Estos son los datos que puedo aportar por ahora.','Quiero trasladarles lo que está sucediendo aquí.','Espero que puedan ocuparse de lo que les voy a contar.']},
-c:{a:['¡Buenas para quien las tenga!','¡Joder, vaya día de mierda!','A ver, que yo no quiero líos.','¡Me cago en la leche, menuda historia!','Soy un vecino y estoy hasta las narices.','Hola, soy Brenda, una vecina de la zona.','¡Qué cojones, no me lo puedo creer!','¡La madre que me parió, vaya panorama!','Yo venía a lo mío, tan tranquilo.','¡Oigan, que esto ya pasa de castaño oscuro!'],b:['Miren la que hay montada, que parece un puto circo.','No hay quien esté tranquilo con estas mierdas.','A ver si alguien puede poner un poco de orden.','Escuchen esto, porque yo ya no sé qué hacer.','Les cuento lo que veo, que tiene cojones la cosa.','No me hace ni puta gracia lo que está pasando.','Atiendan un momento, que estoy que trino.','Yo paso de meterme, pero alguien tendrá que hacer algo.']}
+const openingFragments = {
+  n: {
+    a: [
+      "¡Ayuda, por favor!",
+      "¡Por Dios, atiéndanme!",
+      "¿Me escucha alguien?",
+      "¡Madre mía, necesito ayuda!",
+      "¡Socorro, no me cuelguen!",
+      "Perdonen, me cuesta hablar.",
+      "¡Ay, que me va a dar algo!",
+      "Necesito avisar de algo urgente.",
+      "Estoy intentando mantener la calma.",
+      "Por favor, escuchen hasta el final.",
+    ],
+    b: [
+      "Estoy viendo algo que me tiene temblando.",
+      "No sé cómo reaccionar ante lo que está pasando.",
+      "Necesito que venga alguien a comprobar esto.",
+      "No me esperaba encontrarme con esta situación.",
+      "Tengo el corazón a mil con lo que estoy viendo.",
+      "No sé a quién más llamar para contar esto.",
+      "Estoy de los nervios, voy a intentar explicarlo.",
+      "Les cuento lo que alcanzo a ver desde aquí.",
+    ],
+  },
+  s: {
+    a: [
+      "Buenas, quisiera dar un aviso.",
+      "Disculpen, llamo como testigo.",
+      "Necesito comunicar un incidente.",
+      "Quisiera que atendieran esta llamada.",
+      "Me pongo en contacto para informar de una situación.",
+      "Les llamo para solicitar que se acerquen.",
+      "Buenas, quiero dejar constancia de algo.",
+      "¿Pueden tomar nota de este aviso?",
+      "Tengo información sobre lo que está ocurriendo.",
+      "Quisiera hablar con alguien que pueda atender esto.",
+    ],
+    b: [
+      "Les voy a describir lo que estoy observando.",
+      "Me limitaré a los detalles que puedo distinguir.",
+      "Creo que deberían enviar a alguien a comprobarlo.",
+      "Voy a explicarles la situación tal como la veo.",
+      "Prefiero avisar para que puedan revisarlo.",
+      "Estos son los datos que puedo aportar por ahora.",
+      "Quiero trasladarles lo que está sucediendo aquí.",
+      "Espero que puedan ocuparse de lo que les voy a contar.",
+    ],
+  },
+  c: {
+    a: [
+      "¡Buenas para quien las tenga!",
+      "¡Joder, vaya día de mierda!",
+      "A ver, que yo no quiero líos.",
+      "¡Me cago en la leche, menuda historia!",
+      "Soy un vecino y estoy hasta las narices.",
+      "Hola, soy Brenda, una vecina de la zona.",
+      "¡Qué cojones, no me lo puedo creer!",
+      "¡La madre que me parió, vaya panorama!",
+      "Yo venía a lo mío, tan tranquilo.",
+      "¡Oigan, que esto ya pasa de castaño oscuro!",
+    ],
+    b: [
+      "Miren la que hay montada, que parece un puto circo.",
+      "No hay quien esté tranquilo con estas mierdas.",
+      "A ver si alguien puede poner un poco de orden.",
+      "Escuchen esto, porque yo ya no sé qué hacer.",
+      "Les cuento lo que veo, que tiene cojones la cosa.",
+      "No me hace ni puta gracia lo que está pasando.",
+      "Atiendan un momento, que estoy que trino.",
+      "Yo paso de meterme, pero alguien tendrá que hacer algo.",
+    ],
+  },
 };
-const expandedOpenings={"n":{"a":["¡Ay, por favor, necesito hablar con alguien!","No me cuelguen todavía.","Estoy que no sé ni qué decir.","¡Que alguien me haga caso!","Necesito ayuda y no sé cómo pedirla.","¿Pueden escucharme un momento?","Me está costando encontrar las palabras.","¡Esto no me gusta nada!","Por favor, tengan paciencia conmigo.","¡Qué susto, madre mía!"],"b":["Me preocupa lo que pueda pasar a continuación.","Ojalá pudiera explicarlo con más calma.","Estoy tratando de fijarme en los detalles.","No quiero perder tiempo antes de avisar.","No consigo tranquilizarme con este panorama.","Necesito que alguien se acerque por aquí.","Me da miedo que esto vaya a peor.","Les voy a contar lo que ocurre, aunque estoy nervioso.","No quiero exagerar, pero me está dando miedo.","Intento ordenar las ideas para explicarlo bien.","Prefiero llamar antes de quedarme sin saber qué hacer.","Estoy pendiente de lo que está pasando aquí."]},"s":{"a":["Necesito trasladar una observación.","Gracias por atender, tengo un aviso.","Quiero comunicar lo que estoy presenciando.","Disculpen la llamada, creo que deben saber esto.","Les contacto por algo que ocurre en la zona.","¿Sería posible que atendieran un incidente?","Les voy a dar los detalles de un suceso.","Necesito que registren esta información.","Quiero pedir que revisen una situación.","Llamo para aportar un aviso presencial."],"b":["Por favor, valoren si es necesario intervenir.","Voy a procurar ser preciso con la descripción.","No conozco los motivos, pero sí puedo contar lo que veo.","No quisiera que este aviso quedara sin atender.","Me parece conveniente ponerlo en su conocimiento.","Les facilito la descripción que tengo a la vista.","Quisiera que alguien verificara los hechos.","Espero poder darles información útil.","Creo que es mejor que lo revisen personalmente.","No estoy seguro de cómo proceder y por eso llamo.","Les cuento primero lo que puedo confirmar.","No quiero hacer suposiciones, solo informar de lo visible."]},"c":{"a":["¡Vaya numerito, de verdad!","Escuchen, que ya me están tocando la moral.","¡No puede ser, otra movida más!","Yo no sé qué coño pasa últimamente.","¡Tiene narices que tenga que llamar por esto!","A ver si esta vez alguien nos hace caso.","¡Pero bueno, esto qué mierda es!","Hola, les llamo porque estoy alucinando.","¡Vaya tela con el personal!","Miren, no me gusta dar la lata, pero escuchen."],"b":["Yo no tengo por qué aguantar este puto panorama.","A ver si alguien viene y corta el rollo.","Me estoy mordiendo la lengua para no meterme.","Es para verlo y no creérselo, de verdad.","Me han dejado con una cara de gilipollas que no vean.","Les voy a contar la película, que manda huevos.","Uno quiere ir tranquilo y se encuentra estas historias.","No sé si reírme o ponerme a gritar.","Esto es una tomadura de pelo en toda regla.","A ver quién se hace cargo de esta mierda.","Yo ya he tenido bastante por hoy, sinceramente.","Que venga alguien a ver esto, porque tiene tela."]}};
-for(const tone of Object.keys(openingFragments)){openingFragments[tone].a.push(...expandedOpenings[tone].a);openingFragments[tone].b.push(...expandedOpenings[tone].b);}
-for(const tone of Object.keys(openingFragments)){const {a,b}=openingFragments[tone];voicePools[tone].start=a.flatMap(x=>b.map(y=>x+' '+y));}
-
-const voiceBags=new Map();const lastVoice={};function chooseVoice(pool,key){let bag=voiceBags.get(key);if(!bag||!bag.length){bag=pool.map((_,i)=>i);for(let j=bag.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[bag[j],bag[k]]=[bag[k],bag[j]];}if(bag.length>1&&bag[bag.length-1]===lastVoice[key]){[bag[0],bag[bag.length-1]]=[bag[bag.length-1],bag[0]];}voiceBags.set(key,bag);}const index=bag.pop();lastVoice[key]=index;return pool[index];}
-function voiceScene(parts,tone,long=false){const bank=voicePools[tone]||voicePools.n;const start=chooseVoice(bank.start,tone+'start'),reaction=chooseVoice(bank.reaction,tone+'reaction'),end=chooseVoice(bank.end,tone+'end');let observed=parts.slice();observed[0]=observed[0].replace(/^Veo a /,chooseVoice(['Estoy viendo a ','Aquí hay ','Me encuentro con ','Tengo a la vista a ','Veo a '],'lead'));if(observed.length>2&&Math.random()<.5){const last=observed.pop();observed.splice(1,0,last)}const breakAt=Math.max(1,Math.min(observed.length,2));observed.splice(breakAt,0,reaction);if(long){const extra=chooseVoice(longNarration[tone]||longNarration.s,tone+"long");observed.splice(1,0,extra);observed.push(chooseVoice(["No quiero dar por hecho nada que no haya visto, por eso les estoy contando los detalles tal como los distingo.","Me gustaría que comprobaran lo que ocurre personalmente; yo no sé qué hay detrás de todo esto.","Intento fijarme bien para que puedan identificar la situación cuando lleguen, pero no puedo aportar más de lo que tengo a la vista.","Prefiero explicarlo con cuidado y no confundirles con suposiciones. Eso es lo que puedo contarles por ahora."],"longContext"));}return [start,...observed,end]}
-for(const tone of ['n','s','c']){
-const extra={n:{reaction:['Me cuesta hasta respirar del susto.','Ojalá no estuviera viendo esto.','No sé qué hacer con las manos.','Me he quedado helado.','Necesito que alguien se ocupe de esto.','Perdonen si hablo muy deprisa.'],end:['¡Por favor, que no se quede solo en una llamada!','¡Vengan cuanto antes, estoy asustado!','¡Envíen a alguien a mirar esto!','¡No sé qué hacer, ayúdenme!','¡Por favor, atiendan este aviso!','¡Que alguien se acerque, por lo que más quieran!']},s:{reaction:['Es toda la información que tengo a la vista.','Quisiera que se hiciera una comprobación presencial.','No puedo confirmar nada más aparte de eso.','No me parece adecuado dejarlo pasar.','Espero haberme explicado con claridad.','Pueden tomar esos datos como mi aviso.'],end:['Agradecería una respuesta a este aviso.','¿Sería posible que se acercaran a revisar la zona?','Por favor, deriven el aviso a quien corresponda.','Les ruego que valoren la intervención de una patrulla.','Gracias por atender, espero que puedan comprobarlo.','Quedo pendiente de que lo revisen.']},c:{reaction:['¡Joder, menuda faena!','Ya solo me faltaba encontrarme con esto.','No hay quien tenga un día normal.','Me tienen hasta la coronilla.','Vaya gracia, la verdad.','Esto parece de chiste, pero no lo es.'],end:['¡Acérquense, que yo ya no puedo hacer más!','¡Manden una patrulla y que ponga orden!','¡A ver si alguien puede arreglar este panorama!','¡Que venga alguien antes de que la líen más!','¡No pasen de esto, que estoy hasta arriba ya!','¡Vengan a ver el numerito, por favor!']}}[tone];voicePools[tone].reaction.push(...extra.reaction);voicePools[tone].end.push(...extra.end);
+const expandedOpenings = {
+  n: {
+    a: [
+      "¡Ay, por favor, necesito hablar con alguien!",
+      "No me cuelguen todavía.",
+      "Estoy que no sé ni qué decir.",
+      "¡Que alguien me haga caso!",
+      "Necesito ayuda y no sé cómo pedirla.",
+      "¿Pueden escucharme un momento?",
+      "Me está costando encontrar las palabras.",
+      "¡Esto no me gusta nada!",
+      "Por favor, tengan paciencia conmigo.",
+      "¡Qué susto, madre mía!",
+    ],
+    b: [
+      "Me preocupa lo que pueda pasar a continuación.",
+      "Ojalá pudiera explicarlo con más calma.",
+      "Estoy tratando de fijarme en los detalles.",
+      "No quiero perder tiempo antes de avisar.",
+      "No consigo tranquilizarme con este panorama.",
+      "Necesito que alguien se acerque por aquí.",
+      "Me da miedo que esto vaya a peor.",
+      "Les voy a contar lo que ocurre, aunque estoy nervioso.",
+      "No quiero exagerar, pero me está dando miedo.",
+      "Intento ordenar las ideas para explicarlo bien.",
+      "Prefiero llamar antes de quedarme sin saber qué hacer.",
+      "Estoy pendiente de lo que está pasando aquí.",
+    ],
+  },
+  s: {
+    a: [
+      "Necesito trasladar una observación.",
+      "Gracias por atender, tengo un aviso.",
+      "Quiero comunicar lo que estoy presenciando.",
+      "Disculpen la llamada, creo que deben saber esto.",
+      "Les contacto por algo que ocurre en la zona.",
+      "¿Sería posible que atendieran un incidente?",
+      "Les voy a dar los detalles de un suceso.",
+      "Necesito que registren esta información.",
+      "Quiero pedir que revisen una situación.",
+      "Llamo para aportar un aviso presencial.",
+    ],
+    b: [
+      "Por favor, valoren si es necesario intervenir.",
+      "Voy a procurar ser preciso con la descripción.",
+      "No conozco los motivos, pero sí puedo contar lo que veo.",
+      "No quisiera que este aviso quedara sin atender.",
+      "Me parece conveniente ponerlo en su conocimiento.",
+      "Les facilito la descripción que tengo a la vista.",
+      "Quisiera que alguien verificara los hechos.",
+      "Espero poder darles información útil.",
+      "Creo que es mejor que lo revisen personalmente.",
+      "No estoy seguro de cómo proceder y por eso llamo.",
+      "Les cuento primero lo que puedo confirmar.",
+      "No quiero hacer suposiciones, solo informar de lo visible.",
+    ],
+  },
+  c: {
+    a: [
+      "¡Vaya numerito, de verdad!",
+      "Escuchen, que ya me están tocando la moral.",
+      "¡No puede ser, otra movida más!",
+      "Yo no sé qué coño pasa últimamente.",
+      "¡Tiene narices que tenga que llamar por esto!",
+      "A ver si esta vez alguien nos hace caso.",
+      "¡Pero bueno, esto qué mierda es!",
+      "Hola, les llamo porque estoy alucinando.",
+      "¡Vaya tela con el personal!",
+      "Miren, no me gusta dar la lata, pero escuchen.",
+    ],
+    b: [
+      "Yo no tengo por qué aguantar este puto panorama.",
+      "A ver si alguien viene y corta el rollo.",
+      "Me estoy mordiendo la lengua para no meterme.",
+      "Es para verlo y no creérselo, de verdad.",
+      "Me han dejado con una cara de gilipollas que no vean.",
+      "Les voy a contar la película, que manda huevos.",
+      "Uno quiere ir tranquilo y se encuentra estas historias.",
+      "No sé si reírme o ponerme a gritar.",
+      "Esto es una tomadura de pelo en toda regla.",
+      "A ver quién se hace cargo de esta mierda.",
+      "Yo ya he tenido bastante por hoy, sinceramente.",
+      "Que venga alguien a ver esto, porque tiene tela.",
+    ],
+  },
+};
+for (const tone of Object.keys(openingFragments)) {
+  openingFragments[tone].a.push(...expandedOpenings[tone].a);
+  openingFragments[tone].b.push(...expandedOpenings[tone].b);
+}
+for (const tone of Object.keys(openingFragments)) {
+  const { a, b } = openingFragments[tone];
+  voicePools[tone].start = a.flatMap((x) => b.map((y) => x + " " + y));
 }
 
-const newTones={
-i:{start:['¡Esto es indignante! No pienso quedarme callado.','Estoy harto de tener que aguantar estas cosas.','¡Ya está bien! Alguien tendrá que hacerse cargo.','¿Pero esto qué es? No hay derecho.','Les llamo porque esta situación me parece intolerable.','¡Hasta aquí hemos llegado! Escuchen lo que sucede.'],reaction:['Es una vergüenza tener que presenciar esto.','Estoy muy enfadado, pero voy a intentar explicarme.','No entiendo que haya que aguantar este panorama.','Esto no debería estar pasando.','Ya me dirán ustedes si esto es normal.'],end:['¡Por favor, vengan a poner orden!','¡No dejen este aviso sin atender!','¡Espero que alguien se haga cargo cuanto antes!','¡Envíen una patrulla, que esto no puede seguir así!','¡Hagan algo de una vez, por favor!']},
-g:{start:['Mire, no es por meterme donde no me llaman, pero escuche.','Yo no quiero hablar de más, pero esto hay que contarlo.','Soy de los que se fijan en todo, y miren lo que veo.','No me gusta ser cotilla, pero comprenderán que avise.','Les cuento lo que estoy viendo, que vaya historia.','Miren, yo prefiero que lo sepan por un testigo.'],reaction:['No digo yo que sepa los motivos, pero la escena es la que es.','Aquí uno ve cosas que no se esperaba.','Yo me fijo en los detalles, ya saben.','Lo cuento tal como lo veo, que luego no quiero malentendidos.','No quiero hacer suposiciones, pero desde luego llama la atención.'],end:['Acérquense a comprobarlo, que merece la pena.','Ya me dirán si pueden mandar a alguien.','Yo ya les he avisado; por favor, echen un vistazo.','Que venga una patrulla a ver qué sucede, por favor.','Espero que revisen lo que les he contado.']},
-h:{start:['Maravilloso, justo lo que faltaba para alegrar el día.','Qué bonito panorama. De verdad, todo estupendo.','Fantástico, otro momento de paz y tranquilidad... en fin, escuchen.','Vaya sorpresa, algo que nadie había pedido.','Un aplauso para la situación que tenemos aquí.','Si buscaban un rato tranquilo, este no es el sitio.'],reaction:['Un espectáculo estupendo, como comprenderán.','Todo muy normal, sí, claro.','Precisamente esto era lo que me faltaba ver.','No se me ocurre mejor manera de estropear el rato.','En fin, la realidad supera cualquier broma.'],end:['Ahora, hablando en serio, manden a alguien, por favor.','Si pueden pasarse a poner orden, se agradece.','Vengan a comprobarlo, que la gracia se cuenta sola.','¿Podrían enviar una patrulla y cerrar este numerito?','Por favor, revisen esto; la broma ya está durando demasiado.']},
-t:{start:['Voy a explicarlo con calma para que se entienda.','Hola, no quiero alarmar, pero conviene que sepan esto.','Les doy un aviso con los detalles que puedo ver.','Tengo una situación a la vista y prefiero comunicarla.','Voy a contarles lo que ocurre, sin apresurarme.','Les llamo para que puedan valorar lo que estoy viendo.'],reaction:['Estoy intentando observar sin sacar conclusiones.','Prefiero que sean ustedes quienes lo comprueben.','Voy a ceñirme a lo que tengo delante.','No quiero añadir nada que no pueda confirmar.','Creo que es mejor transmitirlo con claridad.'],end:['Cuando puedan, envíen a alguien a comprobarlo, por favor.','Les agradecería que revisaran la situación.','¿Pueden acercarse a ver qué sucede?','Espero que puedan ocuparse de este aviso.','Quedo pendiente de que se acerque una patrulla.']}
-};Object.assign(voicePools,newTones);
-const longNarration={
-n:['Perdonen si me repito, es que con los nervios me cuesta ordenar lo que estoy viendo. Voy a intentar explicarlo para que se entienda bien.','No sé muy bien cómo reaccionar y por eso les llamo. Necesito que alguien me escuche y compruebe esta situación.'],
-s:['Quisiera que quedara claro lo que puedo observar. No conozco las circunstancias anteriores ni puedo decirles qué intención tiene nadie.','Voy a darles toda la información que puedo distinguir, para que valoren el aviso con los datos disponibles.'],
-c:['Miren, yo no quiero meterme en movidas ajenas, pero tampoco voy a hacer como si no estuviera pasando nada. Bastante tiene uno con sus cosas.','Me tienen de los nervios con este panorama. Intento explicarlo bien, porque no quiero que esto se quede en una llamada que nadie atiende.'],
-i:['No estoy llamando por capricho. Me parece lo bastante serio como para pedir que alguien venga y compruebe lo que estoy denunciando.','Estoy intentando hablar con educación, pero comprenderán mi enfado. No quiero quedarme de brazos cruzados ante esto.'],
-g:['No sé cómo habrá empezado ni me voy a inventar la historia. Pero ya que lo tengo a la vista, prefiero dejar el aviso y contar los detalles.','Una cosa es enterarse de lo que pasa y otra ponerse a inventar. Yo únicamente les cuento lo que alcanzo a ver.'],
-h:['Fuera de bromas, si estoy llamando es porque creo que esto merece que alguien se acerque. La ironía me sale sola, pero el aviso va en serio.','Ya sé que lo digo con sorna, pero no por eso me parece menos importante. Mejor que lo comprueben antes de darlo por una tontería.'],
-t:['Estoy procurando describirlo con cuidado. No quiero precipitarme ni atribuir intenciones, solo comunicar una situación que merece ser revisada.','Prefiero mantener la calma y darles los datos con claridad. Lo que no haya podido distinguir no se lo voy a presentar como seguro.']
+const voiceBags = new Map();
+const lastVoice = {};
+function chooseVoice(pool, key) {
+  let bag = voiceBags.get(key);
+  if (!bag || !bag.length) {
+    bag = pool.map((_, i) => i);
+    for (let j = bag.length - 1; j > 0; j--) {
+      const k = Math.floor(Math.random() * (j + 1));
+      [bag[j], bag[k]] = [bag[k], bag[j]];
+    }
+    if (bag.length > 1 && bag[bag.length - 1] === lastVoice[key]) {
+      [bag[0], bag[bag.length - 1]] = [bag[bag.length - 1], bag[0]];
+    }
+    voiceBags.set(key, bag);
+  }
+  const index = bag.pop();
+  lastVoice[key] = index;
+  return pool[index];
+}
+function voiceScene(parts, tone, long = false) {
+  const bank = voicePools[tone] || voicePools.n;
+  const start = chooseVoice(bank.start, tone + "start"),
+    reaction = chooseVoice(bank.reaction, tone + "reaction"),
+    end = chooseVoice(bank.end, tone + "end");
+  let observed = parts.slice();
+  observed[0] = observed[0].replace(
+    /^Veo a /,
+    chooseVoice(
+      [
+        "Estoy viendo a ",
+        "Aquí hay ",
+        "Me encuentro con ",
+        "Tengo a la vista a ",
+        "Veo a ",
+      ],
+      "lead",
+    ),
+  );
+  if (observed.length > 2 && Math.random() < 0.5) {
+    const last = observed.pop();
+    observed.splice(1, 0, last);
+  }
+  const breakAt = Math.max(1, Math.min(observed.length, 2));
+  observed.splice(breakAt, 0, reaction);
+  if (long) {
+    const extra = chooseVoice(
+      longNarration[tone] || longNarration.s,
+      tone + "long",
+    );
+    observed.splice(1, 0, extra);
+    observed.push(
+      chooseVoice(
+        [
+          "No quiero dar por hecho nada que no haya visto, por eso les estoy contando los detalles tal como los distingo.",
+          "Me gustaría que comprobaran lo que ocurre personalmente; yo no sé qué hay detrás de todo esto.",
+          "Intento fijarme bien para que puedan identificar la situación cuando lleguen, pero no puedo aportar más de lo que tengo a la vista.",
+          "Prefiero explicarlo con cuidado y no confundirles con suposiciones. Eso es lo que puedo contarles por ahora.",
+        ],
+        "longContext",
+      ),
+    );
+  }
+  return [start, ...observed, end];
+}
+for (const tone of ["n", "s", "c"]) {
+  const extra = {
+    n: {
+      reaction: [
+        "Me cuesta hasta respirar del susto.",
+        "Ojalá no estuviera viendo esto.",
+        "No sé qué hacer con las manos.",
+        "Me he quedado helado.",
+        "Necesito que alguien se ocupe de esto.",
+        "Perdonen si hablo muy deprisa.",
+      ],
+      end: [
+        "¡Por favor, que no se quede solo en una llamada!",
+        "¡Vengan cuanto antes, estoy asustado!",
+        "¡Envíen a alguien a mirar esto!",
+        "¡No sé qué hacer, ayúdenme!",
+        "¡Por favor, atiendan este aviso!",
+        "¡Que alguien se acerque, por lo que más quieran!",
+      ],
+    },
+    s: {
+      reaction: [
+        "Es toda la información que tengo a la vista.",
+        "Quisiera que se hiciera una comprobación presencial.",
+        "No puedo confirmar nada más aparte de eso.",
+        "No me parece adecuado dejarlo pasar.",
+        "Espero haberme explicado con claridad.",
+        "Pueden tomar esos datos como mi aviso.",
+      ],
+      end: [
+        "Agradecería una respuesta a este aviso.",
+        "¿Sería posible que se acercaran a revisar la zona?",
+        "Por favor, deriven el aviso a quien corresponda.",
+        "Les ruego que valoren la intervención de una patrulla.",
+        "Gracias por atender, espero que puedan comprobarlo.",
+        "Quedo pendiente de que lo revisen.",
+      ],
+    },
+    c: {
+      reaction: [
+        "¡Joder, menuda faena!",
+        "Ya solo me faltaba encontrarme con esto.",
+        "No hay quien tenga un día normal.",
+        "Me tienen hasta la coronilla.",
+        "Vaya gracia, la verdad.",
+        "Esto parece de chiste, pero no lo es.",
+      ],
+      end: [
+        "¡Acérquense, que yo ya no puedo hacer más!",
+        "¡Manden una patrulla y que ponga orden!",
+        "¡A ver si alguien puede arreglar este panorama!",
+        "¡Que venga alguien antes de que la líen más!",
+        "¡No pasen de esto, que estoy hasta arriba ya!",
+        "¡Vengan a ver el numerito, por favor!",
+      ],
+    },
+  }[tone];
+  voicePools[tone].reaction.push(...extra.reaction);
+  voicePools[tone].end.push(...extra.end);
+}
+
+const newTones = {
+  i: {
+    start: [
+      "¡Esto es indignante! No pienso quedarme callado.",
+      "Estoy harto de tener que aguantar estas cosas.",
+      "¡Ya está bien! Alguien tendrá que hacerse cargo.",
+      "¿Pero esto qué es? No hay derecho.",
+      "Les llamo porque esta situación me parece intolerable.",
+      "¡Hasta aquí hemos llegado! Escuchen lo que sucede.",
+    ],
+    reaction: [
+      "Es una vergüenza tener que presenciar esto.",
+      "Estoy muy enfadado, pero voy a intentar explicarme.",
+      "No entiendo que haya que aguantar este panorama.",
+      "Esto no debería estar pasando.",
+      "Ya me dirán ustedes si esto es normal.",
+    ],
+    end: [
+      "¡Por favor, vengan a poner orden!",
+      "¡No dejen este aviso sin atender!",
+      "¡Espero que alguien se haga cargo cuanto antes!",
+      "¡Envíen una patrulla, que esto no puede seguir así!",
+      "¡Hagan algo de una vez, por favor!",
+    ],
+  },
+  g: {
+    start: [
+      "Mire, no es por meterme donde no me llaman, pero escuche.",
+      "Yo no quiero hablar de más, pero esto hay que contarlo.",
+      "Soy de los que se fijan en todo, y miren lo que veo.",
+      "No me gusta ser cotilla, pero comprenderán que avise.",
+      "Les cuento lo que estoy viendo, que vaya historia.",
+      "Miren, yo prefiero que lo sepan por un testigo.",
+    ],
+    reaction: [
+      "No digo yo que sepa los motivos, pero la escena es la que es.",
+      "Aquí uno ve cosas que no se esperaba.",
+      "Yo me fijo en los detalles, ya saben.",
+      "Lo cuento tal como lo veo, que luego no quiero malentendidos.",
+      "No quiero hacer suposiciones, pero desde luego llama la atención.",
+    ],
+    end: [
+      "Acérquense a comprobarlo, que merece la pena.",
+      "Ya me dirán si pueden mandar a alguien.",
+      "Yo ya les he avisado; por favor, echen un vistazo.",
+      "Que venga una patrulla a ver qué sucede, por favor.",
+      "Espero que revisen lo que les he contado.",
+    ],
+  },
+  h: {
+    start: [
+      "Maravilloso, justo lo que faltaba para alegrar el día.",
+      "Qué bonito panorama. De verdad, todo estupendo.",
+      "Fantástico, otro momento de paz y tranquilidad... en fin, escuchen.",
+      "Vaya sorpresa, algo que nadie había pedido.",
+      "Un aplauso para la situación que tenemos aquí.",
+      "Si buscaban un rato tranquilo, este no es el sitio.",
+    ],
+    reaction: [
+      "Un espectáculo estupendo, como comprenderán.",
+      "Todo muy normal, sí, claro.",
+      "Precisamente esto era lo que me faltaba ver.",
+      "No se me ocurre mejor manera de estropear el rato.",
+      "En fin, la realidad supera cualquier broma.",
+    ],
+    end: [
+      "Ahora, hablando en serio, manden a alguien, por favor.",
+      "Si pueden pasarse a poner orden, se agradece.",
+      "Vengan a comprobarlo, que la gracia se cuenta sola.",
+      "¿Podrían enviar una patrulla y cerrar este numerito?",
+      "Por favor, revisen esto; la broma ya está durando demasiado.",
+    ],
+  },
+  t: {
+    start: [
+      "Voy a explicarlo con calma para que se entienda.",
+      "Hola, no quiero alarmar, pero conviene que sepan esto.",
+      "Les doy un aviso con los detalles que puedo ver.",
+      "Tengo una situación a la vista y prefiero comunicarla.",
+      "Voy a contarles lo que ocurre, sin apresurarme.",
+      "Les llamo para que puedan valorar lo que estoy viendo.",
+    ],
+    reaction: [
+      "Estoy intentando observar sin sacar conclusiones.",
+      "Prefiero que sean ustedes quienes lo comprueben.",
+      "Voy a ceñirme a lo que tengo delante.",
+      "No quiero añadir nada que no pueda confirmar.",
+      "Creo que es mejor transmitirlo con claridad.",
+    ],
+    end: [
+      "Cuando puedan, envíen a alguien a comprobarlo, por favor.",
+      "Les agradecería que revisaran la situación.",
+      "¿Pueden acercarse a ver qué sucede?",
+      "Espero que puedan ocuparse de este aviso.",
+      "Quedo pendiente de que se acerque una patrulla.",
+    ],
+  },
+};
+Object.assign(voicePools, newTones);
+const longNarration = {
+  n: [
+    "Perdonen si me repito, es que con los nervios me cuesta ordenar lo que estoy viendo. Voy a intentar explicarlo para que se entienda bien.",
+    "No sé muy bien cómo reaccionar y por eso les llamo. Necesito que alguien me escuche y compruebe esta situación.",
+  ],
+  s: [
+    "Quisiera que quedara claro lo que puedo observar. No conozco las circunstancias anteriores ni puedo decirles qué intención tiene nadie.",
+    "Voy a darles toda la información que puedo distinguir, para que valoren el aviso con los datos disponibles.",
+  ],
+  c: [
+    "Miren, yo no quiero meterme en movidas ajenas, pero tampoco voy a hacer como si no estuviera pasando nada. Bastante tiene uno con sus cosas.",
+    "Me tienen de los nervios con este panorama. Intento explicarlo bien, porque no quiero que esto se quede en una llamada que nadie atiende.",
+  ],
+  i: [
+    "No estoy llamando por capricho. Me parece lo bastante serio como para pedir que alguien venga y compruebe lo que estoy denunciando.",
+    "Estoy intentando hablar con educación, pero comprenderán mi enfado. No quiero quedarme de brazos cruzados ante esto.",
+  ],
+  g: [
+    "No sé cómo habrá empezado ni me voy a inventar la historia. Pero ya que lo tengo a la vista, prefiero dejar el aviso y contar los detalles.",
+    "Una cosa es enterarse de lo que pasa y otra ponerse a inventar. Yo únicamente les cuento lo que alcanzo a ver.",
+  ],
+  h: [
+    "Fuera de bromas, si estoy llamando es porque creo que esto merece que alguien se acerque. La ironía me sale sola, pero el aviso va en serio.",
+    "Ya sé que lo digo con sorna, pero no por eso me parece menos importante. Mejor que lo comprueben antes de darlo por una tontería.",
+  ],
+  t: [
+    "Estoy procurando describirlo con cuidado. No quiero precipitarme ni atribuir intenciones, solo comunicar una situación que merece ser revisada.",
+    "Prefiero mantener la calma y darles los datos con claridad. Lo que no haya podido distinguir no se lo voy a presentar como seguro.",
+  ],
 };
