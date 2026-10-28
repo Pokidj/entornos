@@ -1201,7 +1201,7 @@ function renderCars() {
       pendingVehicleId = null;
       renderCars();
       $("vehicle-picker").open = false;
-      $("vehicle-picker").querySelector('summary').focus();
+      $("vehicle-picker").querySelector("summary").focus();
       generate();
     };
     const star = document.createElement("button");
@@ -1252,7 +1252,115 @@ $("favfilter").onclick = () => {
   renderCars();
 };
 const selectedText = (id) => $(id).selectedOptions[0]?.textContent || "";
+// Keep one compact editor, with a separate outfit for each identified person.
+const wardrobeFields = ["clothing", "clothcolor", "face"];
+let wardrobePeople = [],
+  wardrobeIndex = 0,
+  wardrobeShared = false,
+  wardrobeSize = 0;
+function readOutfit() {
+  return Object.fromEntries(wardrobeFields.map((id) => [id, $(id).value]));
+}
+function writeOutfit(outfit = {}) {
+  for (const id of wardrobeFields)
+    $(id).value = typeof outfit[id] === "string" ? outfit[id] : "";
+  if (typeof syncAllSelects === "function") syncAllSelects();
+}
+function wardrobeQuantity() {
+  return /^[1-9]\d{0,2}$/.test(number) ? +number : 0;
+}
+function syncWardrobe() {
+  const size = wardrobeQuantity(),
+    multi = size > 1 || (size === 1 && $("number-more").checked);
+  if (!wardrobeShared) wardrobePeople[wardrobeIndex] = readOutfit();
+  const shared = multi && $("same-clothing").checked;
+  if (wardrobeIndex >= Math.max(1, size)) {
+    wardrobeIndex = 0;
+    if (!shared) writeOutfit(wardrobePeople[0]);
+  }
+  if (wardrobeShared && !shared) writeOutfit(wardrobePeople[wardrobeIndex]);
+  wardrobeShared = shared;
+  $("wardrobe-controls").hidden = !multi;
+  $("person-picker").hidden = shared;
+  if (wardrobeSize !== size) {
+    $("clothing-person").replaceChildren(
+      ...Array.from({ length: Math.max(1, size) }, (_, i) => {
+        const option = document.createElement("option");
+        option.value = String(i);
+        option.textContent = "Persona " + (i + 1);
+        return option;
+      }),
+    );
+    wardrobeSize = size;
+  }
+  $("clothing-person").value = String(wardrobeIndex);
+  $("wardrobe-help").textContent = $("number-more").checked
+    ? "Describe a las personas identificadas. No se inventará la ropa del resto."
+    : "Elige una persona y describe su ropa, color y accesorios.";
+}
+$("clothing-person").onchange = () => {
+  wardrobePeople[wardrobeIndex] = readOutfit();
+  wardrobeIndex = +$("clothing-person").value;
+  writeOutfit(wardrobePeople[wardrobeIndex]);
+  generate();
+};
+$("same-clothing").onchange = () => generate();
+function individualWardrobeParts(brief) {
+  return wardrobePeople
+    .slice(0, wardrobeQuantity())
+    .flatMap((outfit, index) => {
+      if (!outfit) return [];
+      const text = (id) =>
+        [...$(id).options].find((o) => o.value === outfit[id])?.textContent ||
+        "";
+      const clothing = outfit.clothing ? text("clothing") : "";
+      const color = outfit.clothcolor ? text("clothcolor") : "";
+      const face = outfit.face ? text("face") : "";
+      const visibleClothes = clothing && clothing !== "no se distingue";
+      let description =
+        visibleClothes || color
+          ? (visibleClothes ? clothing : "ropa") +
+            (color
+              ? color === "no se distingue"
+                ? " de color desconocido"
+                : " de color " + color
+              : "")
+          : "";
+      if (face && face !== "sin detalle visible")
+        description += (description ? ", " : "") + face;
+      if (!description) return [];
+      return ["Persona " + (index + 1) + ": " + description + "."];
+    });
+}
+function restoreWardrobe(data) {
+  wardrobePeople = Array.isArray(data.wardrobe?.people)
+    ? data.wardrobe.people
+        .slice(0, 999)
+        .map((outfit) =>
+          Object.fromEntries(
+            wardrobeFields.map((id) => [
+              id,
+              typeof outfit?.[id] === "string" &&
+              [...$(id).options].some((o) => o.value === outfit[id])
+                ? outfit[id]
+                : "",
+            ]),
+          ),
+        )
+    : [readOutfit()];
+  wardrobeIndex = 0;
+  // Old saved environments described the whole group with one outfit.
+  $("same-clothing").checked = data.wardrobe
+    ? data.wardrobe.same === true
+    : true;
+  wardrobeShared =
+    $("same-clothing").checked &&
+    (wardrobeQuantity() > 1 || $("number-more").checked);
+  wardrobeSize = -1;
+  if (!wardrobeShared) writeOutfit(wardrobePeople[0]);
+}
 function generate() {
+  syncWardrobe();
   if (
     $("manual-number").value !== "" &&
     !/^[1-9]\d{0,2}$/.test($("manual-number").value)
@@ -1282,7 +1390,11 @@ function generate() {
   const place = $("place").value === "" ? "" : places[+$("place").value];
   let parts = [
     brief
-      ? chooseVoice(['', 'Aviso: ', 'Atención: ', 'He visto a ', 'Veo a '], 'briefLead') + qty.charAt(0).toLowerCase() +
+      ? chooseVoice(
+          ["", "Aviso: ", "Atención: ", "He visto a ", "Veo a "],
+          "briefLead",
+        ) +
+        qty.charAt(0).toLowerCase() +
         qty.slice(1) +
         " " +
         action +
@@ -1293,7 +1405,9 @@ function generate() {
   parts[0] = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
   const clothing = $("clothing").value === "" ? "" : selectedText("clothing"),
     color = $("clothcolor").value === "" ? "" : selectedText("clothcolor");
-  if (clothing || color) {
+  const individualClothing = !$("wardrobe-controls").hidden && !wardrobeShared;
+  if (individualClothing) parts.push(...individualWardrobeParts(brief));
+  else if (clothing || color) {
     let desc = brief
       ? color
         ? "Ropa " +
@@ -1307,6 +1421,7 @@ function generate() {
     if (clothing !== "no se distingue" || color) parts.push(desc + ".");
   }
   if (
+    !individualClothing &&
     !brief &&
     $("face").value !== "" &&
     selectedText("face") !== "sin detalle visible"
@@ -1358,19 +1473,24 @@ function generate() {
   $("status").textContent = "";
 }
 
-let copiedText = '';
+let copiedText = "";
 let copyToastTimer;
 function updateCopyHint() {
-  const copied = copiedText !== '' && $('output').textContent.trim() === copiedText;
-  $('copy-hint').textContent = copied ? 'Tu entorno se ha copiado en el portapapeles.' : 'Tu entorno se copiará en el portapapeles.';
-  $('copy-hint').classList.toggle('copied', copied);
+  const copied =
+    copiedText !== "" && $("output").textContent.trim() === copiedText;
+  $("copy-hint").textContent = copied
+    ? "Tu entorno se ha copiado en el portapapeles."
+    : "Tu entorno se copiará en el portapapeles.";
+  $("copy-hint").classList.toggle("copied", copied);
 }
 function notifyCopied() {
-  const toast = $('copy-toast');
-  toast.textContent = '✓ Entorno copiado al portapapeles';
+  const toast = $("copy-toast");
+  toast.textContent = "✓ Entorno copiado al portapapeles";
   toast.hidden = false;
   clearTimeout(copyToastTimer);
-  copyToastTimer = setTimeout(() => { toast.hidden = true; }, 4000);
+  copyToastTimer = setTimeout(() => {
+    toast.hidden = true;
+  }, 4000);
 }
 function count() {
   const text = $("output").textContent;
@@ -1413,7 +1533,8 @@ $("copy").onclick = async () => {
     sel.addRange(range);
     copiedText = "";
     updateCopyHint();
-    $("copy-hint").textContent = "No se pudo copiar automáticamente. Texto seleccionado: pulsa Ctrl+C.";
+    $("copy-hint").textContent =
+      "No se pudo copiar automáticamente. Texto seleccionado: pulsa Ctrl+C.";
     $("status").textContent = "";
   }
 };
@@ -1514,6 +1635,11 @@ function clearConfig() {
   vehicle = null;
   pendingVehicleId = null;
   for (const id of configFields) $(id).value = id === "length" ? "normal" : "";
+  wardrobePeople = [];
+  wardrobeIndex = 0;
+  wardrobeShared = false;
+  wardrobeSize = -1;
+  $("same-clothing").checked = false;
   document
     .querySelectorAll("#details input")
     .forEach((c) => (c.checked = false));
@@ -1533,7 +1659,12 @@ function clearConfig() {
 $("reset").textContent = "Vaciar todo ↻";
 $("reset").onclick = clearConfig;
 function snapshot() {
+  syncWardrobe();
   return {
+    wardrobe: {
+      same: $("same-clothing").checked,
+      people: wardrobePeople.slice(0, Math.max(1, wardrobeQuantity())),
+    },
     fields: Object.fromEntries(configFields.map((id) => [id, $(id).value])),
     number,
     numberMore: $("number-more").checked,
@@ -1560,6 +1691,7 @@ function loadConfig(data) {
   $("number-more").checked =
     Boolean(data.numberMore) || data.number === "Más de 6";
   $("manual-number").value = number && +number > 10 ? number : "";
+  restoreWardrobe(data);
   weapon =
     ["Desarmado", "No se distingue"].includes(data.weapon) ||
     Object.hasOwn(weaponDescription, data.weapon)

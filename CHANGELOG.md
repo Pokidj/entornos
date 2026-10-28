@@ -5,6 +5,18 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Vestimenta por persona
+
+- Con varias personas se puede elegir a quién describir y guardar su vestimenta,
+  color de ropa y cara/accesorios de forma independiente.
+- «Todos van vestidos igual» permite usar una sola descripción para el grupo;
+  al desmarcarla se recuperan las descripciones individuales.
+- Las versiones generadas y Mis entornos conservan esta información. Los guardados
+  anteriores mantienen su descripción compartida. «Más de» no inventa ropa del resto.
+- Selector compacto con búsqueda, compatible con cantidades manuales hasta 999.
+- 460 comprobaciones principales superadas, además de las suites de copia,
+  eventos del atajo y detección del puente; sin envíos a una partida real.
+
 ## 2026-10-28 — Acciones inferiores alineadas
 
 - Copiar entorno y Ejecutar en FiveM se colocan abajo, alineados con Generar otra

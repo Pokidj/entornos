@@ -27,7 +27,11 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
 - **Lugar:** barrios y zonas de GTA V, como Paleto o Grapeseed, y lugares concretos.
   La lista se filtra según la situación. Si un lugar previo deja de ser compatible,
   se elimina y se informa del cambio. Es posible dejarlo sin especificar.
-- **Apariencia:** vestimenta, color de ropa y cara/accesorios.
+- **Apariencia:** vestimenta, color de ropa y cara/accesorios. Con varias personas,
+  «Describir a» permite editar a cada una por separado, sin repetir campos en pantalla.
+  La casilla «Todos van vestidos igual» aplica una descripción al grupo. Al desmarcarla
+  se recuperan las descripciones individuales. Si se elige «más de», se describen
+  únicamente las personas identificadas, sin inventar la ropa del resto.
 - **Arma visible:** Desarmado, Arma melee, Arma de fuego o No se distingue.
   Las categorías con armas despliegan sus tipos. La redacción utiliza nombres
   comprensibles como pistola, rifle o escopeta, sin exigir el modelo exacto.
@@ -76,7 +80,9 @@ estrechas se ajustan a varias filas para evitar desbordamientos.
 Actualizar conserva el nombre y sustituye sus parámetros por la selección actual;
 renombrar usa el nombre del campo sin cambiar sus parámetros. Tras eliminar se puede
 «Deshacer» mientras se conserve esa recuperación en la página; no sobrevive a una recarga.
-Se conservan parámetros, cantidad y su modificador, arma, vehículo y detalles.
+Se conservan parámetros, cantidad y su modificador, ropa individual y modo de
+vestimenta compartida, arma, vehículo y detalles. Los guardados anteriores conservan
+su vestimenta como descripción compartida del grupo.
 Cargar un vehículo funciona aunque el catálogo todavía esté descargándose.
 No se guarda el texto generado como si fuese un parámetro.
 

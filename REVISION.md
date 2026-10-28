@@ -4,7 +4,11 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 28/10/2026
 
-- 442 comprobaciones principales superadas, incluidas 379 situaciones.
+- 460 comprobaciones principales superadas, incluidas 379 situaciones y ropa
+  individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
+- Editor de vestimenta comprobado en navegador a 1280 y 375 px: descripciones
+  distintas para dos personas, casilla compartida y recuperación sin desbordamiento.
+  La fila de generación y copia conserva su alineación en escritorio.
 - Suites de copia/confirmación y de preparación/eventos superadas.
 - Configuraciones con nombre: migración de espacios antiguos, más de cinco elementos,
   carga rápida, actualización, renombrado, nombres duplicados, eliminación/deshacer,
