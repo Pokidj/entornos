@@ -1451,3 +1451,100 @@ button:disabled {
 .copy-toast { position: fixed; z-index: 100; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 32px); width: max-content; padding: 13px 18px; border: 1px solid #558a65; border-radius: 10px; background: #203b2a; color: #a2edbb; box-shadow: 0 6px 24px #0006; font-size: 14px; text-align: center; }
 .copy-toast[hidden] { display: none; }
 @media(max-width: 600px) { .copy-bottom .actions #execute-fivem, .copy-bottom .actions #copy { font-size: 12px; padding: 10px 7px; } }
+
+/* Compact layout: shared spacing and control sizes across both panels. */
+:root { --panel-padding: 18px; --control-height: 38px; --panel-gap: 16px; }
+header, main { max-width: 1180px; padding-left: 24px; padding-right: 24px; }
+header { padding-top: 16px; padding-bottom: 16px; }
+main { padding-top: 18px; padding-bottom: 24px; }
+.logo { font-size: 22px; gap: 10px; }
+.logo img { width: 34px; height: 34px; }
+.grid { gap: var(--panel-gap); }
+.card { border-radius: 10px; }
+.head { padding: 14px var(--panel-padding); min-height: 49px; }
+.head b { font-size: 14px; font-weight: 650; }
+form, .body { padding: var(--panel-padding); }
+.field { margin-bottom: 14px; }
+.field > label { margin-bottom: 7px; font-size: 12px; }
+.row { gap: 12px; }
+.row > .field { margin-bottom: 14px; }
+.chips { gap: 6px; }
+.chips button, #travel-buttons button, #numbers button, #weapons button,
+#weapon-types button { min-height: var(--control-height); padding-top: 7px; padding-bottom: 7px; }
+#numbers { gap: 5px; }
+.number-options { margin-top: 7px; gap: 8px; }
+.number-options > input, .number-options label.check { height: var(--control-height); min-height: var(--control-height); }
+.number-options label.check { padding: 6px 9px; font-size: 11px; gap: 7px; }
+.number-options input[type="checkbox"] { width: 15px; height: 15px; min-height: 15px; min-width: 15px; }
+.combo-entry input, .unified-select .combo-entry input { height: var(--control-height); min-height: var(--control-height); padding-top: 8px; padding-bottom: 8px; font-size: 13px; }
+.combo-entry button { min-height: 32px; }
+#form > details { margin: 0 0 12px; padding: 0; }
+#form > details > summary { font-size: 12px; padding: 4px 0; }
+.checklist { margin: 10px 0; gap: 8px; }
+.extra-label { font-size: 12px; margin: 12px 0 6px; }
+#extra { font-size: 13px; padding: 10px; }
+#vehicle-picker { margin: 0; }
+#vehicle-picker > summary { display: flex; align-items: center; gap: 10px; padding: 3px 0; cursor: pointer; list-style: none; }
+#vehicle-picker > summary::-webkit-details-marker { display: none; }
+#vehicle-picker #selected { min-width: 0; flex: 1; margin: 0; font-size: 12px; color: #e2e1dc; overflow-wrap: anywhere; }
+.vehicle-picker-action { flex: 0 0 auto; color: #c8b478; font-size: 10px; margin: 0; }
+#vehicle-picker[open] > summary { margin-bottom: 10px; }
+#vehicle-picker[open] .vehicle-picker-action::after { content: ' ⌃'; }
+#vehicle-picker:not([open]) .vehicle-picker-action::after { content: ' ⌄'; }
+.hint { font-size: 11px; line-height: 1.5; }
+.result > .body { flex: 0 0 auto; padding-bottom: 8px; }
+.result .settings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin: 0 0 16px; }
+.setting-field { min-width: 0; }
+.setting-field > label { display: block; margin: 0 0 6px; font-size: 11px; }
+.settings .unified-select { width: 100%; max-width: none; }
+.settings .combo-entry input { width: 100%; height: var(--control-height); min-height: var(--control-height); }
+.result .output { flex: none; min-height: 200px; font-size: 17px; line-height: 1.65; }
+.output:empty::before { font-size: 15px; }
+.copy-bottom { padding: 12px var(--panel-padding) 16px; }
+#form > .primary.full, .copy-bottom #copy, .copy-bottom .actions #execute-fivem { height: 44px; min-height: 44px; padding: 10px 12px; font-size: 13px; }
+.copy-bottom .actions { gap: 8px; }
+.auto-version:not([hidden]) { margin-top: 10px; margin-bottom: 0; }
+.auto-version span { font-size: 11px; color: inherit; margin: 0; }
+#bridge-status { overflow-wrap: anywhere; }
+.foot { padding: 11px var(--panel-padding); font-size: 10px; letter-spacing: 0; margin-top: auto; }
+.result > details.presets { margin: 0; padding: 0 var(--panel-padding); border: 0; border-top: 1px solid #3d3e44; border-radius: 0 0 10px 10px; }
+.preset-heading { display: flex; align-items: center; justify-content: flex-start; gap: 8px; padding: 13px 0; margin: 0; cursor: pointer; font-size: 12px; list-style: none; }
+.preset-heading::-webkit-details-marker { display: none; }
+.preset-heading::before { content: '›'; color: #c8b478; font-size: 19px; line-height: 1; }
+.presets[open] > .preset-heading::before { transform: rotate(90deg); }
+.preset-heading small { margin-left: auto; font-size: 10px; color: #9fa0a8; font-weight: 400; }
+.presets[open] { padding-bottom: 14px !important; }
+.presets .slot { margin: 0; }
+#slot-status:empty, #status:empty { display: none; }
+.bridge-download { margin-top: 16px; padding: 16px 18px; gap: 18px; }
+.bridge-download h2 { font-size: 14px; margin-bottom: 5px; }
+.download-bridge { min-height: 44px; padding: 10px 18px; font-size: 13px; }
+button:focus-visible, summary:focus-visible, a:focus-visible, .output:focus-visible { outline: 2px solid #ddc991; outline-offset: 3px; }
+@media (max-width: 800px) {
+  .result .output { min-height: 150px; }
+  .foot { margin-top: 0; }
+}
+@media (max-width: 600px) {
+  :root { --panel-padding: 14px; --control-height: 44px; --panel-gap: 12px; }
+  header { padding: 14px 14px; }
+  main { padding: 12px 10px 20px; }
+  .logo { font-size: 19px; }
+  .logo img { width: 30px; height: 30px; }
+  .head { padding-top: 12px; padding-bottom: 12px; }
+  .field, .row > .field { margin-bottom: 12px; }
+  .row, .result .settings { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .combo-entry input, .unified-select .combo-entry input, .settings .combo-entry input, #extra { font-size: 16px; }
+  #weapons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #travel-buttons button { font-size: 11px; padding: 7px 4px; }
+  #numbers { gap: 3px; }
+  #numbers button { font-size: 11px; }
+  .number-options { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+  .number-options label.check { font-size: 10px; padding: 5px 6px; }
+  .result .output { font-size: 16px; line-height: 1.65; }
+  .result .output:empty { min-height: 110px; }
+  .copy-bottom { padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+  .copy-bottom .actions #execute-fivem, .copy-bottom #copy { font-size: 12px; padding-left: 6px; padding-right: 6px; }
+  .preset-heading { flex-wrap: wrap; }
+  .preset-heading small { font-size: 9px; }
+  .bridge-download { padding: 14px; gap: 12px; }
+}

@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20261028-compact" />
   </head>
   <body>
     <header>
@@ -126,30 +126,39 @@
                 <option value="unknown">No se ha visto vehículo</option>
               </select>
               <div id="garage">
-                <div class="garage-toolbar">
-                  <input
-                    id="search"
-                    class="optional"
-                    placeholder="Buscar coche o marca…"
-                    aria-label="Buscar vehículo"
-                  />
-                  <div class="filters">
-                    <select id="category" aria-label="Categoría de vehículo">
-                      <option value="">Todas las categorías</option></select
-                    ><button type="button" id="favfilter" aria-pressed="false">
-                      ☆ Favoritos
-                    </button>
+                <details id="vehicle-picker" open>
+                  <summary>
+                    <span id="selected" aria-live="polite"></span
+                    ><span class="vehicle-picker-action">Ver catálogo</span>
+                  </summary>
+                  <div class="garage-toolbar">
+                    <input
+                      id="search"
+                      class="optional"
+                      placeholder="Buscar coche o marca…"
+                      aria-label="Buscar vehículo"
+                    />
+                    <div class="filters">
+                      <select id="category" aria-label="Categoría de vehículo">
+                        <option value="">Todas las categorías</option></select
+                      ><button
+                        type="button"
+                        id="favfilter"
+                        aria-pressed="false"
+                      >
+                        ☆ Favoritos
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div id="selected" class="pill" aria-live="polite"></div>
-                <div
-                  id="cars"
-                  class="cars"
-                  aria-label="Catálogo de vehículos"
-                ></div>
-                <div id="catalogstatus" class="hint" role="status">
-                  Cargando catálogo…
-                </div>
+                  <div
+                    id="cars"
+                    class="cars"
+                    aria-label="Catálogo de vehículos"
+                  ></div>
+                  <div id="catalogstatus" class="hint" role="status">
+                    Cargando catálogo…
+                  </div>
+                </details>
                 <div class="row optional">
                   <div>
                     <label for="carcolor">Color del vehículo</label
@@ -163,11 +172,11 @@
               </div>
             </div>
             <details>
-              <summary>Más detalles de la escena</summary>
+              <summary>Detalles adicionales</summary>
               <div id="details" class="checklist"></div>
-            </details>
-            <details>
-              <summary>Añadir un dato concreto (opcional)</summary>
+              <label for="extra" class="extra-label"
+                >Un dato concreto (opcional)</label
+              >
               <input
                 id="extra"
                 class="optional"
@@ -176,34 +185,43 @@
                 aria-label="Detalle adicional"
               />
             </details>
-            <button class="primary full">Generar otra versión ↗</button>
+            <button class="primary full">Generar otra versión ↻</button>
             <div class="hint">
               El texto se actualiza al elegir. Los favoritos se guardan en este
               navegador.
             </div>
           </form>
         </section>
-        <section class="card result">
+        <section
+          class="card result"
+          id="result"
+          aria-label="Resultado del entorno"
+        >
           <div class="head">
             <b>/entorno</b><span class="tag lime">● VISTA PREVIA</span>
           </div>
           <div class="body">
             <div class="settings">
-              <label for="tone">Tono</label
-              ><select id="tone">
-                <option value="n">Nervioso</option>
-                <option value="s">Serio</option>
-                <option value="c">De la calle</option>
-                <option value="i">Indignado</option>
-                <option value="g">Vecino cotilla</option>
-                <option value="h">Sarcástico</option>
-                <option value="t">Tranquilo</option></select
-              ><label for="length">Extensión</label
-              ><select id="length">
-                <option value="normal">Normal</option>
-                <option value="brief">Breve</option>
-                <option value="long">Largo</option>
-              </select>
+              <div class="setting-field">
+                <label for="tone">Tono</label
+                ><select id="tone">
+                  <option value="n">Nervioso</option>
+                  <option value="s">Serio</option>
+                  <option value="c">De la calle</option>
+                  <option value="i">Indignado</option>
+                  <option value="g">Vecino cotilla</option>
+                  <option value="h">Sarcástico</option>
+                  <option value="t">Tranquilo</option>
+                </select>
+              </div>
+              <div class="setting-field">
+                <label for="length">Extensión</label
+                ><select id="length">
+                  <option value="normal">Normal</option>
+                  <option value="brief">Breve</option>
+                  <option value="long">Largo</option>
+                </select>
+              </div>
             </div>
             <div
               id="output"
@@ -223,17 +241,6 @@
               aria-live="polite"
             ></div>
           </div>
-          <div class="foot">
-            <span>DESDE LA PERSPECTIVA DEL TESTIGO</span
-            ><span id="count"></span>
-          </div>
-          <div class="presets">
-            <div class="preset-heading">
-              Mis configuraciones <small>Guardadas en este navegador</small>
-            </div>
-            <div id="slots"></div>
-            <div id="slot-status" role="status" aria-live="polite"></div>
-          </div>
           <div class="copy-bottom">
             <div class="actions">
               <button id="copy" class="primary">Copiar entorno ⧉</button>
@@ -242,6 +249,17 @@
               Tu entorno se copiará en el portapapeles.
             </div>
           </div>
+          <div class="foot">
+            <span>Perspectiva del testigo</span><span id="count"></span>
+          </div>
+          <details class="presets">
+            <summary class="preset-heading">
+              Mis configuraciones
+              <small title="Guardadas en este navegador">5 espacios</small>
+            </summary>
+            <div id="slots"></div>
+            <div id="slot-status" role="status" aria-live="polite"></div>
+          </details>
         </section>
       </div>
       <section class="bridge-download" aria-label="Descargar puente de FiveM">
@@ -255,9 +273,7 @@
           <details>
             <summary>Cómo usarlo</summary>
             <ol>
-              <li>
-                Descarga y abre <strong>Puente Entorno.exe</strong>.
-              </li>
+              <li>Descarga y abre <strong>Puente Entorno.exe</strong>.</li>
               <li>Entra a tu servidor de FiveM y recarga esta web.</li>
               <li>
                 Prepara un entorno, vuelve al juego y pulsa
@@ -273,12 +289,12 @@
             </ol>
             <p>
               Para cambiar el atajo, haz clic derecho en el icono del puente,
-              elige «Elegir atajo de teclado» y pulsa la tecla o combinación
-              que prefieras. Después pulsa Guardar.
-              También puedes activar «Iniciar con Windows» desde ese menú.
-              Activa «Generar otra versión después de usar el atajo» para
-              dejar preparado el siguiente entorno con los mismos parámetros.
-              Mantén esta web abierta, aunque esté en segundo plano.
+              elige «Elegir atajo de teclado» y pulsa la tecla o combinación que
+              prefieras. Después pulsa Guardar. También puedes activar «Iniciar
+              con Windows» desde ese menú. Activa «Generar otra versión después
+              de usar el atajo» para dejar preparado el siguiente entorno con
+              los mismos parámetros. Mantén esta web abierta, aunque esté en
+              segundo plano.
             </p>
           </details>
         </div>
@@ -297,11 +313,11 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js"></script>
-    <script src="app.js"></script>
-    <script src="situation-combo.js"></script>
-    <script src="searchable-selects.js"></script>
-    <script src="location-logic.js"></script>
-    <script src="fivem-bridge.js"></script>
+    <script src="voices.js?v=20261028-compact"></script>
+    <script src="app.js?v=20261028-compact"></script>
+    <script src="situation-combo.js?v=20261028-compact"></script>
+    <script src="searchable-selects.js?v=20261028-compact"></script>
+    <script src="location-logic.js?v=20261028-compact"></script>
+    <script src="fivem-bridge.js?v=20261028-compact"></script>
   </body>
 </html>

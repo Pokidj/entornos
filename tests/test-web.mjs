@@ -44,7 +44,7 @@ async function app({ delayCatalog = false } = {}) {
   });
   for (const script of dom.window.document.querySelectorAll("script[src]"))
     vm.runInContext(
-      fs.readFileSync(path.join(root, script.getAttribute("src")), "utf8"),
+      fs.readFileSync(path.join(root, script.getAttribute("src").split('?')[0]), "utf8"),
       dom.getInternalVMContext(),
     );
   if (!delayCatalog) await tick();
@@ -161,18 +161,22 @@ scene(a, "amenazando a alguien");
 manual.value = "18";
 manual.dispatchEvent(new a.w.Event("input", { bubbles: true }));
 button(a, "#travel-buttons", "Seleccionar coche");
-a.w.eval("vehicle=catalog.find(c=>c.id==='massacro');renderCars();generate()");
+ok(a.d.getElementById('vehicle-picker').open, 'Catalog starts expanded');
+[...a.d.querySelectorAll('#cars .choose')].find(b=>b.firstChild.textContent==='Massacro').click();
+ok(!a.d.getElementById('vehicle-picker').open, 'Choosing a car collapses catalog');
 a.d.querySelector("#slots input").value = "Revisión";
 button(a, "#slots", "Guardar");
 await tick();
 a.d.getElementById("reset").click();
 ok(output(a) === "", "Clear all");
+ok(a.d.getElementById('vehicle-picker').open, 'Reset reopens catalog');
 button(a, "#slots", "Cargar");
 await tick();
 ok(
   output(a).includes("18 personas") && output(a).includes("Massacro"),
   "Config roundtrip",
 );
+ok(!a.d.getElementById('vehicle-picker').open, 'Loading a saved car keeps catalog compact');
 a.d.getElementById("copy").click();
 await tick();
 ok(a.w.copied === output(a).trim(), "Clipboard");

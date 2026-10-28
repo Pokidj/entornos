@@ -79,7 +79,7 @@ async function create(version, events = false) {
   };
   for (const script of d.querySelectorAll("script[src]"))
     vm.runInContext(
-      fs.readFileSync(root + "/" + script.getAttribute("src"), "utf8"),
+      fs.readFileSync(root + "/" + script.getAttribute("src").split('?')[0], "utf8"),
       dom.getInternalVMContext(),
     );
   await tick();

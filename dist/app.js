@@ -1200,6 +1200,8 @@ function renderCars() {
       vehicle = c;
       pendingVehicleId = null;
       renderCars();
+      $("vehicle-picker").open = false;
+      $("vehicle-picker").querySelector('summary').focus();
       generate();
     };
     const star = document.createElement("button");
@@ -1432,6 +1434,7 @@ fetch("vehicles.json")
       ? catalog.find((c) => c.id === pendingVehicleId) || null
       : vehicle;
     pendingVehicleId = null;
+    if (vehicle) $("vehicle-picker").open = false;
     renderCars();
     if ($("travel").value === "vehicle") generate();
   })
@@ -1502,6 +1505,7 @@ function refreshChips() {
   renderTravelButtons();
 }
 function clearConfig() {
+  $("vehicle-picker").open = true;
   number = "";
   $("manual-number").value = "";
   $("number-more").checked = false;
@@ -1592,6 +1596,7 @@ function loadConfig(data) {
           Array.isArray(data.details) && data.details.includes(c.value)),
     );
   $("garage").hidden = $("travel").value !== "vehicle";
+  $("vehicle-picker").open = !vehicle;
   renderSituations();
   refreshChips();
   renderCars();

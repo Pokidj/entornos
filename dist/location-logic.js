@@ -197,7 +197,7 @@ function syncCompatiblePlaces() {
   locationHint.textContent = cleared
     ? "Se ha quitado el lugar anterior porque no encaja con esta situación."
     : rule
-      ? "Lugares compatibles con la situación. También puedes elegir una zona de GTA V o dejarlo sin concretar."
+      ? "Solo lugares compatibles. También puedes elegir una zona."
       : "";
   if (typeof syncAllSelects === "function") syncAllSelects();
 }
