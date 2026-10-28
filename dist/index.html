@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261028-presets" />
+    <link rel="stylesheet" href="styles.css?v=20261028-config-box" />
   </head>
   <body>
     <header>
@@ -252,47 +252,42 @@
           <div class="foot">
             <span>Perspectiva del testigo</span><span id="count"></span>
           </div>
-          <section
-            class="presets named-presets"
-            aria-label="Mis configuraciones"
-          >
-            <div class="preset-heading">
-              Mis configuraciones
-              <small id="preset-count" title="Guardadas en este navegador"
-                >0 guardadas</small
-              >
-            </div>
-            <div id="slots">
-              <div
-                id="preset-list"
-                role="group"
-                aria-label="Accesos rápidos a configuraciones"
-              ></div>
-              <p id="preset-empty" class="hint">
-                Guarda tu selección con un nombre y aparecerá aquí.
-              </p>
-              <div class="preset-toolbar">
-                <input
-                  id="preset-name"
-                  maxlength="40"
-                  placeholder="Nombre de la configuración…"
-                  aria-label="Nombre de configuración"
-                  autocomplete="off"
-                />
-                <button type="button" id="preset-save">Guardar nueva</button>
-              </div>
-              <div id="preset-actions" class="preset-actions" hidden>
-                <button type="button" id="preset-update">
-                  Actualizar datos
-                </button>
-                <button type="button" id="preset-rename">Renombrar</button>
-                <button type="button" id="preset-delete">Eliminar</button>
-              </div>
-            </div>
-            <div id="slot-status" role="status" aria-live="polite"></div>
-          </section>
         </section>
       </div>
+      <section class="presets named-presets" aria-label="Mis configuraciones">
+        <div class="preset-heading">
+          Mis configuraciones
+          <small id="preset-count" title="Guardadas en este navegador"
+            >0 guardadas</small
+          >
+        </div>
+        <div id="slots">
+          <div
+            id="preset-list"
+            role="group"
+            aria-label="Accesos rápidos a configuraciones"
+          ></div>
+          <p id="preset-empty" class="hint">
+            Guarda tu selección con un nombre y aparecerá aquí.
+          </p>
+          <div class="preset-toolbar">
+            <input
+              id="preset-name"
+              maxlength="40"
+              placeholder="Nombre de la configuración…"
+              aria-label="Nombre de configuración"
+              autocomplete="off"
+            />
+            <button type="button" id="preset-save">Guardar nueva</button>
+          </div>
+          <div id="preset-actions" class="preset-actions" hidden>
+            <button type="button" id="preset-update">Actualizar datos</button>
+            <button type="button" id="preset-rename">Renombrar</button>
+            <button type="button" id="preset-delete">Eliminar</button>
+          </div>
+        </div>
+        <div id="slot-status" role="status" aria-live="polite"></div>
+      </section>
       <section class="bridge-download" aria-label="Descargar puente de FiveM">
         <div>
           <h2>Conecta el generador con FiveM</h2>
@@ -344,12 +339,12 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261028-presets"></script>
-    <script src="app.js?v=20261028-presets"></script>
-    <script src="presets.js?v=20261028-presets"></script>
-    <script src="situation-combo.js?v=20261028-presets"></script>
-    <script src="searchable-selects.js?v=20261028-presets"></script>
-    <script src="location-logic.js?v=20261028-presets"></script>
-    <script src="fivem-bridge.js?v=20261028-presets"></script>
+    <script src="voices.js?v=20261028-config-box"></script>
+    <script src="app.js?v=20261028-config-box"></script>
+    <script src="presets.js?v=20261028-config-box"></script>
+    <script src="situation-combo.js?v=20261028-config-box"></script>
+    <script src="searchable-selects.js?v=20261028-config-box"></script>
+    <script src="location-logic.js?v=20261028-config-box"></script>
+    <script src="fivem-bridge.js?v=20261028-config-box"></script>
   </body>
 </html>

@@ -12,6 +12,8 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 - Revisión visual en escritorio y a 320 px, con nombres largos y sin desbordamiento
   en los estados comprobados.
 - Documentación y paquetes actualizados con el nuevo sistema de configuraciones.
+- Configuraciones trasladadas a un recuadro independiente, con el mismo ancho y
+  alineación que el bloque de conexión con FiveM. Se conserva la carga con un clic.
 
 ## Puente — resultado de su revisión anterior
 

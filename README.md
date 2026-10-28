@@ -15,7 +15,8 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 2. Ajusta tono y extensión. Puedes editar el resultado directamente.
 3. Copia el entorno o envíalo con el puente.
 
-En «Mis configuraciones», pon un nombre a tu selección y pulsa «Guardar nueva».
+En el recuadro independiente «Mis configuraciones», debajo de los dos paneles,
+pon un nombre a tu selección y pulsa «Guardar nueva».
 Tendrás un botón para cargarla con un clic, sin espacios fijos. Las configuraciones
 anteriores se conservan mediante migración automática.
 

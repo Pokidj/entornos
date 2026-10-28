@@ -1453,7 +1453,10 @@ button:disabled {
 @media(max-width: 600px) { .copy-bottom .actions #execute-fivem, .copy-bottom .actions #copy { font-size: 12px; padding: 10px 7px; } }
 
 /* Compact layout: shared spacing and control sizes across both panels. */
-.result > .named-presets { padding: 12px 18px 16px; margin: 0; border-top: 1px solid #3d3e44; }
+.named-presets { width: 100%; min-width: 0; box-sizing: border-box; padding: 16px 18px; margin: 16px 0 0; background: #26272c; border: 1px solid #47484e; border-radius: 12px; }
+.named-presets #preset-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.named-presets .preset-toolbar { max-width: 560px; }
+.named-presets .preset-actions { max-width: 560px; }
 .named-presets .preset-heading { padding: 0; margin: 0 0 10px; cursor: default; }
 .named-presets .preset-heading::before { display: none; }
 #preset-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; }
@@ -1470,7 +1473,8 @@ button:disabled {
 #slot-status { line-height: 1.5; overflow-wrap: anywhere; }
 #slot-status button { font-size: 11px; padding: 3px 7px; margin-left: 7px; }
 @media(max-width:600px) {
-  .result > .named-presets { padding: 12px 14px 14px; }
+  .named-presets { padding: 14px; }
+  .named-presets #preset-list { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
   #preset-name { height: 44px; font-size: 16px; }
   .preset-shortcut, .preset-toolbar button, .preset-actions button { min-height: 44px; }
 }

@@ -55,7 +55,8 @@ el texto para copiarlo manualmente.
 
 ### Configuraciones con nombre y acceso rápido
 
-«Mis configuraciones» permanece visible al final del panel del resultado, sin
+«Mis configuraciones» tiene un recuadro independiente debajo de los paneles,
+con el mismo ancho que el bloque de conexión con FiveM. Permanece visible, sin
 espacios preestablecidos ni límite fijo de cinco elementos. Escribe un nombre
 de hasta 40 caracteres y pulsa «Guardar nueva» (también puedes pulsar Enter).
 Hace falta elegir una situación y utilizar una cantidad válida, si la especificas.

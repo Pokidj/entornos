@@ -5,6 +5,15 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Recuadro independiente de configuraciones
+
+- «Mis configuraciones» sale del panel de resultado y pasa a un recuadro propio
+  debajo de los dos paneles, antes de la conexión con FiveM y con su mismo ancho.
+- Se mantienen los accesos rápidos y todas las acciones de guardado y edición.
+- Botones distribuidos en filas adaptables; el recuadro sigue visible aunque se
+  oculte el bloque de conexión al detectar el puente.
+- Manual y paquetes actualizados.
+
 ## 2026-10-28 — Configuraciones con nombre y acceso rápido
 
 - Sustituidos los cinco espacios fijos por configuraciones con nombre, sin límite
