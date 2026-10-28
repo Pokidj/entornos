@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node test-web.mjs && node test-copy-actions.mjs"
+    "test": "node test-web.mjs && node test-copy-actions.mjs && node test-web-hotkey.mjs"
   },
   "devDependencies": {
     "jsdom": "29.1.1"

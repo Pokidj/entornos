@@ -238,16 +238,61 @@
             <div class="actions">
               <button id="copy" class="primary">Copiar entorno ⧉</button>
             </div>
-            <div id="copy-hint" class="hint">Tu entorno se copiará en el portapapeles.</div>
+            <div id="copy-hint" class="hint">
+              Tu entorno se copiará en el portapapeles.
+            </div>
           </div>
         </section>
       </div>
       <section class="bridge-download" aria-label="Descargar puente de FiveM">
-        <div><h2>Conecta el generador con FiveM</h2><p>Descarga el puente para Windows y ábrelo en el PC donde juegas. Se queda en la bandeja, junto al reloj.</p><details><summary>Cómo usarlo</summary><ol><li>Extrae el ZIP y abre <strong>Puente-Entornos.exe</strong>.</li><li>Entra a tu servidor de FiveM y recarga esta web.</li><li>Si el navegador pide acceso a la red local, permítelo para esta web. El botón «Ejecutar en FiveM» aparecerá cuando detecte el puente.</li></ol><p>Si alojas la web en otro dominio, cambia <code>web_url</code> en <code>configuracion.json</code> y recarga la configuración desde el icono del puente.</p></details></div>
-        <a class="download-bridge" href="downloads/puente-fivem-windows.zip" download="puente-fivem-windows.zip">Descargar puente <span>Windows · ZIP</span></a>
+        <div>
+          <h2>Conecta el generador con FiveM</h2>
+          <p>
+            Descarga el puente para Windows y ábrelo en el PC donde juegas. Se
+            queda en la bandeja, junto al reloj. También permite enviar el
+            último entorno con un atajo configurable.
+          </p>
+          <details>
+            <summary>Cómo usarlo</summary>
+            <ol>
+              <li>
+                Extrae el ZIP y abre <strong>Puente-Entornos.exe</strong>.
+              </li>
+              <li>Entra a tu servidor de FiveM y recarga esta web.</li>
+              <li>
+                Prepara un entorno, vuelve al juego y pulsa
+                <strong>Ctrl + F9</strong>. Cambia el atajo desde el icono de
+                bandeja. El atajo envía directamente, sin confirmación, y no
+                repite un entorno ya enviado.
+              </li>
+              <li>
+                Si el navegador pide acceso a la red local, permítelo para esta
+                web. El botón «Ejecutar en FiveM» aparecerá cuando detecte el
+                puente.
+              </li>
+            </ol>
+            <p>
+              Si alojas la web en otro dominio, cambia <code>web_url</code> en
+              <code>configuracion.json</code> y recarga la configuración desde
+              el icono del puente.
+            </p>
+          </details>
+        </div>
+        <a
+          class="download-bridge"
+          href="downloads/puente-fivem-windows.zip"
+          download="puente-fivem-windows.zip"
+          >Descargar puente <span>Windows · ZIP</span></a
+        >
       </section>
     </main>
-    <div id="copy-toast" class="copy-toast" role="status" aria-live="polite" hidden></div>
+    <div
+      id="copy-toast"
+      class="copy-toast"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></div>
     <script src="voices.js"></script>
     <script src="app.js"></script>
     <script src="situation-combo.js"></script>
