@@ -1,31 +1,29 @@
-# Revisión y uso
+# Revisión y verificación actuales
 
-La web es estática. Para alojarla, sube TODOS los archivos de `dist/`, manteniendo sus nombres. No necesita instalación ni compilación. Hay que servirla por HTTP/HTTPS; abrir `index.html` como archivo local puede impedir cargar el catálogo.
+Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
-La conexión con FiveM es opcional. El puente configurable se distribuye aparte y debe ejecutarse en el mismo PC que FiveM. Desde un móvil puedes generar y copiar entornos, pero el puente local del PC no se detecta en el teléfono.
+## Última revisión web — 28/10/2026
 
-## Correcciones de esta revisión
+- 442 comprobaciones principales superadas, incluidas 379 situaciones.
+- Suites de copia/confirmación y de preparación/eventos superadas.
+- Configuraciones con nombre: migración de espacios antiguos, más de cinco elementos,
+  carga rápida, actualización, renombrado, nombres duplicados, eliminación/deshacer,
+  persistencia tras recargar, nombres tratados como texto y errores de almacenamiento.
+- Revisión visual en escritorio y a 320 px, con nombres largos y sin desbordamiento
+  en los estados comprobados.
+- Documentación y paquetes actualizados con el nuevo sistema de configuraciones.
 
-- Código formateado y estilos consolidados en `styles.css`.
-- Eliminados manejadores y estados antiguos que ya no se utilizaban.
-- Los filtros del catálogo ya no regeneran el entorno innecesariamente.
-- La carga de una configuración conserva el vehículo aunque el catálogo llegue más tarde.
-- Cantidades manuales inválidas bloquean el resultado y el copiado.
-- Los selectores eliminados no acumulan manejadores de eventos.
-- Teclado: ArrowUp inicial selecciona el último resultado; solo queda abierto un desplegable.
-- Los lugares concretos con nombre no se tratan como barrios compatibles con cualquier escena.
-- Diseño móvil sin desbordamiento horizontal; fuentes de entrada de 16 px y controles táctiles más altos.
-- Puente: límite global de tiempo para el saludo de consola, validación reforzada de URL y sesión renovada al cambiar de dominio.
+## Puente — resultado de su revisión anterior
 
-## Verificación
+24 pruebas: 23 superadas y una omitida porque el entorno aislado bloquea RegisterHotKey
+con error 5. El código y el EXE del puente no cambian con las configuraciones de la web.
+Las pruebas del agente no enviaron avisos a una partida ni reiniciaron Windows;
+el usuario confirmó que el puente funciona en su equipo.
 
-- 418 comprobaciones automatizadas de la web, incluidas las 379 situaciones.
-- 11 pruebas del puente con consola simulada y peticiones HTTP locales.
-- Revisión en navegador de escritorio y con tamaños de móvil de 390 y 320 px.
-- El ejecutable de Windows se ha reconstruido a partir del código revisado, en modo bandeja sin consola.
+## Repetir comprobaciones
 
-No se ha enviado ningún entorno real a tu servidor durante las pruebas. La aceptación y publicación por el comando particular de tu servidor debe comprobarse dentro de FiveM.
+Web, desde `tests/`: `npm install` y `npm test`.
 
-## Repetir pruebas de la web
+Puente, desde su carpeta: `python -m unittest discover -s tests -p "test_*.py" -v`.
 
-En `tests/`, ejecutar `npm install` y `npm test`. Solo las pruebas necesitan jsdom; la web publicada no usa esa dependencia.
+Empaquetar, desde esta carpeta: `python scripts/package-release.py`.

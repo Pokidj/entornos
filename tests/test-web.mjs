@@ -18,7 +18,7 @@ const ok = (condition, message) => {
   checks++;
 };
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
-async function app({ delayCatalog = false } = {}) {
+async function app({ delayCatalog = false, storage = {} } = {}) {
   const errors = [];
   const vc = new VirtualConsole();
   vc.on("jsdomError", (e) => errors.push(e));
@@ -29,6 +29,7 @@ async function app({ delayCatalog = false } = {}) {
     virtualConsole: vc,
   });
   const w = dom.window;
+  for (const [key,value] of Object.entries(storage)) w.localStorage.setItem(key,value);
   let release;
   w.HTMLElement.prototype.scrollIntoView = function () {};
   w.fetch = async (url) => {
@@ -165,12 +166,12 @@ ok(a.d.getElementById('vehicle-picker').open, 'Catalog starts expanded');
 [...a.d.querySelectorAll('#cars .choose')].find(b=>b.firstChild.textContent==='Massacro').click();
 ok(!a.d.getElementById('vehicle-picker').open, 'Choosing a car collapses catalog');
 a.d.querySelector("#slots input").value = "Revisión";
-button(a, "#slots", "Guardar");
+button(a, "#slots", "Guardar nueva");
 await tick();
 a.d.getElementById("reset").click();
 ok(output(a) === "", "Clear all");
 ok(a.d.getElementById('vehicle-picker').open, 'Reset reopens catalog');
-button(a, "#slots", "Cargar");
+button(a, "#preset-list", "Revisión");
 await tick();
 ok(
   output(a).includes("18 personas") && output(a).includes("Massacro"),
@@ -182,7 +183,7 @@ await tick();
 ok(a.w.copied === output(a).trim(), "Clipboard");
 // 40 updates must not leak detached selector handlers.
 for (let i = 0; i < 40; i++) {
-  button(a, "#slots", "Actualizar");
+  button(a, "#slots", "Actualizar datos");
   await tick();
 }
 ok(
@@ -262,6 +263,57 @@ for (const tone of v.w.eval("Object.keys(voicePools)")) {
   ok(starts.size === size, "Opening rotation " + tone);
 }
 v.close();
+// Named presets: migration, unlimited entries, actions, reload and failures.
+const legacy = JSON.stringify([{name:'Atraco',data:saved},null,{name:'Atraco',data:saved},null,null]);
+const p = await app({storage:{'entorno-configs-v1':legacy}});
+const stored = () => JSON.parse(p.w.localStorage.getItem('entorno-configs-v2'));
+ok(p.d.querySelectorAll('#preset-list button').length===2,'Only populated legacy slots migrate');
+ok(p.w.localStorage.getItem('entorno-configs-v1')===legacy,'Legacy backup retained');
+ok(stored()[1].name==='Atraco (2)','Migration disambiguates duplicate names');
+button(p,'#preset-list','Atraco');
+ok(output(p).includes('Massacro') && output(p).includes('3 personas'),'Legacy preset retains full parameters');
+for(let i=0;i<7;i++){
+  p.d.getElementById('preset-name').value='Nueva '+i;
+  p.d.getElementById('preset-save').click();
+}
+ok(stored().length===9,'No five-entry limit');
+const before=stored().length;
+p.d.getElementById('preset-name').value='  nueva 0  ';
+p.d.getElementById('preset-save').click();
+ok(stored().length===before,'Duplicate name cannot overwrite');
+p.d.getElementById('preset-name').value='';p.d.getElementById('preset-save').click();
+ok(stored().length===before,'Empty name rejected');
+p.d.getElementById('preset-name').value='Renombrada';p.d.getElementById('preset-rename').click();
+ok(stored().some(x=>x.name==='Renombrada'),'Rename stored');
+p.d.getElementById('manual-number').value='27';p.d.getElementById('manual-number').dispatchEvent(new p.w.Event('input',{bubbles:true}));
+p.d.getElementById('preset-update').click();
+ok(stored().find(x=>x.name==='Renombrada').data.number==='27','Update saves parameters');
+p.d.getElementById('reset').click();button(p,'#preset-list','Renombrada');
+ok(output(p).includes('27 personas'),'Quick button loads updated parameters');
+p.d.getElementById('preset-delete').click();
+ok(stored().length===before-1,'Delete removes one preset');
+button(p,'#slot-status','Deshacer');
+ok(stored().length===before && stored().some(x=>x.name==='Renombrada'),'Undo restores deleted preset');
+const persisted=p.w.localStorage.getItem('entorno-configs-v2');
+const reloaded=await app({storage:{'entorno-configs-v2':persisted,'entorno-configs-v1':legacy}});
+ok(reloaded.d.querySelectorAll('#preset-list button').length===before,'Reload uses new store without remigrating');
+button(reloaded,'#preset-list','Renombrada');
+ok(output(reloaded).includes('27 personas'),'Reload retains saved data');
+reloaded.close();
+const raw=JSON.stringify([{id:'unsafe',name:'<img src=x onerror=alert(1)>',data:saved}]);
+const safe=await app({storage:{'entorno-configs-v2':raw}});
+ok(safe.d.querySelector('#preset-list img')===null,'Names rendered as text, never HTML');safe.close();
+const broken=await app({storage:{'entorno-configs-v2':'broken'}});
+ok(broken.d.getElementById('preset-save').disabled,'Unreadable store prevents overwriting');
+ok(broken.w.localStorage.getItem('entorno-configs-v2')==='broken','Corrupt original retained');broken.close();
+const memoryBefore=p.w.localStorage.getItem('entorno-configs-v2');
+const proto=Object.getPrototypeOf(p.w.localStorage), originalSet=proto.setItem;
+proto.setItem=()=>{throw new Error('quota')};
+p.d.getElementById('preset-name').value='No guardar';p.d.getElementById('preset-save').click();
+ok(p.w.localStorage.getItem('entorno-configs-v2')===memoryBefore,'Failed write keeps old data');
+ok(/No se ha podido guardar/.test(p.d.getElementById('slot-status').textContent),'Storage error reported');
+proto.setItem=originalSet;
+ok(p.errors.length===0,'No preset runtime errors');p.close();
 console.log(
   `PASS: ${checks} comprobaciones; ${total} situaciones; configuraciones, catálogo lento, filtros, cantidades, armas, longitudes, teclado y rotación.`,
 );

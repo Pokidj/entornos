@@ -194,11 +194,6 @@ loadConfig = function (data) {
   originalLoadAll(data);
   syncAllSelects();
 };
-const slotsRenderer = renderSlots;
-renderSlots = function () {
-  slotsRenderer();
-  scanSelects();
-};
 scanSelects();
 new MutationObserver((records) => {
   if (

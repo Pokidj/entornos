@@ -1505,6 +1505,7 @@ function refreshChips() {
   renderTravelButtons();
 }
 function clearConfig() {
+  document.dispatchEvent(new Event("entorno:reset"));
   $("vehicle-picker").open = true;
   number = "";
   $("manual-number").value = "";
@@ -1531,27 +1532,6 @@ function clearConfig() {
 }
 $("reset").textContent = "Vaciar todo ↻";
 $("reset").onclick = clearConfig;
-let slots = Array(5).fill(null);
-try {
-  const saved = JSON.parse(
-    localStorage.getItem("entorno-configs-v1") || "null",
-  );
-  if (Array.isArray(saved))
-    slots = Array.from({ length: 5 }, (_, i) =>
-      saved[i] && typeof saved[i] === "object" ? saved[i] : null,
-    );
-} catch {}
-function persistSlots(next) {
-  try {
-    localStorage.setItem("entorno-configs-v1", JSON.stringify(next));
-    slots = next;
-    return true;
-  } catch {
-    $("slot-status").textContent =
-      "No se ha podido guardar. Revisa el almacenamiento del navegador.";
-    return false;
-  }
-}
 function snapshot() {
   return {
     fields: Object.fromEntries(configFields.map((id) => [id, $(id).value])),
@@ -1602,75 +1582,8 @@ function loadConfig(data) {
   renderCars();
   generate();
 }
-let activeSlot = 0;
-function renderSlots() {
-  const wrap = $("slots");
-  wrap.replaceChildren();
-  const row = document.createElement("div");
-  row.className = "slot";
-  const select = document.createElement("select");
-  select.setAttribute("aria-label", "Espacio de configuración");
-  slots.forEach((slot, i) => {
-    const o = document.createElement("option");
-    o.value = i;
-    o.textContent = i + 1 + " · " + (slot?.name || "Vacío");
-    select.append(o);
-  });
-  select.value = activeSlot;
-  select.onchange = () => {
-    activeSlot = +select.value;
-    renderSlots();
-    $("slot-status").textContent = "";
-  };
-  const slot = slots[activeSlot];
-  const name = document.createElement("input");
-  name.maxLength = 40;
-  name.placeholder = "Nombre";
-  name.value = slot?.name || "";
-  name.setAttribute("aria-label", "Nombre de configuración");
-  const save = document.createElement("button");
-  save.type = "button";
-  save.textContent = slot ? "Actualizar" : "Guardar";
-  save.onclick = () => {
-    const next = slots.slice();
-    next[activeSlot] = {
-      name: name.value.trim() || "Configuración " + (activeSlot + 1),
-      data: snapshot(),
-    };
-    if (persistSlots(next)) {
-      renderSlots();
-      $("slot-status").textContent = "Configuración guardada.";
-    }
-  };
-  const load = document.createElement("button");
-  load.type = "button";
-  load.textContent = "Cargar";
-  load.disabled = !slot;
-  load.onclick = () => {
-    loadConfig(slot.data || {});
-    $("slot-status").textContent = "Cargada: " + slot.name;
-  };
-  const del = document.createElement("button");
-  del.type = "button";
-  del.textContent = "×";
-  del.setAttribute("aria-label", "Borrar configuración seleccionada");
-  del.title = "Borrar configuración";
-  del.disabled = !slot;
-  del.onclick = () => {
-    const next = slots.slice();
-    next[activeSlot] = null;
-    if (persistSlots(next)) {
-      renderSlots();
-      $("slot-status").textContent = "Espacio vacío.";
-    }
-  };
-  row.append(select, name, save, load, del);
-  wrap.append(row);
-}
-
 $("situation-search").oninput = renderSituations;
 clearConfig();
-renderSlots();
 
 function renderNumbers() {
   const root = $("numbers");
