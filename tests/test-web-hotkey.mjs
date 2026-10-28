@@ -23,6 +23,7 @@ async function create(version, events = false) {
     executions = 0;
   let holdResolve = null;
   let sequence = 0, eventResolve = null;
+  let connected = true, available = true;
   w.HTMLElement.prototype.scrollIntoView = function () {};
   w.AbortSignal.timeout = () => undefined;
   w.confirm = () => true;
@@ -36,6 +37,7 @@ async function create(version, events = false) {
         json: async () =>
           JSON.parse(fs.readFileSync(root + "/vehicles.json", "utf8")),
       };
+    if (url.endsWith('/health') && !available) throw new TypeError('offline');
     if (url.endsWith("/health"))
       return {
         ok: true,
@@ -43,7 +45,7 @@ async function create(version, events = false) {
           bridge: "entorno-fivem",
           version,
           token: "test-token",
-          connected: true,
+          connected,
           capabilities: version === 2 ? ["prepare", "hotkey", ...(events ? ['send-events'] : [])] : [],
           sequence,
           preparation: { ready: !!text && !sent, sent },
@@ -87,6 +89,7 @@ async function create(version, events = false) {
     d,
     dom,
     state: () => ({ text, sent, preparations, executions }),
+    connection: async (game, bridge=true) => { connected=game;available=bridge;await w.checkBridge(); },
     emit: async (source='hotkey', value=text) => {
       assert(eventResolve, 'event listener running');
       sequence++; sent=true;
@@ -130,6 +133,8 @@ assert.match(
 );
 b.dom.window.close();
 const c = await create(2, true);
+assert(c.d.querySelector('.bridge-download').hidden,'download hidden when bridge detected');
+assert(c.d.getElementById('auto-version').parentElement.hidden,'option hidden with disabled execute');
 c.d.getElementById('situation').value='0';
 c.d.getElementById('place').value='0';
 c.w.generate();
@@ -138,6 +143,12 @@ const original=c.state().text;
 const settings=()=>[...c.d.querySelectorAll('#form select, #form input, #form textarea')].map(e=>[e.id,e.value,e.checked]);
 const before=settings();
 const option=c.d.getElementById('auto-version');
+assert(!option.parentElement.hidden,'option visible when execute enabled');
+await c.connection(false);
+assert(option.parentElement.hidden,'option hidden without game connection');
+assert(c.d.querySelector('.bridge-download').hidden,'bridge detected even if game closed');
+await c.connection(true);
+assert(!option.parentElement.hidden);
 assert(!option.checked);
 option.checked=true; option.dispatchEvent(new c.w.Event('change'));
 await tick(); await tick();
@@ -168,6 +179,9 @@ await tick();await tick();
 c.w.handleSendEvent({sequence:99,source:'hotkey',text:current});
 assert.equal(c.state().text,current,'disabled option leaves draft alone');
 assert.equal(c.state().executions,0);
+await c.connection(false,false);
+assert(!c.d.querySelector('.bridge-download').hidden,'download restored when bridge unavailable');
+assert(option.parentElement.hidden);
 c.dom.window.close();
 console.log(
   "PASS: preparación, compatibilidad y generación tras atajo: parámetros intactos, sin autoenvío, opción persistente, eventos antiguos y envíos manuales ignorados.",

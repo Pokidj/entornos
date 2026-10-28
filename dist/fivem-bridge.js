@@ -19,7 +19,10 @@ const autoVersionInput = document.createElement('input');
 autoVersionInput.type = 'checkbox';
 autoVersionInput.id = 'auto-version';
 try { autoVersionInput.checked = localStorage.getItem('entorno-auto-version') === 'true'; } catch {}
-autoVersion.append(autoVersionInput, document.createTextNode('Generar otra versión después de usar el atajo'));
+const autoVersionText = document.createElement('span');
+autoVersionText.textContent = 'Generar otra versión después de usar el atajo';
+autoVersion.append(autoVersionInput, autoVersionText);
+const bridgeDownload = document.querySelector('.bridge-download');
 const executeButton = document.createElement("button");
 executeButton.type = "button";
 executeButton.id = "execute-fivem";
@@ -109,6 +112,7 @@ function refreshExecuteState() {
     bridgeBusy ||
     !currentDraft().startsWith("/entorno ") ||
     draftAlreadySent();
+  autoVersion.hidden = !supportsSendEvents() || executeButton.hidden || executeButton.disabled;
 }
 function renderBridgeStatus() {
   if (!bridgeState) return;
@@ -208,7 +212,7 @@ async function checkBridge() {
       eventSession = data.token;
       autoNeedsBaseline = false;
     }
-    autoVersion.hidden = !supportsSendEvents();
+    if (bridgeDownload) bridgeDownload.hidden = true;
     executeButton.hidden = false;
     bridgeStatus.hidden = false;
     await syncPreparedDraft();
@@ -223,6 +227,7 @@ async function checkBridge() {
     executeButton.hidden = true;
     bridgeStatus.hidden = true;
     autoVersion.hidden = true;
+    if (bridgeDownload) bridgeDownload.hidden = false;
     eventController?.abort();
   } finally {
     bridgeChecking = false;
