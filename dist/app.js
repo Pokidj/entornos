@@ -1280,7 +1280,7 @@ function generate() {
   const place = $("place").value === "" ? "" : places[+$("place").value];
   let parts = [
     brief
-      ? qty.charAt(0).toUpperCase() +
+      ? chooseVoice(['', 'Aviso: ', 'Atención: ', 'He visto a ', 'Veo a '], 'briefLead') + qty.charAt(0).toLowerCase() +
         qty.slice(1) +
         " " +
         action +
@@ -1288,6 +1288,7 @@ function generate() {
         "."
       : "Veo a " + qty + (place ? " " + place : "") + "; " + action + ".",
   ];
+  parts[0] = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
   const clothing = $("clothing").value === "" ? "" : selectedText("clothing"),
     color = $("clothcolor").value === "" ? "" : selectedText("clothcolor");
   if (clothing || color) {

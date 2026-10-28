@@ -10,7 +10,7 @@ const root = path.resolve(
 );
 const html = fs.readFileSync(root + "/index.html", "utf8");
 const tick = () => new Promise((r) => setTimeout(r, 0));
-async function create(version) {
+async function create(version, events = false) {
   const dom = new JSDOM(html, {
       url: "https://hotkey.test/",
       runScripts: "outside-only",
@@ -22,6 +22,7 @@ async function create(version) {
     preparations = 0,
     executions = 0;
   let holdResolve = null;
+  let sequence = 0, eventResolve = null;
   w.HTMLElement.prototype.scrollIntoView = function () {};
   w.AbortSignal.timeout = () => undefined;
   w.confirm = () => true;
@@ -43,11 +44,16 @@ async function create(version) {
           version,
           token: "test-token",
           connected: true,
-          capabilities: version === 2 ? ["prepare", "hotkey"] : [],
+          capabilities: version === 2 ? ["prepare", "hotkey", ...(events ? ['send-events'] : [])] : [],
+          sequence,
           preparation: { ready: !!text && !sent, sent },
           hotkey: { configured: "CTRL+F9", active: true, error: "" },
         }),
       };
+    if (url.endsWith('/events')) return new Promise((resolve, reject) => {
+      eventResolve = event => resolve({ok:true,json:async()=>({ok:true,event})});
+      options.signal.addEventListener('abort', () => reject(new Error('aborted')), {once:true});
+    });
     const value = JSON.parse(options.body).text;
     if (url.endsWith("/prepare")) {
       preparations++;
@@ -81,6 +87,12 @@ async function create(version) {
     d,
     dom,
     state: () => ({ text, sent, preparations, executions }),
+    emit: async (source='hotkey', value=text) => {
+      assert(eventResolve, 'event listener running');
+      sequence++; sent=true;
+      eventResolve({sequence, source, text:value});
+      await tick(); await tick();
+    },
     setDraft: async (value) => {
       d.getElementById("output").textContent = value;
       await tick();
@@ -117,6 +129,46 @@ assert.match(
   /Actualiza el puente/,
 );
 b.dom.window.close();
+const c = await create(2, true);
+c.d.getElementById('situation').value='0';
+c.d.getElementById('place').value='0';
+c.w.generate();
+await c.w.syncPreparedDraft();
+const original=c.state().text;
+const settings=()=>[...c.d.querySelectorAll('#form select, #form input, #form textarea')].map(e=>[e.id,e.value,e.checked]);
+const before=settings();
+const option=c.d.getElementById('auto-version');
+assert(!option.checked);
+option.checked=true; option.dispatchEvent(new c.w.Event('change'));
+await tick(); await tick();
+assert.equal(c.w.localStorage.getItem('entorno-auto-version'),'true');
+await c.emit();
+assert.notEqual(c.state().text,original);
+assert.deepEqual(settings(),before);
+assert.equal(c.state().executions,0,'new version never auto-executes');
+const next=c.state().text;
+await c.emit('web');
+assert.equal(c.state().text,next,'manual web sends do not rotate');
+await c.emit('hotkey',original);
+assert.equal(c.state().text,next,'stale events cannot replace edited output');
+Object.defineProperty(c.d,'hidden',{configurable:true,value:true});
+for (const length of ['brief','normal','long']) {
+  c.d.getElementById('length').value=length;
+  c.w.generate();await c.w.syncPreparedDraft();
+  const previous=c.state().text, selected=settings();
+  await c.emit();
+  assert.notEqual(c.state().text,previous,'rotates '+length+' while backgrounded');
+  assert.deepEqual(settings(),selected);
+}
+const current=c.state().text;
+c.w.handleSendEvent({sequence:1,source:'hotkey',text:current});
+assert.equal(c.state().text,current,'duplicate event ignored');
+option.checked=false;option.dispatchEvent(new c.w.Event('change'));
+await tick();await tick();
+c.w.handleSendEvent({sequence:99,source:'hotkey',text:current});
+assert.equal(c.state().text,current,'disabled option leaves draft alone');
+assert.equal(c.state().executions,0);
+c.dom.window.close();
 console.log(
-  "PASS: preparar sin enviar, no subir duplicados, estado del atajo, bloqueo tras enviar, vaciar borrador y compatibilidad con puente anterior.",
+  "PASS: preparación, compatibilidad y generación tras atajo: parámetros intactos, sin autoenvío, opción persistente, eventos antiguos y envíos manuales ignorados.",
 );

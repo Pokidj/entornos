@@ -10,6 +10,16 @@ let bridgeState = null,
 let prepareTimer,
   bridgeTimer,
   prepareError = "";
+let eventSequence = 0, eventSession = '', eventLoopRunning = false,
+  eventController = null, autoNeedsBaseline = true;
+const autoVersion = document.createElement('label');
+autoVersion.className = 'auto-version hint';
+autoVersion.hidden = true;
+const autoVersionInput = document.createElement('input');
+autoVersionInput.type = 'checkbox';
+autoVersionInput.id = 'auto-version';
+try { autoVersionInput.checked = localStorage.getItem('entorno-auto-version') === 'true'; } catch {}
+autoVersion.append(autoVersionInput, document.createTextNode('Generar otra versión después de usar el atajo'));
 const executeButton = document.createElement("button");
 executeButton.type = "button";
 executeButton.id = "execute-fivem";
@@ -24,6 +34,60 @@ bridgeStatus.setAttribute("aria-live", "polite");
 bridgeStatus.hidden = true;
 document.querySelector(".copy-bottom .actions").append(executeButton);
 document.querySelector(".copy-bottom").append(bridgeStatus);
+document.querySelector('.copy-bottom').append(autoVersion);
+autoVersionInput.onchange = () => {
+  try { localStorage.setItem('entorno-auto-version', String(autoVersionInput.checked)); } catch {}
+  autoNeedsBaseline = true;
+  eventController?.abort();
+  checkBridge();
+};
+function supportsSendEvents() {
+  return bridgeState?.capabilities?.includes('send-events') === true;
+}
+function handleSendEvent(event) {
+  if (!event || !Number.isSafeInteger(event.sequence) || event.sequence <= eventSequence) return;
+  eventSequence = event.sequence;
+  if (!autoVersionInput.checked || event.source !== 'hotkey' || event.text !== currentDraft()) return;
+  if ($('situation').value === '') return;
+  const previous = currentDraft();
+  // Generate uses the current parameters; it never sends a command.
+  for (let attempt = 0; attempt < 6 && currentDraft() === previous; attempt++) generate();
+  queuePreparation();
+}
+async function watchSendEvents() {
+  if (eventLoopRunning || !autoVersionInput.checked || !supportsSendEvents() || !bridgeToken || autoNeedsBaseline) return;
+  eventLoopRunning = true;
+  const token = bridgeToken;
+  let failed = false;
+  try {
+    while (autoVersionInput.checked && supportsSendEvents() && bridgeToken === token && !autoNeedsBaseline) {
+      eventController = new AbortController();
+      const timeout = setTimeout(() => eventController?.abort(), 24000);
+      let response;
+      try {
+        response = await bridgeFetch('/events', {
+          method: 'POST',
+          signal: eventController.signal,
+          headers: { 'Content-Type': 'application/json', 'X-Entorno-Token': token },
+          body: JSON.stringify({ after: eventSequence }),
+        });
+      } finally { clearTimeout(timeout); }
+      if (!response.ok) throw Error('Eventos no disponibles');
+      const data = await response.json();
+      if (bridgeToken !== token || autoNeedsBaseline) break;
+      handleSendEvent(data.event);
+      await syncPreparedDraft();
+    }
+  } catch { failed = true; }
+  finally {
+    eventLoopRunning = false;
+    eventController = null;
+    if (autoVersionInput.checked && bridgeToken && supportsSendEvents()) {
+      if (failed || autoNeedsBaseline) setTimeout(checkBridge, 1500);
+      else watchSendEvents();
+    }
+  }
+}
 function currentDraft() {
   return $("output")
     .textContent.trim()
@@ -74,7 +138,7 @@ async function bridgeFetch(path, options = {}) {
     mode: "cors",
     cache: "no-store",
     credentials: "omit",
-    signal: AbortSignal.timeout(3000),
+    signal: options.signal ?? AbortSignal.timeout(3000),
   });
 }
 async function syncPreparedDraft() {
@@ -134,14 +198,22 @@ async function checkBridge() {
     if (bridgeToken !== data.token) {
       preparedText = null;
       preparedToken = "";
+      eventController?.abort();
     }
     bridgeToken = data.token;
     bridgeConnected = data.connected === true;
     bridgeState = data;
+    if (eventSession !== data.token || autoNeedsBaseline) {
+      eventSequence = Number.isSafeInteger(data.sequence) ? data.sequence : 0;
+      eventSession = data.token;
+      autoNeedsBaseline = false;
+    }
+    autoVersion.hidden = !supportsSendEvents();
     executeButton.hidden = false;
     bridgeStatus.hidden = false;
     await syncPreparedDraft();
     renderBridgeStatus();
+    watchSendEvents();
   } catch {
     bridgeConnected = false;
     bridgeToken = "";
@@ -150,6 +222,8 @@ async function checkBridge() {
     preparedToken = "";
     executeButton.hidden = true;
     bridgeStatus.hidden = true;
+    autoVersion.hidden = true;
+    eventController?.abort();
   } finally {
     bridgeChecking = false;
     refreshExecuteState();

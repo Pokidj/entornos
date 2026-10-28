@@ -1428,6 +1428,8 @@ button:disabled {
 
 .bridge-download { margin-top: 24px; padding: 22px 24px; border: 1px solid #47484e; border-radius: 12px; background: #26272c; display: flex; align-items: center; gap: 24px; }
 .bridge-download > div { flex: 1; min-width: 0; }
+.auto-version:not([hidden]) { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; line-height: 1.5; }
+.auto-version input { flex: 0 0 auto; margin: 3px 0 0; accent-color: #b84c58; }
 .bridge-download h2 { margin: 0 0 8px; font-size: 16px; }
 .bridge-download p, .bridge-download li { font-size: 12px; line-height: 1.6; color: #acadb3; }
 .bridge-download p { margin: 0; }
