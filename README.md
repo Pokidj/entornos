@@ -23,6 +23,8 @@ anteriores se conservan mediante migración automática.
 Para el puente, cierra cualquier versión anterior, descarga `Puente Entorno.exe`
 desde la web y ábrelo en el mismo PC que FiveM. El atajo predeterminado es
 **Ctrl + F9**. Su menú está en la bandeja junto al reloj.
+Si no se detecta estando abierto, usa «Conectar puente» en la web y revisa el
+mensaje de conexión y el permiso de acceso local del navegador.
 
 ## Carpetas y entregables
 

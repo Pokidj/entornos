@@ -5,6 +5,24 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Detección local y diagnóstico del puente
+
+- Añadido «Conectar puente»: comprobación manual de estado con 20 segundos de
+  espera para permitir responder a permisos del navegador, sin enviar comandos.
+- Destino `loopback` indicado solo cuando la API Request lo reconoce; alternativa
+  para navegadores sin `AbortSignal.timeout`.
+- Mensajes de diagnóstico para HTTP 403, servicio incompatible, tiempo agotado,
+  fallo de red y bloqueo CSP observado, en vez de ocultar todos los errores.
+- Se mantienen origen exacto, token temporal y restricciones locales del puente;
+  no se recompila ni modifica el EXE.
+- Comprobación del puente en el equipo: `/health` respondió 200, reconoció FiveM
+  y devolvió el origen permitido. La comprobación OPTIONS respondió 204 y admitió
+  acceso de red privada.
+- Añadida suite de conexión manual, compatibilidad, diagnóstico y reconexión.
+- Límite de verificación: la herramienta de inspección del navegador integrado
+  devuelve «browser.user is unavailable»; no se ha confirmado la causa exacta
+  dentro de esa pestaña ni un permiso aceptado en ella.
+
 ## 2026-10-28 — Acciones de entornos junto a Guardar
 
 - «Actualizar datos», «Renombrar» y «Eliminar» se muestran junto al botón general

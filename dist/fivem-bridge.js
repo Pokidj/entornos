@@ -10,19 +10,92 @@ let bridgeState = null,
 let prepareTimer,
   bridgeTimer,
   prepareError = "";
-let eventSequence = 0, eventSession = '', eventLoopRunning = false,
-  eventController = null, autoNeedsBaseline = true;
-const autoVersion = document.createElement('label');
-autoVersion.className = 'auto-version hint';
+let eventSequence = 0,
+  eventSession = "",
+  eventLoopRunning = false,
+  eventController = null,
+  autoNeedsBaseline = true;
+const autoVersion = document.createElement("label");
+autoVersion.className = "auto-version hint";
 autoVersion.hidden = true;
-const autoVersionInput = document.createElement('input');
-autoVersionInput.type = 'checkbox';
-autoVersionInput.id = 'auto-version';
-try { autoVersionInput.checked = localStorage.getItem('entorno-auto-version') === 'true'; } catch {}
-const autoVersionText = document.createElement('span');
-autoVersionText.textContent = 'Generar otra versión después de usar el atajo';
+const autoVersionInput = document.createElement("input");
+autoVersionInput.type = "checkbox";
+autoVersionInput.id = "auto-version";
+try {
+  autoVersionInput.checked =
+    localStorage.getItem("entorno-auto-version") === "true";
+} catch {}
+const autoVersionText = document.createElement("span");
+autoVersionText.textContent = "Generar otra versión después de usar el atajo";
 autoVersion.append(autoVersionInput, autoVersionText);
-const bridgeDownload = document.querySelector('.bridge-download');
+const bridgeDownload = document.querySelector(".bridge-download");
+let localCspBlocked = false;
+const bridgeConnect = document.createElement("button");
+bridgeConnect.type = "button";
+bridgeConnect.id = "connect-bridge";
+bridgeConnect.textContent = "Conectar puente";
+const connectionMessage = document.createElement("p");
+connectionMessage.id = "bridge-connection-message";
+connectionMessage.className = "hint";
+connectionMessage.setAttribute("role", "status");
+connectionMessage.setAttribute("aria-live", "polite");
+const connectionControls = document.createElement("div");
+connectionControls.className = "bridge-connect-controls";
+connectionControls.append(bridgeConnect, connectionMessage);
+if (bridgeDownload) {
+  const content = bridgeDownload.querySelector("div");
+  content.insertBefore(connectionControls, content.querySelector("details"));
+}
+function connectionFeedback(message) {
+  if (connectionMessage.textContent !== message)
+    connectionMessage.textContent = message;
+}
+function bridgeConnectionError(error) {
+  if (localCspBlocked)
+    return "La política de esta página bloquea la conexión local. Prueba la web en una pestaña de Chrome o Edge.";
+  if (error.status === 403)
+    return "El puente rechazó la dirección de esta web. Revisa el dominio autorizado en configuracion.json y reinicia el puente.";
+  if (error.code === "bridge-identity")
+    return "El servicio local no es una versión compatible del puente. Actualiza Puente Entorno.";
+  if (error.status)
+    return `El puente respondió con error ${error.status}. Comprueba su estado e inténtalo de nuevo.`;
+  if (error.name === "AbortError" || error.name === "TimeoutError")
+    return "El puente no respondió a tiempo. Comprueba que esté abierto y permite el acceso a la red local si el navegador lo solicita.";
+  return "No se puede conectar con el puente. Si está abierto, permite a esta web acceder a la red local en este navegador y pulsa «Conectar puente». Si el navegador no ofrece ese permiso, prueba Chrome o Edge.";
+}
+bridgeConnect.onclick = () => checkBridge({ manual: true });
+document.addEventListener("securitypolicyviolation", (event) => {
+  if (
+    typeof event.blockedURI === "string" &&
+    (event.blockedURI === bridgeURL ||
+      event.blockedURI.startsWith(bridgeURL + "/"))
+  ) {
+    localCspBlocked = true;
+    connectionFeedback(bridgeConnectionError({}));
+  }
+});
+const localFetchOptions = (() => {
+  try {
+    const request = new Request(bridgeURL + "/health", {
+      targetAddressSpace: "loopback",
+    });
+    return request.targetAddressSpace === "loopback"
+      ? { targetAddressSpace: "loopback" }
+      : {};
+  } catch {
+    return {};
+  }
+})();
+function bridgeTimeout(milliseconds) {
+  if (
+    typeof AbortSignal !== "undefined" &&
+    typeof AbortSignal.timeout === "function"
+  )
+    return AbortSignal.timeout(milliseconds);
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), milliseconds);
+  return controller.signal;
+}
 const executeButton = document.createElement("button");
 executeButton.type = "button";
 executeButton.id = "execute-fivem";
@@ -37,52 +110,86 @@ bridgeStatus.setAttribute("aria-live", "polite");
 bridgeStatus.hidden = true;
 document.querySelector(".copy-bottom .actions").append(executeButton);
 document.querySelector(".copy-bottom").append(bridgeStatus);
-document.querySelector('.copy-bottom').append(autoVersion);
+document.querySelector(".copy-bottom").append(autoVersion);
 autoVersionInput.onchange = () => {
-  try { localStorage.setItem('entorno-auto-version', String(autoVersionInput.checked)); } catch {}
+  try {
+    localStorage.setItem(
+      "entorno-auto-version",
+      String(autoVersionInput.checked),
+    );
+  } catch {}
   autoNeedsBaseline = true;
   eventController?.abort();
   checkBridge();
 };
 function supportsSendEvents() {
-  return bridgeState?.capabilities?.includes('send-events') === true;
+  return bridgeState?.capabilities?.includes("send-events") === true;
 }
 function handleSendEvent(event) {
-  if (!event || !Number.isSafeInteger(event.sequence) || event.sequence <= eventSequence) return;
+  if (
+    !event ||
+    !Number.isSafeInteger(event.sequence) ||
+    event.sequence <= eventSequence
+  )
+    return;
   eventSequence = event.sequence;
-  if (!autoVersionInput.checked || event.source !== 'hotkey' || event.text !== currentDraft()) return;
-  if ($('situation').value === '') return;
+  if (
+    !autoVersionInput.checked ||
+    event.source !== "hotkey" ||
+    event.text !== currentDraft()
+  )
+    return;
+  if ($("situation").value === "") return;
   const previous = currentDraft();
   // Generate uses the current parameters; it never sends a command.
-  for (let attempt = 0; attempt < 6 && currentDraft() === previous; attempt++) generate();
+  for (let attempt = 0; attempt < 6 && currentDraft() === previous; attempt++)
+    generate();
   queuePreparation();
 }
 async function watchSendEvents() {
-  if (eventLoopRunning || !autoVersionInput.checked || !supportsSendEvents() || !bridgeToken || autoNeedsBaseline) return;
+  if (
+    eventLoopRunning ||
+    !autoVersionInput.checked ||
+    !supportsSendEvents() ||
+    !bridgeToken ||
+    autoNeedsBaseline
+  )
+    return;
   eventLoopRunning = true;
   const token = bridgeToken;
   let failed = false;
   try {
-    while (autoVersionInput.checked && supportsSendEvents() && bridgeToken === token && !autoNeedsBaseline) {
+    while (
+      autoVersionInput.checked &&
+      supportsSendEvents() &&
+      bridgeToken === token &&
+      !autoNeedsBaseline
+    ) {
       eventController = new AbortController();
       const timeout = setTimeout(() => eventController?.abort(), 24000);
       let response;
       try {
-        response = await bridgeFetch('/events', {
-          method: 'POST',
+        response = await bridgeFetch("/events", {
+          method: "POST",
           signal: eventController.signal,
-          headers: { 'Content-Type': 'application/json', 'X-Entorno-Token': token },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Entorno-Token": token,
+          },
           body: JSON.stringify({ after: eventSequence }),
         });
-      } finally { clearTimeout(timeout); }
-      if (!response.ok) throw Error('Eventos no disponibles');
+      } finally {
+        clearTimeout(timeout);
+      }
+      if (!response.ok) throw Error("Eventos no disponibles");
       const data = await response.json();
       if (bridgeToken !== token || autoNeedsBaseline) break;
       handleSendEvent(data.event);
       await syncPreparedDraft();
     }
-  } catch { failed = true; }
-  finally {
+  } catch {
+    failed = true;
+  } finally {
     eventLoopRunning = false;
     eventController = null;
     if (autoVersionInput.checked && bridgeToken && supportsSendEvents()) {
@@ -112,7 +219,8 @@ function refreshExecuteState() {
     bridgeBusy ||
     !currentDraft().startsWith("/entorno ") ||
     draftAlreadySent();
-  autoVersion.hidden = !supportsSendEvents() || executeButton.hidden || executeButton.disabled;
+  autoVersion.hidden =
+    !supportsSendEvents() || executeButton.hidden || executeButton.disabled;
 }
 function renderBridgeStatus() {
   if (!bridgeState) return;
@@ -137,12 +245,14 @@ function renderBridgeStatus() {
   bridgeStatus.textContent = prepareError || text;
 }
 async function bridgeFetch(path, options = {}) {
+  const { timeoutMs = 3000, ...requestOptions } = options;
   return fetch(bridgeURL + path, {
-    ...options,
+    ...localFetchOptions,
+    ...requestOptions,
     mode: "cors",
     cache: "no-store",
     credentials: "omit",
-    signal: options.signal ?? AbortSignal.timeout(3000),
+    signal: requestOptions.signal ?? bridgeTimeout(timeoutMs),
   });
 }
 async function syncPreparedDraft() {
@@ -186,19 +296,31 @@ async function syncPreparedDraft() {
     if (!bridgeBusy) renderBridgeStatus();
   }
 }
-async function checkBridge() {
+async function checkBridge(options = {}) {
   if (bridgeBusy || bridgeChecking) return;
   bridgeChecking = true;
+  bridgeConnect.disabled = true;
+  if (options.manual === true) {
+    bridgeConnect.textContent = "Conectando…";
+    connectionFeedback(
+      "Comprobando el puente. Si aparece una solicitud de acceso a la red local, permite la conexión para esta web.",
+    );
+  }
   try {
-    const response = await bridgeFetch("/health");
-    if (!response.ok) throw Error();
+    const response = await bridgeFetch("/health", {
+      timeoutMs: options.manual === true ? 20000 : 3000,
+    });
+    if (!response.ok)
+      throw Object.assign(Error("HTTP"), { status: response.status });
     const data = await response.json();
     if (
       data.bridge !== "entorno-fivem" ||
       ![1, 2].includes(data.version) ||
       typeof data.token !== "string"
     )
-      throw Error();
+      throw Object.assign(Error("Bridge identity"), {
+        code: "bridge-identity",
+      });
     if (bridgeToken !== data.token) {
       preparedText = null;
       preparedToken = "";
@@ -207,6 +329,7 @@ async function checkBridge() {
     bridgeToken = data.token;
     bridgeConnected = data.connected === true;
     bridgeState = data;
+    connectionFeedback("Puente detectado.");
     if (eventSession !== data.token || autoNeedsBaseline) {
       eventSequence = Number.isSafeInteger(data.sequence) ? data.sequence : 0;
       eventSession = data.token;
@@ -218,7 +341,7 @@ async function checkBridge() {
     await syncPreparedDraft();
     renderBridgeStatus();
     watchSendEvents();
-  } catch {
+  } catch (error) {
     bridgeConnected = false;
     bridgeToken = "";
     bridgeState = null;
@@ -228,9 +351,12 @@ async function checkBridge() {
     bridgeStatus.hidden = true;
     autoVersion.hidden = true;
     if (bridgeDownload) bridgeDownload.hidden = false;
+    connectionFeedback(bridgeConnectionError(error));
     eventController?.abort();
   } finally {
     bridgeChecking = false;
+    bridgeConnect.disabled = false;
+    bridgeConnect.textContent = "Conectar puente";
     refreshExecuteState();
   }
 }

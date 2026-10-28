@@ -17,6 +17,12 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 - Recuadro renombrado a «Mis entornos»: campo y botón Guardar centrados arriba,
   accesos rápidos debajo. Centrado y orden comprobados en navegador.
 - Las acciones del entorno seleccionado se agrupan junto a Guardar en la barra superior.
+- Añadida suite `test-bridge-detection.mjs`: conexión manual con más tiempo,
+  detección sin AbortSignal.timeout, destinos locales compatibles y mensajes de error.
+- Comprobación local real del puente: GET /health 200, FiveM conectado y CORS del
+  origen esperado; OPTIONS 204 con permiso de red privada. No se enviaron comandos.
+- No se pudo inspeccionar esta conexión dentro de la pestaña de ChatGPT por un
+  error de su herramienta de navegador; la compatibilidad final necesita prueba allí.
 
 ## Puente — resultado de su revisión anterior
 

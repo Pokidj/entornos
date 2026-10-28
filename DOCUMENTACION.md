@@ -121,6 +121,20 @@ de alcance. No existe sincronización de configuraciones entre dispositivos.
 4. Abre FiveM, entra al servidor y recarga la web.
 5. Si el navegador solicita acceso a la red local para el generador, permite ese acceso.
 
+Si el puente está abierto pero no se detecta, pulsa **Conectar puente** en el bloque
+de conexión. Esta comprobación manual espera hasta 20 segundos para dar tiempo a
+responder al permiso del navegador; la automática conserva su plazo corto. Solo
+consulta el estado y prepara el borrador: no ejecuta comandos en FiveM.
+
+La web muestra mensajes distintos ante tiempo agotado, rechazo HTTP 403, servicio
+incompatible o bloqueo CSP que haya podido observar. Un error de red genérico no
+permite distinguir por sí solo entre permiso denegado y servicio inaccesible.
+Se indica el destino de bucle local cuando la API del navegador admite esa opción,
+y existe una alternativa a `AbortSignal.timeout` para navegadores que no la implementan.
+La web no concede permisos ni cambia políticas del navegador automáticamente.
+Referencias: [navegador integrado de ChatGPT](https://learn.chatgpt.com/docs/browser)
+y [acceso a la red local en Chromium](https://developer.chrome.com/blog/local-network-access).
+
 La web detecta el puente. Oculta el bloque «Conecta el generador con FiveM» mientras
 lo detecta y lo vuelve a mostrar si deja de estar disponible. La preparación del
 texto no ejecuta ningún comando.
@@ -292,7 +306,8 @@ npm test
 ```
 
 Dependencia de pruebas: `jsdom` 29.1.1. No se carga en la web de producción.
-Las tres suites son `test-web.mjs`, `test-copy-actions.mjs` y `test-web-hotkey.mjs`.
+Las suites son `test-web.mjs`, `test-copy-actions.mjs`, `test-web-hotkey.mjs`
+y `test-bridge-detection.mjs` (errores, conexión manual y compatibilidad).
 Para una vista local, desde `outputs/entorno-rp`:
 
 ```powershell
@@ -341,7 +356,7 @@ Actualizar estas cifras solo cuando se obtengan resultados nuevos.
 
 | Problema | Comprobación |
 | --- | --- |
-| No aparece Ejecutar en FiveM | Puente abierto en el mismo PC, versión actual, permisos del navegador y origen autorizado. |
+| No aparece Ejecutar en FiveM | Puente abierto en el mismo PC, pulsar Conectar puente, revisar su mensaje, permisos del navegador y origen autorizado. |
 | El puente está detectado pero no permite enviar | FiveM dentro del servidor, borrador válido y distinto del último enviado; esperar el intervalo mínimo. |
 | El atajo no actúa | FiveM delante, atajo activo/disponible y entorno preparado. Cambiar una combinación reservada u ocupada. |
 | No genera el siguiente entorno | Activar la opción, actualizar el puente, dejar la web abierta y revisar que el envío no haya sido manual, fallido o incierto. |
