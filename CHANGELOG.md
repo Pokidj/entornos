@@ -5,6 +5,16 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Acciones inferiores alineadas
+
+- Copiar entorno y Ejecutar en FiveM se colocan abajo, alineados con Generar otra
+  versión en escritorio mediante una fila de acciones compartida.
+- Ayudas, estado del puente y versión automática quedan debajo de los botones;
+  el contador se integra en el cuerpo del resultado.
+- Se conserva la distribución apilada en móvil y la funcionalidad de generación,
+  copia, confirmación y preparación del puente.
+- Documentación y paquetes actualizados.
+
 ## 2026-10-28 — Detección local y diagnóstico del puente
 
 - Añadido «Conectar puente»: comprobación manual de estado con 20 segundos de

@@ -109,8 +109,8 @@ bridgeStatus.setAttribute("role", "status");
 bridgeStatus.setAttribute("aria-live", "polite");
 bridgeStatus.hidden = true;
 document.querySelector(".copy-bottom .actions").append(executeButton);
-document.querySelector(".copy-bottom").append(bridgeStatus);
-document.querySelector(".copy-bottom").append(autoVersion);
+document.querySelector(".copy-notes").append(bridgeStatus);
+document.querySelector(".copy-notes").append(autoVersion);
 autoVersionInput.onchange = () => {
   try {
     localStorage.setItem(

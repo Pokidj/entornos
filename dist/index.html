@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261028-bridge-detection" />
+    <link rel="stylesheet" href="styles.css?v=20261028-button-alignment" />
   </head>
   <body>
     <header>
@@ -24,167 +24,172 @@
             ><button id="reset" class="textbutton">Restablecer ↻</button>
           </div>
           <form id="form">
-            <div class="field">
-              <label>¿Cuántos sois?</label>
-              <div id="numbers" class="chips"></div>
-              <div class="number-options">
-                <input
-                  id="manual-number"
-                  type="number"
-                  min="1"
-                  max="999"
-                  step="1"
-                  placeholder="Otra cantidad…"
-                  aria-label="Cantidad personalizada"
-                /><label class="check"
-                  ><input id="number-more" type="checkbox" /> Más de la cantidad
-                  elegida</label
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label for="situation">¿Qué está pasando?</label>
-              <div class="situation-combo" id="situation-combo">
-                <div class="combo-entry">
+            <div class="selection-fields">
+              <div class="field">
+                <label>¿Cuántos sois?</label>
+                <div id="numbers" class="chips"></div>
+                <div class="number-options">
                   <input
-                    id="situation-search"
-                    type="text"
-                    role="combobox"
-                    aria-label="Qué está pasando: buscar y seleccionar"
-                    aria-autocomplete="list"
-                    aria-expanded="false"
-                    aria-controls="situation-list"
-                    placeholder="Busca o selecciona una situación…"
-                    autocomplete="off"
-                  /><button
-                    type="button"
-                    id="situation-toggle"
-                    aria-label="Mostrar situaciones"
-                    tabindex="-1"
+                    id="manual-number"
+                    type="number"
+                    min="1"
+                    max="999"
+                    step="1"
+                    placeholder="Otra cantidad…"
+                    aria-label="Cantidad personalizada"
+                  /><label class="check"
+                    ><input id="number-more" type="checkbox" /> Más de la
+                    cantidad elegida</label
                   >
-                    ⌄</button
-                  ><button
-                    type="button"
-                    id="situation-clear"
-                    aria-label="Quitar situación"
-                    hidden
-                  >
-                    ×
-                  </button>
-                </div>
-                <select id="situation" hidden></select>
-                <div id="situation-popup" hidden>
-                  <div
-                    id="situation-list"
-                    role="listbox"
-                    aria-label="Situaciones"
-                  ></div>
-                  <div
-                    id="situation-results"
-                    class="hint"
-                    role="status"
-                    aria-live="polite"
-                  ></div>
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="field">
-                <label for="place">Lugar</label
-                ><select id="place"></select>
-              </div>
-              <div class="field">
-                <label for="clothing">Vestimenta</label
-                ><select id="clothing"></select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <label for="clothcolor">Color de la ropa</label
-                ><select id="clothcolor"></select>
-              </div>
-              <div class="field">
-                <label for="face">Cara y accesorios</label
-                ><select id="face"></select>
-              </div>
-            </div>
-            <div class="field">
-              <label>Arma visible</label>
-              <div id="weapons" class="chips"></div>
-            </div>
-            <div class="field">
-              <label>Vehículo</label>
-              <div
-                id="travel-buttons"
-                class="chips"
-                role="group"
-                aria-label="Forma de desplazamiento"
-              ></div>
-              <select id="travel" hidden>
-                <option value="vehicle">Seleccionar vehículo</option>
-                <option value="foot">A pie</option>
-                <option value="unknown">No se ha visto vehículo</option>
-              </select>
-              <div id="garage">
-                <details id="vehicle-picker" open>
-                  <summary>
-                    <span id="selected" aria-live="polite"></span
-                    ><span class="vehicle-picker-action">Ver catálogo</span>
-                  </summary>
-                  <div class="garage-toolbar">
+                <label for="situation">¿Qué está pasando?</label>
+                <div class="situation-combo" id="situation-combo">
+                  <div class="combo-entry">
                     <input
-                      id="search"
-                      class="optional"
-                      placeholder="Buscar coche o marca…"
-                      aria-label="Buscar vehículo"
-                    />
-                    <div class="filters">
-                      <select id="category" aria-label="Categoría de vehículo">
-                        <option value="">Todas las categorías</option></select
-                      ><button
-                        type="button"
-                        id="favfilter"
-                        aria-pressed="false"
-                      >
-                        ☆ Favoritos
-                      </button>
+                      id="situation-search"
+                      type="text"
+                      role="combobox"
+                      aria-label="Qué está pasando: buscar y seleccionar"
+                      aria-autocomplete="list"
+                      aria-expanded="false"
+                      aria-controls="situation-list"
+                      placeholder="Busca o selecciona una situación…"
+                      autocomplete="off"
+                    /><button
+                      type="button"
+                      id="situation-toggle"
+                      aria-label="Mostrar situaciones"
+                      tabindex="-1"
+                    >
+                      ⌄</button
+                    ><button
+                      type="button"
+                      id="situation-clear"
+                      aria-label="Quitar situación"
+                      hidden
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <select id="situation" hidden></select>
+                  <div id="situation-popup" hidden>
+                    <div
+                      id="situation-list"
+                      role="listbox"
+                      aria-label="Situaciones"
+                    ></div>
+                    <div
+                      id="situation-results"
+                      class="hint"
+                      role="status"
+                      aria-live="polite"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label for="place">Lugar</label
+                  ><select id="place"></select>
+                </div>
+                <div class="field">
+                  <label for="clothing">Vestimenta</label
+                  ><select id="clothing"></select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label for="clothcolor">Color de la ropa</label
+                  ><select id="clothcolor"></select>
+                </div>
+                <div class="field">
+                  <label for="face">Cara y accesorios</label
+                  ><select id="face"></select>
+                </div>
+              </div>
+              <div class="field">
+                <label>Arma visible</label>
+                <div id="weapons" class="chips"></div>
+              </div>
+              <div class="field">
+                <label>Vehículo</label>
+                <div
+                  id="travel-buttons"
+                  class="chips"
+                  role="group"
+                  aria-label="Forma de desplazamiento"
+                ></div>
+                <select id="travel" hidden>
+                  <option value="vehicle">Seleccionar vehículo</option>
+                  <option value="foot">A pie</option>
+                  <option value="unknown">No se ha visto vehículo</option>
+                </select>
+                <div id="garage">
+                  <details id="vehicle-picker" open>
+                    <summary>
+                      <span id="selected" aria-live="polite"></span
+                      ><span class="vehicle-picker-action">Ver catálogo</span>
+                    </summary>
+                    <div class="garage-toolbar">
+                      <input
+                        id="search"
+                        class="optional"
+                        placeholder="Buscar coche o marca…"
+                        aria-label="Buscar vehículo"
+                      />
+                      <div class="filters">
+                        <select
+                          id="category"
+                          aria-label="Categoría de vehículo"
+                        >
+                          <option value="">Todas las categorías</option></select
+                        ><button
+                          type="button"
+                          id="favfilter"
+                          aria-pressed="false"
+                        >
+                          ☆ Favoritos
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      id="cars"
+                      class="cars"
+                      aria-label="Catálogo de vehículos"
+                    ></div>
+                    <div id="catalogstatus" class="hint" role="status">
+                      Cargando catálogo…
+                    </div>
+                  </details>
+                  <div class="row optional">
+                    <div>
+                      <label for="carcolor">Color del vehículo</label
+                      ><select id="carcolor"></select>
+                    </div>
+                    <div>
+                      <label for="finish">Acabado</label
+                      ><select id="finish"></select>
                     </div>
                   </div>
-                  <div
-                    id="cars"
-                    class="cars"
-                    aria-label="Catálogo de vehículos"
-                  ></div>
-                  <div id="catalogstatus" class="hint" role="status">
-                    Cargando catálogo…
-                  </div>
-                </details>
-                <div class="row optional">
-                  <div>
-                    <label for="carcolor">Color del vehículo</label
-                    ><select id="carcolor"></select>
-                  </div>
-                  <div>
-                    <label for="finish">Acabado</label
-                    ><select id="finish"></select>
-                  </div>
                 </div>
               </div>
+              <details>
+                <summary>Detalles adicionales</summary>
+                <div id="details" class="checklist"></div>
+                <label for="extra" class="extra-label"
+                  >Un dato concreto (opcional)</label
+                >
+                <input
+                  id="extra"
+                  class="optional"
+                  maxlength="400"
+                  placeholder="Nombre de la tienda, calle u otro detalle observable"
+                  aria-label="Detalle adicional"
+                />
+              </details>
             </div>
-            <details>
-              <summary>Detalles adicionales</summary>
-              <div id="details" class="checklist"></div>
-              <label for="extra" class="extra-label"
-                >Un dato concreto (opcional)</label
-              >
-              <input
-                id="extra"
-                class="optional"
-                maxlength="400"
-                placeholder="Nombre de la tienda, calle u otro detalle observable"
-                aria-label="Detalle adicional"
-              />
-            </details>
             <button class="primary full">Generar otra versión ↻</button>
             <div class="hint">
               El texto se actualiza al elegir. Los favoritos se guardan en este
@@ -240,17 +245,19 @@
               role="status"
               aria-live="polite"
             ></div>
+            <div class="foot">
+              <span>Perspectiva del testigo</span><span id="count"></span>
+            </div>
           </div>
           <div class="copy-bottom">
             <div class="actions">
               <button id="copy" class="primary">Copiar entorno ⧉</button>
             </div>
-            <div id="copy-hint" class="hint">
-              Tu entorno se copiará en el portapapeles.
+            <div class="copy-notes">
+              <div id="copy-hint" class="hint">
+                Tu entorno se copiará en el portapapeles.
+              </div>
             </div>
-          </div>
-          <div class="foot">
-            <span>Perspectiva del testigo</span><span id="count"></span>
           </div>
         </section>
       </div>
@@ -339,12 +346,12 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261028-bridge-detection"></script>
-    <script src="app.js?v=20261028-bridge-detection"></script>
-    <script src="presets.js?v=20261028-bridge-detection"></script>
-    <script src="situation-combo.js?v=20261028-bridge-detection"></script>
-    <script src="searchable-selects.js?v=20261028-bridge-detection"></script>
-    <script src="location-logic.js?v=20261028-bridge-detection"></script>
-    <script src="fivem-bridge.js?v=20261028-bridge-detection"></script>
+    <script src="voices.js?v=20261028-button-alignment"></script>
+    <script src="app.js?v=20261028-button-alignment"></script>
+    <script src="presets.js?v=20261028-button-alignment"></script>
+    <script src="situation-combo.js?v=20261028-button-alignment"></script>
+    <script src="searchable-selects.js?v=20261028-button-alignment"></script>
+    <script src="location-logic.js?v=20261028-button-alignment"></script>
+    <script src="fivem-bridge.js?v=20261028-button-alignment"></script>
   </body>
 </html>

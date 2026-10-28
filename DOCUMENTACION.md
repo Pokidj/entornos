@@ -48,6 +48,10 @@ manteniendo los parámetros. Los tonos ofrecen distintas voces y reacciones;
 Aleatorio elige un tono al generar. Hay tres extensiones: Breve, Normal y Largo.
 Las variantes breves también pueden cambiar su comienzo.
 
+Los botones de copia y ejecución se sitúan en la parte inferior del panel; en
+escritorio comparten fila de alineación con «Generar otra versión». Los mensajes
+de ayuda y estado quedan debajo, incluso cuando cambia el estado del puente.
+
 El resultado se puede editar directamente. «Copiar entorno» lo lleva al portapapeles,
 muestra una notificación y vuelve verde el mensaje de copia. Al cambiar el texto
 se restablece ese estado. Si el navegador impide copiar, se informa y se selecciona
@@ -86,7 +90,7 @@ el formato guardado, se bloquea guardar para evitar sobrescribirlo.
 ### Diseño y teclado
 
 Dos paneles del mismo ancho en escritorio, controles de altura coherente y acciones
-de copia junto al texto. En móvil se usa una columna principal, campos agrupados
+de copia alineadas abajo con la generación. En móvil se usa una columna principal, campos agrupados
 en dos columnas cuando corresponde y entradas de tamaño legible. Se mantienen
 los números en una fila. Los campos con búsqueda admiten navegación por teclado
 y cierre de desplegables; solo debe quedar abierto un buscador a la vez.

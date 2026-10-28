@@ -17,6 +17,8 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 - Recuadro renombrado a «Mis entornos»: campo y botón Guardar centrados arriba,
   accesos rápidos debajo. Centrado y orden comprobados en navegador.
 - Las acciones del entorno seleccionado se agrupan junto a Guardar en la barra superior.
+- Botones de generación, copia y ejecución alineados en la fila inferior en escritorio;
+  mensajes del puente agrupados debajo de la fila de botones.
 - Añadida suite `test-bridge-detection.mjs`: conexión manual con más tiempo,
   detección sin AbortSignal.timeout, destinos locales compatibles y mensajes de error.
 - Comprobación local real del puente: GET /health 200, FiveM conectado y CORS del
