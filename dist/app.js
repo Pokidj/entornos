@@ -52,5 +52,5 @@ function renderSlots(){const wrap=$('slots');wrap.replaceChildren();const row=do
 
 $('situation-search').oninput=renderSituations;clearConfig();renderSlots();
 
-function renderNumbers(){const root=$('numbers');root.replaceChildren();for(let i=1;i<=10;i++){const b=document.createElement('button');b.type='button';b.textContent=i;b.setAttribute('aria-pressed',String(number===String(i)));b.onclick=()=>{number=String(i);$('manual-number').value='';renderNumbers();generate()};root.append(b)}const manual=document.createElement('button');manual.type='button';manual.textContent='Manual';manual.setAttribute('aria-pressed',String(Boolean($('manual-number').value)));manual.onclick=()=>{$('manual-number').focus()};root.append(manual);}
+function renderNumbers(){const root=$('numbers');root.replaceChildren();for(let i=1;i<=10;i++){const b=document.createElement('button');b.type='button';b.textContent=i;b.setAttribute('aria-pressed',String(number===String(i)));b.onclick=()=>{number=String(i);$('manual-number').value='';renderNumbers();generate()};root.append(b)}}
 $('manual-number').oninput=()=>{const value=$('manual-number').value;number=/^[1-9]\d{0,2}$/.test(value)?value:'';renderNumbers();generate()};$('number-more').onchange=generate;
