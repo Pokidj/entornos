@@ -668,22 +668,185 @@ situations.push(
     .filter((a) => !situations.some((x) => x[0] === a))
     .map((a) => [a, "está " + a, "están " + a]),
 );
+// Append only: existing saved scenes use their original numeric indices.
+const robberyVenues = [
+  "una peluquería",
+  "una chatarrería",
+  "un desguace",
+  "un centro de reciclaje",
+  "una ferretería",
+  "una panadería",
+  "una carnicería",
+  "una cafetería",
+  "un local de comida rápida",
+  "un mercado",
+  "un centro comercial",
+  "una tienda de mascotas",
+  "una lavandería",
+  "un salón de tatuajes",
+  "un concesionario",
+  "un depósito de vehículos",
+  "un lavadero de coches",
+  "una gasolinera",
+  "un supermercado",
+  "una licorería",
+  "un badulaque",
+  "una joyería",
+  "una armería",
+  "una tienda de ropa",
+  "una tienda de electrónica",
+  "un pawnshop",
+  "una farmacia",
+  "un restaurante",
+  "un bar",
+  "una discoteca",
+  "un casino",
+  "un hotel",
+  "un motel",
+  "una oficina",
+  "un museo",
+  "un almacén",
+  "una nave industrial",
+  "una fábrica",
+  "una obra",
+  "una granja",
+  "un rancho",
+  "un viñedo",
+  "un hangar",
+  "una iglesia",
+  "una mansión",
+  "un bloque de apartamentos",
+  "una vivienda",
+];
+const extraCrimeScenes = [
+  "robando",
+  "atracando",
+  "asaltando a alguien",
+  "intentando robar",
+  "intentando atracar a alguien",
+  "amenazando para exigir dinero",
+  "robando dinero",
+  "robando una caja registradora",
+  "robando una caja fuerte",
+  "robando mercancía",
+  "robando herramientas",
+  "robando joyas",
+  "robando paquetes",
+  "robando teléfonos móviles",
+  "robando carteras",
+  "robando bolsos",
+  "robando a los peatones",
+  "robando a un repartidor",
+  "robando a un taxista",
+  "robando a un vendedor ambulante",
+  "robando a una persona en un cajero automático",
+  "forzando un cajero automático",
+  "robando una máquina expendedora",
+  "robando un coche",
+  "robando una moto",
+  "robando una bicicleta",
+  "robando una furgoneta",
+  "robando un camión",
+  "robando un autobús",
+  "robando un taxi",
+  "robando una ambulancia",
+  "robando un vehículo de reparto",
+  "robando objetos del interior de un coche",
+  "robando equipaje",
+  "robando piezas de vehículos",
+  "robando ruedas de un coche",
+  "robando una embarcación",
+  "robando una moto de agua",
+  "robando una lancha",
+  "robando un helicóptero",
+  "robando una avioneta",
+  "robando un remolque",
+  "robando la carga de un camión",
+  "robando mercancía de un contenedor",
+  "robando materiales de una obra",
+  "robando maquinaria de una fábrica",
+  "robando combustible de una gasolinera",
+  "robando productos de una granja",
+  "robando botellas de una licorería",
+  "robando la caja de un badulaque",
+  "robando la caja de una peluquería",
+  "robando productos de una peluquería",
+  "amenazando a los clientes de una peluquería",
+  "reteniendo al personal de una peluquería",
+  "atracando una peluquería",
+  "sacando bolsas de una peluquería",
+  "robando metal de una chatarrería",
+  "robando baterías de una chatarrería",
+  "robando herramientas de una chatarrería",
+  "amenazando al personal de una chatarrería",
+  "sacando piezas de un desguace",
+  "cargando material de una chatarrería en un camión",
+  "robando alimentos de un supermercado",
+  "robando bebidas de un bar",
+  "robando obras de arte de un museo",
+  "robando objetos de una iglesia",
+  "robando ordenadores de una oficina",
+  "robando las cajas de un mercado",
+  "robando las maletas de un hotel",
+  "robando muebles de una vivienda",
+  "secuestrando a alguien",
+  "intentando secuestrar a alguien",
+  "reteniendo a alguien contra su voluntad",
+  "tomando a alguien como rehén",
+  "obligando a una persona a subir a un vehículo",
+  "metiendo a una persona en el maletero",
+  "sacando a una persona de un vehículo por la fuerza",
+  "arrastrando a una persona por la fuerza",
+  "llevándose a una persona contra su voluntad",
+  "atando a una persona",
+  "reteniendo a un repartidor",
+  "reteniendo a un taxista",
+  "reteniendo a un comerciante",
+  "secuestrando a una persona en una peluquería",
+  "secuestrando a una persona en una chatarrería",
+];
+for (const venue of robberyVenues) {
+  extraCrimeScenes.push(
+    "robando en " + venue,
+    "forzando la entrada de " + venue,
+    "amenazando al personal de " + venue,
+  );
+}
+for (const action of extraCrimeScenes) {
+  if (!situations.some((scene) => scene[0] === action))
+    situations.push([action, "está " + action, "están " + action]);
+}
 const situationLabel = (s) => s.charAt(0).toLocaleUpperCase("es") + s.slice(1);
+function situationSearchText(text) {
+  return norm(text)
+    .replace(
+      /\b(?:robar|robando|robos?|atracar|atracando|atracos?|asaltar|asaltando|asaltos?)\b/g,
+      "rob",
+    )
+    .replace(/\b(?:secuestrar|secuestrando|secuestros?)\b/g, "secuestr")
+    .replace(/\b(?:peluquerias?|barberias?)\b/g, "peluqueria")
+    .replace(/\b(?:chatarrerias?|desguaces?)\b/g, "chatarreria")
+    .replace(/\bdisparos?\b/g, "dispar")
+    .replace(/\bretencion(?:es)?\b/g, "reten");
+}
 function renderSituations() {
   const selected = $("situation").value;
-  const query = norm($("situation-search").value)
+  const terms = situationSearchText($("situation-search").value)
     .trim()
-    .replace(/\batracos?\b/g, "atrac")
-    .replace(/\brobos?\b/g, "rob")
-    .replace(/\bdisparos?\b/g, "dispar")
-    .replace(/\bsecuestros?\b/g, "secuestr")
-    .replace(/\bretencion(?:es)?\b/g, "reten");
+    .split(/\s+/)
+    .filter(Boolean);
   const list = situations
     .map((x, i) => ({ text: situationLabel(x[0]), id: String(i) }))
-    .filter((x) => !query || norm(x.text).includes(query));
+    .filter((x) =>
+      terms.every((term) =>
+        (norm(x.text) + " " + situationSearchText(x.text)).includes(term),
+      ),
+    );
   const placeholder = document.createElement("option");
   placeholder.value = "";
-  placeholder.textContent = query ? "Elige un resultado" : "Sin seleccionar";
+  placeholder.textContent = terms.length
+    ? "Elige un resultado"
+    : "Sin seleccionar";
   const nodes = [placeholder];
   if (selected && !list.some((x) => x.id === selected)) {
     const o = document.createElement("option");

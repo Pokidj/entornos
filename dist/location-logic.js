@@ -1,7 +1,7 @@
 // Compatibilidad entre la escena y el lugar, conservando los índices guardados.
 const locationGroups = [
   {
-    words: ["yate", "carguero"],
+    words: ["yate", "carguero", "embarcación", "lancha", "moto de agua"],
     places: [
       "puerto",
       "muelle",
@@ -17,14 +17,14 @@ const locationGroups = [
   { words: ["licorería"], places: ["licorería"] },
   { words: ["badulaque"], places: ["tienda", "supermercado"] },
   {
-    words: ["tienda digital", "electrónica", "móviles", "ordenadores"],
+    words: ["tienda digital", "electrónica"],
     places: ["tienda de electrónica"],
   },
   { words: ["pawnshop", "casa de empeños"], places: [] },
   { words: ["tienda de ropa", "prendas"], places: ["tienda de ropa"] },
-  { words: ["barbería"], places: ["barbería", "peluquería"] },
+  { words: ["barbería", "peluquería"], places: ["barbería", "peluquería"] },
   {
-    words: ["chatarrería", "chatarra"],
+    words: ["chatarrería", "chatarra", "desguace", "centro de reciclaje"],
     places: ["desguace", "centro de reciclaje"],
   },
   { words: ["joyería"], places: ["joyería"] },
@@ -39,6 +39,14 @@ const locationGroups = [
   { words: ["bar"], places: ["bar", "club nocturno", "discoteca"] },
   { words: ["casino"], places: ["casino"] },
   {
+    words: ["cajero automático"],
+    places: ["banco", "tienda", "supermercado", "centro comercial", "calle"],
+  },
+  {
+    words: ["helicóptero", "avioneta"],
+    places: ["aeropuerto", "helipuerto", "hangar", "pista de aterrizaje"],
+  },
+  {
     words: ["casa", "casas", "vivienda", "viviendas", "habitantes"],
     places: ["vivienda", "mansión", "bloque de apartamentos", "urbanización"],
   },
@@ -49,6 +57,35 @@ const locationGroups = [
     places: ["garaje", "aparcamiento", "aparcamiento subterráneo"],
   },
   { words: ["nave industrial"], places: ["nave industrial", "almacén"] },
+  ...[
+    "ferretería",
+    "panadería",
+    "carnicería",
+    "cafetería",
+    "local de comida rápida",
+    "mercado",
+    "centro comercial",
+    "tienda de mascotas",
+    "lavandería",
+    "salón de tatuajes",
+    "concesionario",
+    "depósito de vehículos",
+    "lavadero de coches",
+    "discoteca",
+    "hotel",
+    "motel",
+    "oficina",
+    "museo",
+    "fábrica",
+    "obra",
+    "granja",
+    "rancho",
+    "viñedo",
+    "hangar",
+    "iglesia",
+    "mansión",
+    "bloque de apartamentos",
+  ].map((place) => ({ words: [place], places: [place] })),
   {
     words: ["tienda"],
     places: [

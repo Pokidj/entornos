@@ -5,6 +5,20 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Más robos y situaciones genéricas
+
+- Añadidas 214 situaciones: el catálogo pasa de 379 a 593, conservando los índices
+  antiguos para no alterar los entornos guardados.
+- Ampliados peluquería, chatarrería y desguace; robos en comercios, oficinas,
+  instalaciones, viviendas, vehículos, mercancía y pertenencias.
+- Opciones genéricas de robo, atraco, secuestro y retención sin fijar un negocio.
+- Búsqueda por varias palabras en cualquier orden, infinitivos y sinónimos;
+  se mantienen las búsquedas parciales y sin tildes.
+- Nuevas reglas de lugar para peluquerías y otros negocios, aeronaves y embarcaciones.
+  Robar ordenadores no fuerza una tienda de electrónica si se especifica una oficina.
+- 701 comprobaciones principales superadas, incluidas las 593 situaciones;
+  búsquedas y lugares revisados en navegador. Sin envíos reales a FiveM.
+
 ## 2026-10-28 — Vestimenta por persona
 
 - Con varias personas se puede elegir a quién describir y guardar su vestimenta,

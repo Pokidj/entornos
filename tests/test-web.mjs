@@ -362,6 +362,49 @@ set(outfits,'clothing-person','998');
 set(outfits,'clothing',outfitOption('clothing','ropa de calle'));
 ok(output(outfits).includes('Persona 999: ropa de calle'), 'Manual count supports last identified person');
 ok(outfits.errors.length===0,'No wardrobe runtime errors'); outfits.close();
+const crimes = await app();
+const labels = crimes.w.eval('situations.map(x=>x[0])');
+ok(new Set(labels).size===labels.length, 'Expanded crime catalog has no duplicate labels');
+ok(labels[0]==='amenazando a alguien' && labels[1]==='atracando una tienda' && labels[2]==='robando un vehículo', 'Existing scene indices remain stable');
+for (const [query, expected] of [
+  ['chatarreria','Robando metal de una chatarrería'],
+  ['peluqueria','Atracando una peluquería'],
+  ['robar peluqueria','Robando la caja de una peluquería'],
+  ['peluqueria robar','Robando la caja de una peluquería'],
+  ['robar','Robando'], ['atracar','Robando'], ['secuestro','Secuestrando a alguien'],
+  ['secuestrar','Secuestrando a alguien'], ['atrac','Atracando una peluquería'],
+  ['barb','Atracando una barbería'], ['desguace','Robando metal de una chatarrería'],
+]) {
+  crimes.d.getElementById('situation-search').value=query;
+  crimes.d.getElementById('situation-search').dispatchEvent(new crimes.w.Event('input',{bubbles:true}));
+  ok([...crimes.d.querySelectorAll('#situation-list [role=option]')].some(o=>o.textContent===expected), 'Crime search: '+query);
+}
+crimes.d.getElementById('situation-search').value='';
+crimes.d.getElementById('situation-search').dispatchEvent(new crimes.w.Event('input',{bubbles:true}));
+for (const [action, allowed, denied] of [
+  ['atracando una peluquería','en una peluquería','en una joyería'],
+  ['robando metal de una chatarrería','en un desguace','en una tienda'],
+  ['secuestrando a una persona en una chatarrería','en un centro de reciclaje','en un banco'],
+  ['robando en una ferretería','en una ferretería','en una farmacia'],
+  ['robando en una tienda de mascotas','en una tienda de mascotas','en una tienda de ropa'],
+  ['robando obras de arte de un museo','en un museo','en un supermercado'],
+  ['robando ordenadores de una oficina','en una oficina','en una tienda de electrónica'],
+  ['robando un helicóptero','en un helipuerto','en una tienda'],
+  ['robando una lancha','en el puerto','en una tienda'],
+]) {
+  scene(crimes,action);
+  const locations=[...crimes.d.getElementById('place').options].map(o=>o.textContent);
+  ok(locations.includes(allowed) && !locations.includes(denied),'Compatible place for '+action);
+}
+scene(crimes,'robando');
+ok([...crimes.d.getElementById('place').options].some(o=>o.textContent==='en una tienda'), 'Generic robbery keeps location choices');
+button(crimes,'#numbers','1');
+ok(output(crimes).includes('está robando'), 'Generic robbery uses singular');
+button(crimes,'#numbers','3');
+ok(output(crimes).includes('están robando'), 'Generic robbery uses plural');
+scene(crimes,'secuestrando a alguien');
+ok([...crimes.d.getElementById('place').options].some(o=>o.textContent==='en una vivienda'), 'Generic kidnapping keeps location choices');
+ok(crimes.errors.length===0,'No expanded catalog runtime errors'); crimes.close();
 console.log(
   `PASS: ${checks} comprobaciones; ${total} situaciones; configuraciones, catálogo lento, filtros, cantidades, armas, longitudes, teclado y rotación.`,
 );

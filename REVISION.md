@@ -4,8 +4,12 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 28/10/2026
 
-- 460 comprobaciones principales superadas, incluidas 379 situaciones y ropa
+- 701 comprobaciones principales superadas, incluidas 593 situaciones y ropa
   individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
+- Catálogo ampliado sin duplicados ni cambios en los índices anteriores. Búsquedas
+  por infinitivos, sinónimos, varias palabras, orden inverso y fragmentos comprobadas.
+  Lugares de peluquería, chatarrería, comercios, oficina, aeronaves y embarcaciones
+  comprobados; las situaciones genéricas conservan la elección libre del lugar.
 - Editor de vestimenta comprobado en navegador a 1280 y 375 px: descripciones
   distintas para dos personas, casilla compartida y recuperación sin desbordamiento.
   La fila de generación y copia conserva su alineación en escritorio.
