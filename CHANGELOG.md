@@ -5,6 +5,13 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Acciones de entornos junto a Guardar
+
+- «Actualizar datos», «Renombrar» y «Eliminar» se muestran junto al botón general
+  «Guardar» al seleccionar un entorno, dentro de la barra superior centrada.
+- Ajuste en varias filas en pantallas estrechas; accesos rápidos debajo.
+- Documentación y paquetes actualizados.
+
 ## 2026-10-28 — Mis entornos y guardado centrado
 
 - Renombrado el recuadro a «Mis entornos», con etiquetas de nombre y contador coherentes.

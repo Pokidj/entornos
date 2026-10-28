@@ -67,6 +67,8 @@ El botón activo queda resaltado. Los nombres no pueden repetirse ignorando
 mayúsculas y espacios sobrantes; guardar nunca sobrescribe otra configuración por nombre.
 
 Al cargar una configuración aparecen «Actualizar datos», «Renombrar» y «Eliminar».
+Estas acciones se sitúan junto a «Guardar» en la barra superior; en pantallas
+estrechas se ajustan a varias filas para evitar desbordamientos.
 Actualizar conserva el nombre y sustituye sus parámetros por la selección actual;
 renombrar usa el nombre del campo sin cambiar sus parámetros. Tras eliminar se puede
 «Deshacer» mientras se conserve esa recuperación en la página; no sobrevive a una recarga.

@@ -16,6 +16,7 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
   alineación que el bloque de conexión con FiveM. Se conserva la carga con un clic.
 - Recuadro renombrado a «Mis entornos»: campo y botón Guardar centrados arriba,
   accesos rápidos debajo. Centrado y orden comprobados en navegador.
+- Las acciones del entorno seleccionado se agrupan junto a Guardar en la barra superior.
 
 ## Puente — resultado de su revisión anterior
 
