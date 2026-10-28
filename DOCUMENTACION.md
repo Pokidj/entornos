@@ -55,10 +55,12 @@ el texto para copiarlo manualmente.
 
 ### Configuraciones con nombre y acceso rápido
 
-«Mis configuraciones» tiene un recuadro independiente debajo de los paneles,
+«Mis entornos» tiene un recuadro independiente debajo de los paneles,
 con el mismo ancho que el bloque de conexión con FiveM. Permanece visible, sin
 espacios preestablecidos ni límite fijo de cinco elementos. Escribe un nombre
-de hasta 40 caracteres y pulsa «Guardar nueva» (también puedes pulsar Enter).
+de hasta 40 caracteres y pulsa «Guardar» (también puedes pulsar Enter).
+El campo de nombre y el botón están centrados en la parte superior del recuadro;
+los botones de acceso rápido se muestran debajo.
 Hace falta elegir una situación y utilizar una cantidad válida, si la especificas.
 Cada configuración se convierte en un botón: una pulsación carga sus parámetros.
 El botón activo queda resaltado. Los nombres no pueden repetirse ignorando

@@ -110,7 +110,7 @@ function renderPresets() {
   const list = $("preset-list");
   list.replaceChildren();
   $("preset-count").textContent =
-    `${savedPresets.length} guardada${savedPresets.length === 1 ? "" : "s"}`;
+    `${savedPresets.length} guardado${savedPresets.length === 1 ? "" : "s"}`;
   $("preset-empty").hidden = savedPresets.length > 0;
   $("preset-actions").hidden = !savedPresets.some(
     (p) => p.id === activePresetId,

@@ -5,6 +5,13 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-28 — Mis entornos y guardado centrado
+
+- Renombrado el recuadro a «Mis entornos», con etiquetas de nombre y contador coherentes.
+- Campo de nombre y botón de guardado centrados arriba; accesos rápidos debajo.
+- Conservados los datos guardados, las acciones de edición y el ancho del recuadro.
+- Documentación y paquetes actualizados.
+
 ## 2026-10-28 — Recuadro independiente de configuraciones
 
 - «Mis configuraciones» sale del panel de resultado y pasa a un recuadro propio

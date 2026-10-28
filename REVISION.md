@@ -14,6 +14,8 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 - Documentación y paquetes actualizados con el nuevo sistema de configuraciones.
 - Configuraciones trasladadas a un recuadro independiente, con el mismo ancho y
   alineación que el bloque de conexión con FiveM. Se conserva la carga con un clic.
+- Recuadro renombrado a «Mis entornos»: campo y botón Guardar centrados arriba,
+  accesos rápidos debajo. Centrado y orden comprobados en navegador.
 
 ## Puente — resultado de su revisión anterior
 

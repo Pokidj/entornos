@@ -166,7 +166,7 @@ ok(a.d.getElementById('vehicle-picker').open, 'Catalog starts expanded');
 [...a.d.querySelectorAll('#cars .choose')].find(b=>b.firstChild.textContent==='Massacro').click();
 ok(!a.d.getElementById('vehicle-picker').open, 'Choosing a car collapses catalog');
 a.d.querySelector("#slots input").value = "Revisión";
-button(a, "#slots", "Guardar nueva");
+button(a, "#slots", "Guardar");
 await tick();
 a.d.getElementById("reset").click();
 ok(output(a) === "", "Clear all");

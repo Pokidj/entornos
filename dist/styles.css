@@ -1455,8 +1455,9 @@ button:disabled {
 /* Compact layout: shared spacing and control sizes across both panels. */
 .named-presets { width: 100%; min-width: 0; box-sizing: border-box; padding: 16px 18px; margin: 16px 0 0; background: #26272c; border: 1px solid #47484e; border-radius: 12px; }
 .named-presets #preset-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-.named-presets .preset-toolbar { max-width: 560px; }
-.named-presets .preset-actions { max-width: 560px; }
+.named-presets .preset-toolbar { width: 100%; max-width: 560px; margin: 0 auto 12px; }
+.named-presets .preset-actions { max-width: 560px; margin-left: auto; margin-right: auto; }
+.named-presets #preset-name { text-align: center; }
 .named-presets .preset-heading { padding: 0; margin: 0 0 10px; cursor: default; }
 .named-presets .preset-heading::before { display: none; }
 #preset-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; }
