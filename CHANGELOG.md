@@ -5,6 +5,19 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Situaciones propias y menos repeticiones
+
+- Accesos directos para Robar, Atracar, Secuestrar, Amenazar, Pelear y Disparar.
+- «Usar mi texto» acepta palabras o frases propias de hasta 160 caracteres,
+  con teclado, guardado y recuperación en Mis entornos y compatibilidad de lugares.
+- Añadidas 28 situaciones genéricas; catálogo de 621 opciones sin cambiar índices anteriores.
+- Eliminada la repetición del lugar cuando ya aparece en la escena. Limpieza de palabras
+  consecutivas duplicadas y fragmentos idénticos en la generación.
+- Corregido el cierre prematuro del botón de texto propio al cambiar el foco.
+- 749 comprobaciones principales superadas, además de las suites de copia,
+  atajo y detección del puente. Revisión en navegador de texto propio, lugar único,
+  alineación de botones y ausencia de desbordamiento a 375 px. Sin envíos reales a FiveM.
+
 ## 2026-10-28 — Más robos y situaciones genéricas
 
 - Añadidas 214 situaciones: el catálogo pasa de 379 a 593, conservando los índices

@@ -816,6 +816,100 @@ for (const action of extraCrimeScenes) {
   if (!situations.some((scene) => scene[0] === action))
     situations.push([action, "está " + action, "están " + action]);
 }
+for (const action of [
+  "hurtando pertenencias",
+  "arrebatando un bolso",
+  "sustrayendo una cartera",
+  "vaciando una caja registradora",
+  "llevándose mercancía sin pagar",
+  "saliendo con objetos robados",
+  "intentando llevarse un vehículo",
+  "registrando un vehículo ajeno",
+  "forzando una persiana",
+  "rompiendo un escaparate",
+  "intentando entrar por una ventana",
+  "saltando una valla",
+  "entrando por la fuerza",
+  "amenazando a los presentes",
+  "intimidando a una persona",
+  "exigiendo dinero bajo amenazas",
+  "extorsionando a alguien",
+  "coaccionando a un comerciante",
+  "impidiendo que alguien se marche",
+  "reteniendo a varias personas",
+  "obligando a alguien a acompañarles",
+  "trasladando a un rehén",
+  "vigilando a una persona retenida",
+  "persiguiendo a una persona",
+  "siguiendo a alguien",
+  "acorralando a una persona",
+  "bloqueando una entrada",
+  "bloqueando el paso",
+  "dañando un vehículo",
+  "destrozando mobiliario",
+  "causando daños",
+  "huyendo del lugar",
+]) {
+  if (!situations.some((scene) => scene[0] === action))
+    situations.push([action, "está " + action, "están " + action]);
+}
+let customSituation = "";
+const customVerbs = {
+  robar: "robando",
+  atracar: "atracando",
+  secuestrar: "secuestrando",
+  amenazar: "amenazando",
+  disparar: "disparando",
+  pelear: "peleando",
+  huir: "huyendo",
+  retener: "reteniendo",
+  entrar: "entrando",
+  romper: "rompiendo",
+  forzar: "forzando",
+  perseguir: "persiguiendo",
+  extorsionar: "extorsionando",
+  intimidar: "intimidando",
+  hurtar: "hurtando",
+};
+function cleanRepeatedWords(text) {
+  return String(text)
+    .replace(
+      /(^|[\s¿¡])([\p{L}\p{N}]+)(?:[ \t]+\2)+(?=[\s.,;:!?]|$)/giu,
+      "$1$2",
+    )
+    .replace(/\b(de color|en una|en un|en la|en el)(?:\s+\1)+\b/gi, "$1")
+    .trim();
+}
+function cleanCustomSituation(value) {
+  return typeof value === "string"
+    ? cleanRepeatedWords(
+        value
+          .replace(/[\u0000-\u001f\u007f]/g, " ")
+          .replace(/\s+/g, " ")
+          .slice(0, 160),
+      )
+        .replace(/[.!?]+$/, "")
+        .trim()
+    : "";
+}
+function currentSituation() {
+  if ($("situation").value !== "custom")
+    return situations[+$("situation").value] || null;
+  if (!customSituation) return null;
+  const raw = customSituation;
+  const match = raw.match(/^([^\s]+)(.*)$/u),
+    key = norm(match[1]),
+    verb = Object.hasOwn(customVerbs, key) ? customVerbs[key] : "";
+  const action = verb ? verb + match[2] : raw;
+  // Unrecognised words remain verbatim; never guess a conjugation or invent a fact.
+  return /^(?:\S+ando|\S+iendo|\S+yendo)(?:\s|$)/iu.test(action)
+    ? [action, "está " + action, "están " + action]
+    : [
+        "en esta situación: " + action,
+        "la situación es: " + action,
+        "la situación es: " + action,
+      ];
+}
 const situationLabel = (s) => s.charAt(0).toLocaleUpperCase("es") + s.slice(1);
 function situationSearchText(text) {
   return norm(text)
@@ -851,7 +945,11 @@ function renderSituations() {
   if (selected && !list.some((x) => x.id === selected)) {
     const o = document.createElement("option");
     o.value = selected;
-    o.textContent = "Seleccionado: " + situationLabel(situations[+selected][0]);
+    o.textContent =
+      "Seleccionado: " +
+      (selected === "custom"
+        ? customSituation
+        : situationLabel(situations[+selected][0]));
     nodes.push(o);
   }
   for (const item of list) {
@@ -1533,7 +1631,8 @@ function generate() {
     count();
     return;
   }
-  if ($("situation").value === "" || !situations[+$("situation").value]) {
+  const scene = currentSituation();
+  if ($("situation").value === "" || !scene) {
     $("output").textContent = "";
     $("status").textContent = "";
     count();
@@ -1548,9 +1647,24 @@ function generate() {
           ? "más de " + number + " personas"
           : number + " personas"
       : "alguien";
-  const action =
-    situations[+$("situation").value][brief ? 0 : one || !number ? 1 : 2];
-  const place = $("place").value === "" ? "" : places[+$("place").value];
+  const action = scene[brief ? 0 : one || !number ? 1 : 2];
+  let place = $("place").value === "" ? "" : places[+$("place").value];
+  if (place) {
+    const venue = situationSearchText(
+      place.replace(
+        /^(?:en |junto a |cerca de |bajo )(?:un |una |el |la |los |las )?/,
+        "",
+      ),
+    );
+    if (
+      (
+        " " +
+        situationSearchText(action).replace(/[^\p{L}\p{N}\s]/gu, " ") +
+        " "
+      ).includes(" " + venue + " ")
+    )
+      place = "";
+  }
   let parts = [
     brief
       ? chooseVoice(
@@ -1631,6 +1745,15 @@ function generate() {
       : chooseVoice(Object.keys(voicePools), "randomTone");
     parts = voiceScene(parts, tone, $("length").value === "long");
   }
+  const seenParts = new Set();
+  parts = parts.map(cleanRepeatedWords).filter((part) => {
+    const key = norm(part)
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim();
+    if (!key || seenParts.has(key)) return false;
+    seenParts.add(key);
+    return true;
+  });
   $("output").textContent = "/entorno " + parts.join(" ");
   count();
   $("status").textContent = "";
@@ -1789,6 +1912,7 @@ function refreshChips() {
   renderTravelButtons();
 }
 function clearConfig() {
+  customSituation = "";
   document.dispatchEvent(new Event("entorno:reset"));
   $("vehicle-picker").open = true;
   number = "";
@@ -1824,6 +1948,7 @@ $("reset").onclick = clearConfig;
 function snapshot() {
   syncWardrobe();
   return {
+    customSituation: $("situation").value === "custom" ? customSituation : "",
     wardrobe: {
       same: $("same-clothing").checked,
       people: wardrobePeople.slice(0, Math.max(1, wardrobeQuantity())),
@@ -1841,6 +1966,15 @@ function snapshot() {
 function loadConfig(data) {
   if (!data || typeof data !== "object") data = {};
   clearConfig();
+  if (data.fields?.situation === "custom") {
+    customSituation = cleanCustomSituation(data.customSituation);
+    if (customSituation) {
+      const option = document.createElement("option");
+      option.value = "custom";
+      option.textContent = customSituation;
+      $("situation").append(option);
+    }
+  }
   for (const id of configFields) {
     if (typeof data.fields?.[id] === "string")
       $(id).value =

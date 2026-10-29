@@ -1,6 +1,6 @@
 # Documentación del Generador de /entornos
 
-Última actualización documental: **28 de octubre de 2026**, Europa/Madrid.
+Última actualización documental: **29 de octubre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
 ## 1. Qué hace
@@ -21,7 +21,7 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
   y casilla para expresar «más de» la cantidad elegida. La entrada manual y
   los botones representan la misma cantidad. Los valores manuales inválidos
   impiden generar y copiar un resultado.
-- **Situación:** buscador integrado con 593 situaciones en el catálogo actual.
+- **Situación:** buscador integrado con 621 situaciones en el catálogo actual.
   Incluye robos, amenazas, daños, persecuciones, secuestros y escenas en negocios,
   viviendas, yates, cargueros y furgones blindados. También ofrece robos en peluquerías,
   chatarrerías, desguaces, comercios, oficinas y otros negocios; robos de vehículos,
@@ -29,6 +29,12 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
   Se puede buscar por varias palabras en cualquier orden («robar peluquería»),
   con o sin tildes. Reconoce infinitivos y variantes de robo/atraco y secuestro,
   así como peluquería/barbería y chatarrería/desguace.
+  Debajo del campo están los accesos directos Robar, Atracar, Secuestrar, Amenazar,
+  Pelear y Disparar. Para una situación propia, escribe hasta 160 caracteres y
+  pulsa «Usar mi texto». Con teclado, Tab lleva a ese botón; Enter también acepta
+  un texto sin coincidencias. Los infinitivos habituales se adaptan a la narración;
+  otras palabras o frases se conservan literalmente como descripción de la situación.
+  Las situaciones propias se guardan en Mis entornos y usan las mismas reglas de lugar.
 - **Lugar:** barrios y zonas de GTA V, como Paleto o Grapeseed, y lugares concretos.
   La lista se filtra según la situación. Si un lugar previo deja de ser compatible,
   se elimina y se informa del cambio. Es posible dejarlo sin especificar.
@@ -56,6 +62,10 @@ El texto se actualiza al seleccionar. «Generar otra versión» cambia la redacc
 manteniendo los parámetros. Los tonos ofrecen distintas voces y reacciones;
 Aleatorio elige un tono al generar. Hay tres extensiones: Breve, Normal y Largo.
 Las variantes breves también pueden cambiar su comienzo.
+Si la situación ya menciona el lugar elegido, este no se añade otra vez. Se limpian
+palabras consecutivas duplicadas y fragmentos idénticos del texto generado, conservando
+datos distintos y zonas concretas como Paleto Bay. Las ediciones manuales del resultado
+no se reescriben automáticamente.
 
 Los botones de copia y ejecución se sitúan en la parte inferior del panel; en
 escritorio comparten fila de alineación con «Generar otra versión». Los mensajes

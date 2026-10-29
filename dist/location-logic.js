@@ -204,7 +204,7 @@ function syncCompatiblePlaces() {
   const action =
     $("situation").value === ""
       ? ""
-      : situations[+$("situation").value]?.[0] || "";
+      : currentSituation()?.[0] || "";
   const allowed = compatiblePlaceIndices(action),
     key = allowed.join(",");
   const selected = $("place").value;

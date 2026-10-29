@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261028-expanded-scenes" />
+    <link rel="stylesheet" href="styles.css?v=20261029-custom-scenes" />
   </head>
   <body>
     <header>
@@ -55,7 +55,8 @@
                       aria-autocomplete="list"
                       aria-expanded="false"
                       aria-controls="situation-list"
-                      placeholder="Busca o selecciona una situación…"
+                      placeholder="Busca, elige o escribe tu situación…"
+                      maxlength="160"
                       autocomplete="off"
                     /><button
                       type="button"
@@ -86,7 +87,38 @@
                       role="status"
                       aria-live="polite"
                     ></div>
+                    <button
+                      id="situation-use-custom"
+                      type="button"
+                      class="full"
+                      hidden
+                    >
+                      Usar mi texto
+                    </button>
                   </div>
+                </div>
+                <small class="hint"
+                  >Escribe una palabra o frase y pulsa «Usar mi texto» para
+                  crear tu situación.</small
+                >
+                <div
+                  id="generic-situations"
+                  class="chips"
+                  role="group"
+                  aria-label="Situaciones genéricas"
+                >
+                  <button type="button" data-scene="robando">Robar</button>
+                  <button type="button" data-scene="atracando">Atracar</button>
+                  <button type="button" data-scene="secuestrando a alguien">
+                    Secuestrar
+                  </button>
+                  <button type="button" data-scene="amenazando a alguien">
+                    Amenazar
+                  </button>
+                  <button type="button" data-scene="peleándose">Pelear</button>
+                  <button type="button" data-scene="disparando">
+                    Disparar
+                  </button>
                 </div>
               </div>
               <div class="field">
@@ -358,12 +390,12 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261028-expanded-scenes"></script>
-    <script src="app.js?v=20261028-expanded-scenes"></script>
-    <script src="presets.js?v=20261028-expanded-scenes"></script>
-    <script src="situation-combo.js?v=20261028-expanded-scenes"></script>
-    <script src="searchable-selects.js?v=20261028-expanded-scenes"></script>
-    <script src="location-logic.js?v=20261028-expanded-scenes"></script>
-    <script src="fivem-bridge.js?v=20261028-expanded-scenes"></script>
+    <script src="voices.js?v=20261029-custom-scenes"></script>
+    <script src="app.js?v=20261029-custom-scenes"></script>
+    <script src="presets.js?v=20261029-custom-scenes"></script>
+    <script src="situation-combo.js?v=20261029-custom-scenes"></script>
+    <script src="searchable-selects.js?v=20261029-custom-scenes"></script>
+    <script src="location-logic.js?v=20261029-custom-scenes"></script>
+    <script src="fivem-bridge.js?v=20261029-custom-scenes"></script>
   </body>
 </html>

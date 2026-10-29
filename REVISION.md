@@ -2,10 +2,14 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
-## Última revisión web — 28/10/2026
+## Última revisión web — 29/10/2026
 
-- 701 comprobaciones principales superadas, incluidas 593 situaciones y ropa
+- 749 comprobaciones principales superadas, incluidas 621 situaciones y ropa
   individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
+- Situaciones propias: infinitivos, texto literal, límite, teclado, texto tratado como
+  contenido y no HTML, guardado, recarga y sustitución por catálogo comprobados.
+  Repeticiones de palabras, frases de color y lugar comprobadas. Interacción real
+  de Usar mi texto y alineación de acciones verificadas; sin desbordamiento a 375 px.
 - Catálogo ampliado sin duplicados ni cambios en los índices anteriores. Búsquedas
   por infinitivos, sinónimos, varias palabras, orden inverso y fragmentos comprobadas.
   Lugares de peluquería, chatarrería, comercios, oficina, aeronaves y embarcaciones

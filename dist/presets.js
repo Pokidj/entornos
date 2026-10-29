@@ -159,6 +159,7 @@ function enteredPresetName(exceptId = null) {
 function validPresetScene() {
   if (
     !$("situation").value ||
+    !currentSituation() ||
     ($("manual-number").value &&
       !/^[1-9]\d{0,2}$/.test($("manual-number").value))
   ) {

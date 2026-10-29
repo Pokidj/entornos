@@ -11,7 +11,8 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 
 ## Empezar
 
-1. Selecciona una situación y añade los detalles que quieras.
+1. Selecciona una situación, usa un acceso genérico como Robar o escribe una propia
+   y pulsa «Usar mi texto». Añade los detalles que quieras.
 2. Ajusta tono y extensión. Puedes editar el resultado directamente.
 3. Copia el entorno o envíalo con el puente.
 

@@ -10,6 +10,9 @@ function drawSituationList() {
   const box = $("situation-list");
   box.replaceChildren();
   const options = situationItems();
+  $("situation-use-custom").hidden = !cleanCustomSituation(
+    $("situation-search").value,
+  );
   options.forEach((option, i) => {
     const row = document.createElement("div");
     row.id = "situation-option-" + i;
@@ -28,7 +31,8 @@ function drawSituationList() {
   if (!options.length) {
     const empty = document.createElement("div");
     empty.className = "situation-option";
-    empty.textContent = "Sin resultados. Prueba con otra palabra.";
+    empty.textContent =
+      "Sin coincidencias. Puedes usar tu texto como situación.";
     box.append(empty);
   }
   if (situationActive >= 0)
@@ -46,7 +50,9 @@ function syncSituationLabel() {
   $("situation-search").value =
     $("situation").value === ""
       ? ""
-      : situationLabel(situations[+$("situation").value][0]);
+      : $("situation").value === "custom"
+        ? customSituation
+        : situationLabel(situations[+$("situation").value][0]);
   $("situation-clear").hidden = $("situation").value === "";
 }
 function openSituation() {
@@ -69,6 +75,7 @@ function closeSituation() {
   syncSituationLabel();
 }
 function selectSituation(value) {
+  if (value !== "custom") customSituation = "";
   $("situation").value = value;
   closeSituation();
   $("situation").dispatchEvent(new Event("change", { bubbles: true }));
@@ -95,7 +102,10 @@ $("situation-search").onkeydown = (e) => {
     return;
   }
   if (e.key === "Tab") {
-    closeSituation();
+    if (!e.shiftKey && situationOpen && !$("situation-use-custom").hidden) {
+      e.preventDefault();
+      $("situation-use-custom").focus();
+    } else closeSituation();
     return;
   }
   if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -124,8 +134,34 @@ $("situation-search").onkeydown = (e) => {
     const options = situationItems();
     if (options.length)
       selectSituation(options[Math.max(0, situationActive)].value);
+    else useCustomSituation();
   }
 };
+function useCustomSituation() {
+  const text = cleanCustomSituation($("situation-search").value);
+  if (!text) return;
+  customSituation = text;
+  $("situation").querySelector('option[value="custom"]')?.remove();
+  const option = document.createElement("option");
+  option.value = "custom";
+  option.textContent = text;
+  $("situation").append(option);
+  $("situation-search").focus();
+  selectSituation("custom");
+}
+$("situation-use-custom").onclick = useCustomSituation;
+$("situation-use-custom").onmousedown = (e) => e.preventDefault();
+document.querySelectorAll("#generic-situations button").forEach((button) => {
+  button.onclick = () => {
+    $("situation-search").value = "";
+    renderSituations();
+    selectSituation(
+      String(
+        situations.findIndex((scene) => scene[0] === button.dataset.scene),
+      ),
+    );
+  };
+});
 $("situation-toggle").onmousedown = (e) => e.preventDefault();
 $("situation-toggle").onclick = () => {
   if (situationOpen) closeSituation();
@@ -140,6 +176,9 @@ $("situation-clear").onclick = () => {
   $("situation-search").blur();
 };
 document.addEventListener("click", (e) => {
+  if (!$("situation-combo").contains(e.target)) closeSituation();
+});
+document.addEventListener("focusin", (e) => {
   if (!$("situation-combo").contains(e.target)) closeSituation();
 });
 $("situation").addEventListener("change", syncSituationLabel);

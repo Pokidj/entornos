@@ -1583,6 +1583,9 @@ button:focus-visible, summary:focus-visible, a:focus-visible, .output:focus-visi
 }
 
 /* Shared action row keeps Generate, Copy and FiveM aligned as content changes. */
+#generic-situations { gap: 5px; margin-top: 8px; }
+#generic-situations button { padding: 7px 9px; min-height: 36px; font-size: 11px; }
+#situation-use-custom { margin-top: 8px; min-height: 40px; }
 .wardrobe-same { display: flex; align-items: center; gap: 9px; min-height: var(--control-height); margin: 0 0 10px; cursor: pointer; font-size: 12px; }
 .wardrobe-same input[type="checkbox"] { flex: 0 0 16px; width: 16px; height: 16px; min-width: 16px; min-height: 16px; padding: 0; margin: 0; accent-color: #b84c58; }
 #wardrobe-help { display: block; margin-top: 6px; line-height: 1.5; }

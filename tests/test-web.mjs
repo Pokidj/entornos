@@ -65,7 +65,7 @@ function set(a, id, value) {
 }
 function button(a, container, label) {
   const b = [...a.d.querySelectorAll(container + " button")].find(
-    (b) => b.textContent === label,
+    (b) => b.textContent.trim() === label,
   );
   assert.ok(b, "Button " + label);
   b.click();
@@ -405,6 +405,57 @@ ok(output(crimes).includes('están robando'), 'Generic robbery uses plural');
 scene(crimes,'secuestrando a alguien');
 ok([...crimes.d.getElementById('place').options].some(o=>o.textContent==='en una vivienda'), 'Generic kidnapping keeps location choices');
 ok(crimes.errors.length===0,'No expanded catalog runtime errors'); crimes.close();
+const custom = await app();
+button(custom,'#generic-situations','Robar');
+button(custom,'#numbers','2');
+ok(output(custom).includes('están robando'), 'Generic robbery is directly accessible');
+const writeCustom = text => {
+  custom.d.getElementById('situation-search').value=text;
+  custom.d.getElementById('situation-search').dispatchEvent(new custom.w.Event('input',{bubbles:true}));
+  custom.d.getElementById('situation-use-custom').click();
+};
+writeCustom('robar en una peluquería');
+set(custom,'place',String(place(custom,'en una peluquería')));
+for (const length of ['normal','brief','long']) {
+  set(custom,'length',length);
+  ok((output(custom).match(/peluquería/gi)||[]).length===1, 'Custom venue appears once: '+length);
+}
+ok(custom.d.getElementById('situation').value==='custom','Custom scene selected');
+ok(![...custom.d.getElementById('place').options].some(o=>o.textContent==='en una tienda'),'Custom scene uses place compatibility');
+custom.d.getElementById('preset-name').value='Mi situación';custom.d.getElementById('preset-save').click();
+const customStorage=custom.w.localStorage.getItem('entorno-configs-v2');
+custom.d.getElementById('reset').click();button(custom,'#preset-list','Mi situación');
+ok(output(custom).includes('robando en una peluquería'),'Custom scene restored from preset');
+const customReload=await app({storage:{'entorno-configs-v2':customStorage}});
+button(customReload,'#preset-list','Mi situación');
+ok(output(customReload).includes('robando en una peluquería'),'Custom scene survives reload');customReload.close();
+writeCustom('robar robar en en una una joyería');
+ok(output(custom).includes('robando en una joyería') && !/robar robar|en en|una una/.test(output(custom)),'Repeated words removed');
+writeCustom('constructor');
+ok(output(custom).includes('constructor') && !/function Object|\[object Object\]/.test(output(custom)),'Unknown word is kept literally');
+custom.d.getElementById('situation-search').value='mi escena manual';
+custom.d.getElementById('situation-search').dispatchEvent(new custom.w.Event('input',{bubbles:true}));
+custom.d.getElementById('situation-search').dispatchEvent(new custom.w.KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true}));
+ok(custom.d.activeElement.id==='situation-use-custom','Custom text action is keyboard accessible');
+writeCustom('<img src=x onerror=alert(1)>');
+ok(!custom.d.querySelector('#output img') && output(custom).includes('<img'), 'Custom situation rendered as text');
+writeCustom('x'.repeat(200));
+ok(custom.w.eval('customSituation.length')===160,'Custom situation length limited');
+writeCustom('   ');
+ok(custom.d.getElementById('situation-use-custom').hidden,'Blank input cannot replace scene');
+custom.d.getElementById('situation-search').value='celebración espontánea';
+custom.d.getElementById('situation-search').dispatchEvent(new custom.w.Event('input',{bubbles:true}));
+custom.d.getElementById('situation-search').dispatchEvent(new custom.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+ok(output(custom).includes('celebración espontánea'),'Enter accepts custom text without matches');
+button(custom,'#generic-situations','Secuestrar');
+ok(output(custom).includes('secuestrando a alguien') && custom.w.eval('customSituation')==='','Catalog selection replaces custom scene');
+custom.d.getElementById('reset').click();scene(custom,'robando la caja de una peluquería');
+set(custom,'place',String(place(custom,'en una peluquería')));
+ok((output(custom).match(/peluquería/gi)||[]).length===1,'Catalog scene does not repeat selected venue');
+set(custom,'place',String(place(custom,'en Paleto Bay')));
+ok(output(custom).includes('Paleto Bay') && output(custom).includes('peluquería'),'Specific geography preserved');
+ok(custom.w.eval('cleanRepeatedWords("de color de color negro negro")')==='de color negro','Repeated color phrase removed');
+ok(custom.errors.length===0,'No custom scene runtime errors');custom.close();
 console.log(
   `PASS: ${checks} comprobaciones; ${total} situaciones; configuraciones, catálogo lento, filtros, cantidades, armas, longitudes, teclado y rotación.`,
 );
