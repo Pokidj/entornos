@@ -94,6 +94,31 @@ muestra una notificación y vuelve verde el mensaje de copia. Al cambiar el text
 se restablece ese estado. Si el navegador impide copiar, se informa y se selecciona
 el texto para copiarlo manualmente.
 
+### Historial de envíos
+
+«Ver historial de envíos», debajo de copiar, abre el recuadro situado tras Mis entornos.
+Conserva los últimos 100 envíos confirmados, más recientes primero, con hora de registro,
+texto y origen: Botón web o Atajo del puente. Cada entrada se despliega para leer el
+texto completo y copiarlo. «Vaciar historial» pide confirmación y no borra favoritos
+ni entornos guardados. El registro persiste al recargar en este navegador y dominio.
+
+Solo se registran respuestas correctas o eventos autenticados del puente. Cancelar,
+copiar sin enviar, fallar o recibir una respuesta incierta no crea un envío confirmado.
+La respuesta del botón y su evento se unifican para evitar duplicados. Dos envíos reales
+distintos pueden contener el mismo texto. La confirmación corresponde al envío a la
+consola; no verifica la aceptación del comando por el servidor de juego.
+
+El atajo se registra aunque la generación automática de otra versión esté desactivada.
+Para recibirlo, la web debe permanecer abierta y el puente admitir `send-events`.
+No se reconstruyen envíos anteriores a la conexión ni los realizados con la pestaña
+cerrada o suspendida. El puente actual comunica su último evento: si se detecta un salto
+de secuencia se informa de que pueden faltar envíos del intervalo sin conexión.
+El EXE actual sigue siendo válido; no se modifica el código del puente de Windows.
+
+No se guardan tokens ni datos de sesión. Si el navegador impide guardar, las entradas
+nuevas se muestran en memoria y se informa. Un historial ilegible no se sobrescribe
+automáticamente; se puede vaciar expresamente para recuperarlo.
+
 ### Configuraciones con nombre y acceso rápido
 
 «Mis entornos» tiene un recuadro independiente debajo de los paneles,
@@ -156,12 +181,13 @@ versión automática se ajusta al ancho del panel y solo aparece cuando el botó
 | Favoritos de vehículos | `localStorage`, clave `entorno-favs`. |
 | Configuraciones con nombre | `localStorage`, clave `entorno-configs-v2`; `entorno-configs-v1` se conserva tras migrar los espacios anteriores. |
 | Preferencia de otra versión tras el atajo | `localStorage`, clave `entorno-auto-version`. |
+| Historial de envíos | `localStorage`, clave `entorno-sent-history-v1`; últimos 100 textos confirmados y sus metadatos de interfaz. |
 | Atajo del puente | `configuracion.json` junto al EXE. |
 | Inicio con Windows | Registro del usuario de Windows, descrito más adelante. |
-| Entorno preparado y sesión del puente | Memoria del proceso; no se persisten los textos en disco. |
+| Entorno preparado y sesión del puente | Memoria del proceso del puente; el historial del navegador es independiente. |
 
 El almacenamiento del navegador depende del origen: otro dominio, otro navegador
-o borrar sus datos puede dejar los favoritos y configuraciones anteriores fuera
+o borrar sus datos puede dejar los favoritos, configuraciones e historial anteriores fuera
 de alcance. No existe sincronización de configuraciones entre dispositivos.
 
 ## 4. Puente de Windows
@@ -311,6 +337,7 @@ outputs/
       experience.js           Guía, ayudas contextuales y estado inicial
       location-logic.js       Compatibilidad entre situaciones y lugares
       fivem-bridge.js         Detección, preparación, confirmación y eventos
+      sent-history.js         Historial local de envíos y deduplicación de confirmaciones
       vehicles.json           Catálogo distribuido con la web
       logo.svg, favicon.svg   Identidad visual
       downloads/Puente Entorno.exe

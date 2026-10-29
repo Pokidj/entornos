@@ -4,6 +4,15 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 29/10/2026
 
+- Historial: 27 comprobaciones específicas superadas además de las 1.182 generales
+  y suites previas. Atajo con rotación desactivada, botón, respuesta/evento en ambos
+  órdenes, cancelaciones, fallos, incertidumbre, recarga, límite, copia, vaciado,
+  preservación de favoritos, datos ilegibles y ausencia de tokens comprobados.
+  Simuladores y datos de prueba: no se enviaron comandos a una partida real.
+- Historial revisado visualmente con entradas de ejemplo, fechas y ambos orígenes:
+  acceso desde el resultado, despliegue del texto y vista a 320 px sin desbordamiento;
+  controles móviles de 44 px. La vista de ejemplo bloquea la conexión al puente real.
+
 - Revisión de código y experiencia: guía opcional, accesos iniciales, mensajes de
   ayuda, orden escena/personas/desplazamiento y botones con estados coherentes.
   Etiquetas vinculadas al buscador visible, estado desactivado, escritura tras Escape

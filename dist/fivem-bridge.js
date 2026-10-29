@@ -14,7 +14,7 @@ let eventSequence = 0,
   eventSession = "",
   eventLoopRunning = false,
   eventController = null,
-  autoNeedsBaseline = true;
+  eventsNeedBaseline = true;
 const autoVersion = document.createElement("label");
 autoVersion.className = "auto-version hint";
 autoVersion.hidden = true;
@@ -118,8 +118,6 @@ autoVersionInput.onchange = () => {
       String(autoVersionInput.checked),
     );
   } catch {}
-  autoNeedsBaseline = true;
-  eventController?.abort();
   checkBridge();
 };
 function supportsSendEvents() {
@@ -132,7 +130,18 @@ function handleSendEvent(event) {
     event.sequence <= eventSequence
   )
     return;
+  const missedEvents = event.sequence > eventSequence + 1;
   eventSequence = event.sequence;
+  recordConfirmedSend({
+    text: event.text,
+    source: event.source,
+    session: bridgeToken,
+    sequence: event.sequence,
+  });
+  if (missedEvents)
+    historyMessage(
+      "Se ha recuperado el último envío del puente. Pueden faltar envíos del intervalo sin conexión.",
+    );
   if (
     !autoVersionInput.checked ||
     event.source !== "hotkey" ||
@@ -149,10 +158,9 @@ function handleSendEvent(event) {
 async function watchSendEvents() {
   if (
     eventLoopRunning ||
-    !autoVersionInput.checked ||
     !supportsSendEvents() ||
     !bridgeToken ||
-    autoNeedsBaseline
+    eventsNeedBaseline
   )
     return;
   eventLoopRunning = true;
@@ -160,10 +168,9 @@ async function watchSendEvents() {
   let failed = false;
   try {
     while (
-      autoVersionInput.checked &&
       supportsSendEvents() &&
       bridgeToken === token &&
-      !autoNeedsBaseline
+      !eventsNeedBaseline
     ) {
       eventController = new AbortController();
       const timeout = setTimeout(() => eventController?.abort(), 24000);
@@ -183,7 +190,7 @@ async function watchSendEvents() {
       }
       if (!response.ok) throw Error("Eventos no disponibles");
       const data = await response.json();
-      if (bridgeToken !== token || autoNeedsBaseline) break;
+      if (bridgeToken !== token || eventsNeedBaseline) break;
       handleSendEvent(data.event);
       await syncPreparedDraft();
     }
@@ -192,8 +199,8 @@ async function watchSendEvents() {
   } finally {
     eventLoopRunning = false;
     eventController = null;
-    if (autoVersionInput.checked && bridgeToken && supportsSendEvents()) {
-      if (failed || autoNeedsBaseline) setTimeout(checkBridge, 1500);
+    if (bridgeToken && supportsSendEvents()) {
+      if (failed || eventsNeedBaseline) setTimeout(checkBridge, 1500);
       else watchSendEvents();
     }
   }
@@ -242,6 +249,8 @@ function renderBridgeStatus() {
             : " · Sin entorno preparado");
     else text += " · Atajo no disponible";
   } else text += " · Actualiza el puente para usar atajos";
+  if (supportsHotkey() && !supportsSendEvents())
+    text += " · Actualiza el puente para registrar los envíos por atajo";
   bridgeStatus.textContent = prepareError || text;
 }
 async function bridgeFetch(path, options = {}) {
@@ -287,7 +296,9 @@ async function syncPreparedDraft() {
     }
   } catch (error) {
     prepareError =
-      error.name === "TimeoutError" || error.name === "AbortError" || error instanceof TypeError
+      error.name === "TimeoutError" ||
+      error.name === "AbortError" ||
+      error instanceof TypeError
         ? "No se ha podido preparar el atajo. Revisa el puente."
         : error.message;
   } finally {
@@ -330,10 +341,10 @@ async function checkBridge(options = {}) {
     bridgeConnected = data.connected === true;
     bridgeState = data;
     connectionFeedback("Puente detectado.");
-    if (eventSession !== data.token || autoNeedsBaseline) {
+    if (eventSession !== data.token || eventsNeedBaseline) {
       eventSequence = Number.isSafeInteger(data.sequence) ? data.sequence : 0;
       eventSession = data.token;
-      autoNeedsBaseline = false;
+      eventsNeedBaseline = false;
     }
     if (bridgeDownload) bridgeDownload.hidden = true;
     executeButton.hidden = false;
@@ -372,6 +383,7 @@ executeButton.onclick = async () => {
     return;
   if (!bridgeConnected || bridgeBusy) return;
   bridgeBusy = true;
+  const sendSession = bridgeToken;
   refreshExecuteState();
   bridgeStatus.textContent = "Enviando a FiveM…";
   try {
@@ -391,11 +403,20 @@ executeButton.onclick = async () => {
     }
     if (!response.ok || !data.ok)
       throw Error(data.error || "No se ha podido enviar.");
+    if (data.ok === true)
+      recordConfirmedSend({
+        text,
+        source: "web",
+        session: sendSession,
+        acknowledgement: true,
+      });
     bridgeStatus.textContent =
       "Enviado a la consola. Prepara un entorno nuevo para volver a enviar.";
   } catch (error) {
     bridgeStatus.textContent =
-      error.name === "TimeoutError" || error.name === "AbortError" || error instanceof TypeError
+      error.name === "TimeoutError" ||
+      error.name === "AbortError" ||
+      error instanceof TypeError
         ? "No se pudo confirmar el envío. Comprueba el juego antes de repetir."
         : error.message || "No se ha podido conectar con el puente.";
   } finally {

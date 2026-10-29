@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261029-usability-final" />
+    <link rel="stylesheet" href="styles.css?v=20261029-history-final" />
   </head>
   <body>
     <header>
@@ -389,6 +389,9 @@
               <div id="copy-hint" class="hint">
                 Tu entorno se copiará en el portapapeles.
               </div>
+              <a id="history-jump" class="history-jump" href="#sent-history"
+                >Ver historial de envíos</a
+              >
             </div>
           </div>
         </section>
@@ -427,6 +430,33 @@
         </div>
         <div id="slot-status" role="status" aria-live="polite"></div>
       </section>
+      <details id="sent-history" class="sent-history">
+        <summary>
+          <span>Historial de envíos</span
+          ><small id="sent-history-count">0 envíos</small>
+        </summary>
+        <div class="sent-history-body">
+          <div class="sent-history-toolbar">
+            <p class="hint">
+              Últimos 100 envíos confirmados, guardados en este navegador.
+              Mantén la web abierta para registrar el atajo.
+            </p>
+            <button id="sent-history-clear" type="button" disabled>
+              Vaciar historial
+            </button>
+          </div>
+          <p id="sent-history-empty" class="hint">
+            Aquí aparecerán tus entornos cuando los envíes a FiveM.
+          </p>
+          <ol id="sent-history-list" aria-label="Entornos enviados"></ol>
+          <p
+            id="sent-history-status"
+            class="hint"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </div>
+      </details>
       <section class="bridge-download" aria-label="Descargar puente de FiveM">
         <div>
           <h2>Conecta el generador con FiveM</h2>
@@ -478,14 +508,15 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261029-usability-final"></script>
-    <script src="app.js?v=20261029-usability-final"></script>
-    <script src="robbery-catalog.js?v=20261029-usability-final"></script>
-    <script src="presets.js?v=20261029-usability-final"></script>
-    <script src="situation-combo.js?v=20261029-usability-final"></script>
-    <script src="searchable-selects.js?v=20261029-usability-final"></script>
-    <script src="location-logic.js?v=20261029-usability-final"></script>
-    <script src="fivem-bridge.js?v=20261029-usability-final"></script>
-    <script src="experience.js?v=20261029-usability-final"></script>
+    <script src="voices.js?v=20261029-history-final"></script>
+    <script src="app.js?v=20261029-history-final"></script>
+    <script src="robbery-catalog.js?v=20261029-history-final"></script>
+    <script src="presets.js?v=20261029-history-final"></script>
+    <script src="situation-combo.js?v=20261029-history-final"></script>
+    <script src="searchable-selects.js?v=20261029-history-final"></script>
+    <script src="location-logic.js?v=20261029-history-final"></script>
+    <script src="sent-history.js?v=20261029-history-final"></script>
+    <script src="fivem-bridge.js?v=20261029-history-final"></script>
+    <script src="experience.js?v=20261029-history-final"></script>
   </body>
 </html>

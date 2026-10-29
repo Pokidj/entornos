@@ -5,6 +5,22 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Historial de entornos enviados
+
+- Historial local con los últimos 100 envíos confirmados del botón y del atajo,
+  fecha/hora de registro, texto desplegable, copia y vaciado con confirmación.
+- Acceso desde el resultado y recuadro plegable tras Mis entornos. Persistencia
+  por navegador, sin almacenar tokens ni sesiones y sin borrar favoritos o guardados.
+- Los eventos se reciben aunque la rotación automática esté desactivada. El registro
+  ocurre antes de generar otra versión y conserva el texto enviado, no el borrador nuevo.
+- Respuesta y evento del mismo envío se deduplican en ambos órdenes. Fallos,
+  cancelaciones e incertidumbres no se registran como envíos confirmados.
+- Errores de almacenamiento y secuencias incompletas informados. Sin reconstrucción
+  de envíos con la web cerrada; el puente actual se conserva sin recompilar el EXE.
+- 1.182 comprobaciones generales y suites previas superadas; 27 comprobaciones
+  específicas del historial cubren integración, duplicados, persistencia, límites,
+  copia, borrado, datos ilegibles y texto seguro. Sin envíos reales al juego.
+
 ## 2026-10-29 — Revisión de código, botones y guía integrada
 
 - Formulario ordenado por escena, personas/apariencia y desplazamiento, manteniendo

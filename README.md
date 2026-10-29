@@ -20,6 +20,10 @@ del entorno ofrece ejemplos para empezar y las ayudas cambian al completar la es
 2. Ajusta tono y extensión. Puedes editar el resultado directamente.
 3. Copia el entorno o envíalo con el puente.
 
+«Ver historial de envíos» permite consultar y copiar los últimos 100 envíos del
+botón y del atajo. Se guarda en este navegador; mantén la web abierta para registrar
+los envíos del puente. Vaciar ese historial no borra Mis entornos ni los favoritos.
+
 En el recuadro independiente «Mis entornos», debajo de los dos paneles,
 pon un nombre a tu selección y pulsa «Guardar».
 Tendrás un botón para cargarla con un clic, sin espacios fijos. Las configuraciones
