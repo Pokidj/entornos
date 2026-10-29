@@ -4,6 +4,11 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 29/10/2026
 
+- Último ajuste visual: el editor llena la altura disponible de la columna derecha,
+  crece al desplegar detalles y conserva la alineación de botones. Comprobado en
+  escritorio y a 375 px sin desbordamiento. No se repitieron las suites funcionales
+  para este ajuste de dos reglas CSS; sus últimos resultados se conservan a continuación.
+
 - 1.165 comprobaciones principales superadas, incluidas 974 situaciones y ropa
   individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
 - Robos ampliados: 345 escenas nuevas y 496 detalles concretos más el aviso general.

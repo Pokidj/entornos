@@ -81,6 +81,9 @@ no se reescriben automáticamente.
 Los botones de copia y ejecución se sitúan en la parte inferior del panel; en
 escritorio comparten fila de alineación con «Generar otra versión». Los mensajes
 de ayuda y estado quedan debajo, incluso cuando cambia el estado del puente.
+El área editable del entorno ocupa toda la altura libre de la columna derecha,
+entre los ajustes de tono/extensión y las ayudas inferiores. Crece con la altura
+de los controles de la izquierda; en móvil conserva una altura proporcionada al texto.
 
 El resultado se puede editar directamente. «Copiar entorno» lo lleva al portapapeles,
 muestra una notificación y vuelve verde el mensaje de copia. Al cambiar el texto

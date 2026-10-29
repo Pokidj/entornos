@@ -5,6 +5,16 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Área del entorno a toda la altura disponible
+
+- El editor del entorno aprovecha el espacio libre de la columna derecha y crece
+  al desplegar más controles a la izquierda. Botones y ayudas conservan su posición.
+- Comprobado en navegador: editor de 606 px en el estado plegado y 1.414 px con
+  detalles abiertos, botones alineados y sin desbordamiento horizontal. A 375 px
+  el editor conserva una altura acorde al texto, sin estirar la vista móvil.
+- Cambio limitado a estilos; comprobación visual y de geometría, sin repetir las
+  suites funcionales de la revisión anterior. Documentación y ZIP actualizados.
+
 ## 2026-10-29 — Catálogo ampliado de robos
 
 - Añadidas 345 escenas de robo: 974 escenas totales y 496 detalles concretos

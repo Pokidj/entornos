@@ -1525,13 +1525,13 @@ form, .body { padding: var(--panel-padding); }
 #vehicle-picker[open] .vehicle-picker-action::after { content: ' ⌃'; }
 #vehicle-picker:not([open]) .vehicle-picker-action::after { content: ' ⌄'; }
 .hint { font-size: 11px; line-height: 1.5; }
-.result > .body { flex: 0 0 auto; padding-bottom: 8px; }
+.result > .body { flex: 1 1 auto; padding-bottom: 8px; }
 .result .settings { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin: 0 0 16px; }
 .setting-field { min-width: 0; }
 .setting-field > label { display: block; margin: 0 0 6px; font-size: 11px; }
 .settings .unified-select { width: 100%; max-width: none; }
 .settings .combo-entry input { width: 100%; height: var(--control-height); min-height: var(--control-height); }
-.result .output { flex: none; min-height: 200px; font-size: 17px; line-height: 1.65; }
+.result .output { flex: 1 0 auto; min-height: 200px; font-size: 17px; line-height: 1.65; }
 .output:empty::before { font-size: 15px; }
 .copy-bottom { padding: 12px var(--panel-padding) 16px; }
 #form > .primary.full, .copy-bottom #copy, .copy-bottom .actions #execute-fivem { height: 44px; min-height: 44px; padding: 10px 12px; font-size: 13px; }
