@@ -17,6 +17,10 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
 
 ### Selección rápida
 
+El formulario sigue el orden **escena → personas y apariencia → desplazamiento**.
+Solo es necesario elegir la acción; la ayuda junto a la escena cambia según el estado
+del formulario. Generar otra versión se habilita al elegir una acción con cantidad válida.
+
 - **Cantidad:** botones del 1 al 10 en una línea, cantidad manual de 1 a 999
   y casilla para expresar «más de» la cantidad elegida. La entrada manual y
   los botones representan la misma cantidad. Los valores manuales inválidos
@@ -124,13 +128,24 @@ el formato guardado, se bloquea guardar para evitar sobrescribirlo.
 
 ### Diseño y teclado
 
+«Guía rápida», en la cabecera, abre tres explicaciones breves con botones para ir
+directamente al campo correspondiente. Se cierra al usar esos enlaces o con Escape;
+no bloquea el generador ni se abre automáticamente. En el resultado vacío hay tres
+acciones de ejemplo para empezar; desaparecen al generar y vuelven al vaciar todo.
+
+Los botones usan estados de selección, foco, pulsación y desactivado consistentes:
+rojo para generar, dorado para copiar y verde para ejecutar con el puente. La ejecución
+mantiene su confirmación. Se respeta la preferencia de reducir animaciones.
+Las etiquetas de los campos llevan al buscador visible, que refleja su estado desactivado.
+Escribir después de cerrar un desplegable con Escape vuelve a abrirlo sin perder la búsqueda.
+
 Dos paneles del mismo ancho en escritorio, controles de altura coherente y acciones
 de copia alineadas abajo con la generación. En móvil se usa una columna principal, campos agrupados
 en dos columnas cuando corresponde y entradas de tamaño legible. Se mantienen
 los números en una fila. Los campos con búsqueda admiten navegación por teclado
 y cierre de desplegables; solo debe quedar abierto un buscador a la vez.
 
-La revisión visual cubrió anchos de 320 y 390 píxeles y escritorio. La casilla de
+La revisión visual del diseño actual cubre escritorio y móvil estrecho de 320 píxeles. La casilla de
 versión automática se ajusta al ancho del panel y solo aparece cuando el botón
 «Ejecutar en FiveM» está habilitado y el puente admite eventos de envío.
 
@@ -293,6 +308,7 @@ outputs/
       voices.js               Tonos y bancos de variantes
       situation-combo.js      Buscador de situaciones
       searchable-selects.js   Selectores con búsqueda y teclado
+      experience.js           Guía, ayudas contextuales y estado inicial
       location-logic.js       Compatibilidad entre situaciones y lugares
       fivem-bridge.js         Detección, preparación, confirmación y eventos
       vehicles.json           Catálogo distribuido con la web

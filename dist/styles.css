@@ -1605,3 +1605,61 @@ button:focus-visible, summary:focus-visible, a:focus-visible, .output:focus-visi
     .copy-notes { grid-row: 4; padding: 0 var(--panel-padding) var(--panel-padding); }
   }
 }
+
+/* Shared controls and light, optional guidance. */
+header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+button { border-radius: 8px; font-weight: 600; transition: background-color .16s, border-color .16s, box-shadow .16s, transform .12s; }
+button:not(:disabled):active { transform: translateY(1px); }
+button:disabled { cursor: not-allowed; opacity: .48; }
+.chips button { border: 1px solid #42434b; background: #24252a; box-shadow: 0 1px 2px #0002; }
+.chips button:not(:disabled):hover { border-color: #847650; background: #303037; }
+.chips button[aria-pressed="true"], .chips button[aria-pressed="true"]:hover { color: #fff; background: linear-gradient(145deg,#a13b49,#7e2d39); border-color: #c46070; box-shadow: inset 0 1px #ffffff15, 0 2px 6px #0003; }
+#generate { background: linear-gradient(135deg,#ab4251,#87313e); color: #fff; border: 1px solid #bd5a68; box-shadow: 0 3px 10px #0002; }
+#generate:not(:disabled):hover { background: linear-gradient(135deg,#bc4c5d,#963746); box-shadow: 0 3px 13px #8d304635; }
+.copy-bottom #copy { background: linear-gradient(135deg,#d8c18a,#bda269); color: #211e16; border: 1px solid #e2ce9d; box-shadow: 0 3px 10px #0002; }
+.copy-bottom #copy:not(:disabled):hover { background: #e4cf9a; border-color: #f0dfb7; }
+.copy-bottom #copy:disabled { box-shadow: none; }
+.copy-bottom .actions #execute-fivem { background: #315e53; color: #eef9f4; border: 1px solid #538577; }
+.copy-bottom .actions #execute-fivem:not(:disabled):hover { background: #3b7163; }
+#reset { padding: 6px 8px; font-size: 11px; border: 1px solid transparent; }
+#reset:hover, #preset-delete:hover { color: #f0a7b1; border-color: #80515a; background: #7a2c3a20; }
+.guide-toggle { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 9px; padding: 8px 11px; border: 1px solid #514b3d; background: #292720; color: #dcc994; font-size: 12px; }
+.guide-toggle span { display: grid; place-items: center; border: 1px solid currentColor; border-radius: 50%; width: 17px; height: 17px; font-size: 11px; }
+.guide-toggle:hover, .guide-toggle[aria-expanded="true"] { background: #363124; border-color: #a38b55; }
+.quick-guide { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; padding: 18px; margin-bottom: 16px; background: #212226; border: 1px solid #4a4436; border-radius: 10px; }
+.quick-guide[hidden], .empty-guide[hidden] { display: none; }
+.quick-guide h2 { margin: 0 0 8px; font-size: 14px; color: #e0cc96; }
+.quick-guide p { color: #b4b3b9; font-size: 12px; line-height: 1.7; margin: 0 0 12px; }
+.quick-guide button { font-size: 11px; padding: 8px 10px; background: #2b2c31; border: 1px solid #4e4c46; color: #e1d2ac; }
+.quick-guide .guide-note { grid-column: 1/-1; margin: 0; padding-top: 12px; border-top: 1px solid #37383e; font-size: 11px; }
+.form-caption { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 20px 0 12px; padding-top: 16px; border-top: 1px solid #3b3c43; font-size: 11px; font-weight: 650; color: #d2bd87; }
+.form-caption:first-child { margin-top: 0; padding-top: 0; border: 0; }
+.form-caption span { font-weight: 400; color: #96969f; font-size: 10px; text-align: right; }
+.flow-hint { margin: 0 0 14px; color: #b4b2ba; font-size: 11px; line-height: 1.6; }
+.empty-guide { padding: 16px; border: 1px dashed #5e5540; border-radius: 10px; margin-bottom: 14px; background: #c9b77d07; }
+.empty-guide strong { font-size: 16px; color: #e0cf9f; }
+.empty-guide p { font-size: 12px; line-height: 1.7; color: #aaa9b1; margin: 7px 0 12px; }
+.quick-start { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick-start button { flex: 1; min-height: 38px; background: #302b24; border: 1px solid #66583d; color: #dfcd9f; padding: 8px 10px; font-size: 12px; }
+.quick-start button:hover { background: #453a2a; border-color: #b59b62; }
+.result .output { caret-color: #d8c18a; }
+.result .output:empty::before { content: 'Aquí aparecerá tu /entorno.'; color: #777983; }
+.output::selection { background: #a3445655; }
+.preset-shortcut:hover { border-color: #a18a59; background: #323035; }
+.preset-toolbar #preset-save { background: #3c3527; border-color: #8f794b; color: #e4d3a8; }
+@media (max-width: 600px) {
+  header { gap: 10px; }
+  .logo { font-size: 17px; }
+  .guide-toggle { font-size: 11px; padding: 8px; gap: 6px; min-height: 40px; }
+  .guide-toggle span { display: none; }
+  .quick-guide { grid-template-columns: 1fr; padding: 14px; gap: 14px; }
+  .quick-guide > div + div { border-top: 1px solid #393a40; padding-top: 14px; }
+  .quick-guide button, .quick-start button { min-height: 44px; }
+  .form-caption { margin-top: 16px; padding-top: 13px; }
+  .form-caption span { max-width: 50%; }
+  .empty-guide { padding: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  button:not(:disabled):active { transform: none; }
+}

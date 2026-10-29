@@ -11,6 +11,9 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 
 ## Empezar
 
+La cabecera tiene una «Guía rápida» opcional con accesos a los campos. El panel
+del entorno ofrece ejemplos para empezar y las ayudas cambian al completar la escena.
+
 1. Elige una acción general en «Qué está pasando», como Robar o Secuestrar.
    Puedes dejar «Detalle» vacío para un aviso general, elegir uno relacionado
    o escribirlo y pulsar «Usar mi texto».

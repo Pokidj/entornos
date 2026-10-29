@@ -20,11 +20,14 @@ function enhanceSelect(select) {
   input.setAttribute("role", "combobox");
   input.setAttribute("aria-autocomplete", "list");
   input.setAttribute("aria-expanded", "false");
+  const labelNode = select.labels?.[0];
   const label =
-    select.labels?.[0]?.textContent ||
+    labelNode?.textContent ||
     select.getAttribute("aria-label") ||
     "Seleccionar opción";
   input.setAttribute("aria-label", label.trim() + ": buscar y seleccionar");
+  input.id = (select.id || "select-" + nextSelectId) + "-search-input";
+  if (labelNode) labelNode.htmlFor = input.id;
   const popup = document.createElement("div");
   popup.className = "unified-popup";
   popup.hidden = true;
@@ -48,6 +51,8 @@ function enhanceSelect(select) {
     active = -1,
     rows = [];
   function sync() {
+    input.disabled = select.disabled;
+    toggle.disabled = select.disabled;
     if (!opened) input.value = select.selectedOptions[0]?.textContent || "";
   }
   function draw() {
@@ -109,6 +114,11 @@ function enhanceSelect(select) {
     if (!opened) open();
   };
   input.oninput = () => {
+    if (!opened) {
+      const query = input.value;
+      open();
+      input.value = query;
+    }
     active = -1;
     draw();
   };

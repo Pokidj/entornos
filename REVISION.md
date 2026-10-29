@@ -4,13 +4,20 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 29/10/2026
 
-- Último ajuste visual: el editor llena la altura disponible de la columna derecha,
-  crece al desplegar detalles y conserva la alineación de botones. Comprobado en
-  escritorio y a 375 px sin desbordamiento. No se repitieron las suites funcionales
-  para este ajuste de dos reglas CSS; sus últimos resultados se conservan a continuación.
+- Revisión de código y experiencia: guía opcional, accesos iniciales, mensajes de
+  ayuda, orden escena/personas/desplazamiento y botones con estados coherentes.
+  Etiquetas vinculadas al buscador visible, estado desactivado, escritura tras Escape
+  y enfoque desde la guía comprobados. Sintaxis de todos los JS y enlaces locales válidos.
+- Diseño final comprobado en escritorio y a 320 px, con guía abierta/cerrada,
+  arranque desde un ejemplo, detalle opcional, personas, resultado y botones de 44 px.
+  Sin desbordamiento horizontal; las acciones inferiores conservan su alineación.
+  «Ver mi entorno» enfoca el panel sin activar el editor ni el teclado del móvil.
 
-- 1.165 comprobaciones principales superadas, incluidas 974 situaciones y ropa
+- 1.182 comprobaciones principales superadas, incluidas 974 situaciones y ropa
   individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
+- Puente: 23 pruebas correctas y una omitida por RegisterHotKey en el entorno aislado.
+  Servidor/consola simulados y registro de inicio simulado: no se envió nada a FiveM
+  ni se cambió el inicio de Windows. Código y EXE del puente conservados.
 - Robos ampliados: 345 escenas nuevas y 496 detalles concretos más el aviso general.
   Índices anteriores intactos, escenas y etiquetas sin duplicados, categorías,
   búsquedas por nombres/tipos, lugares y recuperación de guardados comprobados.

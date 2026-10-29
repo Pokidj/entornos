@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261029-full-output" />
+    <link rel="stylesheet" href="styles.css?v=20261029-usability-final" />
   </head>
   <body>
     <header>
@@ -15,8 +15,59 @@
           >Generador de <span class="lime">/entornos</span></span
         >
       </div>
+      <button
+        id="guide-toggle"
+        type="button"
+        class="guide-toggle"
+        aria-controls="usage-guide"
+        aria-expanded="false"
+      >
+        Guía rápida <span aria-hidden="true">?</span>
+      </button>
     </header>
     <main>
+      <section
+        id="usage-guide"
+        class="quick-guide"
+        aria-label="Guía rápida del generador"
+        hidden
+      >
+        <div>
+          <h2>Elige la escena</h2>
+          <p>
+            Empieza por una acción, como Robar. El detalle es opcional: elige
+            una joyería, busca otro objetivo o escribe el tuyo.
+          </p>
+          <button type="button" data-guide-target="scene-action">
+            Elegir acción <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div>
+          <h2>Añade lo que ves</h2>
+          <p>
+            Marca cuántos sois, la ropa, el arma y el transporte. Con varias
+            personas puedes describir a cada una o vestir a todo el grupo igual.
+          </p>
+          <button type="button" data-guide-target="numbers">
+            Completar personas <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div>
+          <h2>Copia y sigue roleando</h2>
+          <p>
+            El texto se actualiza solo. Ajusta el tono, genera otra versión o
+            edítalo. Guarda tus selecciones en Mis entornos para volver a
+            usarlas.
+          </p>
+          <button type="button" data-guide-target="result">
+            Ver mi entorno <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <p class="guide-note">
+          ¿Quieres enviarlo al juego? El puente de Windows es opcional. Su ayuda
+          y descarga están al final de la página.
+        </p>
+      </section>
       <div class="grid">
         <section class="card">
           <div class="head">
@@ -25,24 +76,17 @@
           </div>
           <form id="form">
             <div class="selection-fields">
-              <div class="field">
-                <label>¿Cuántos sois?</label>
-                <div id="numbers" class="chips"></div>
-                <div class="number-options">
-                  <input
-                    id="manual-number"
-                    type="number"
-                    min="1"
-                    max="999"
-                    step="1"
-                    placeholder="Otra cantidad…"
-                    aria-label="Cantidad personalizada"
-                  /><label class="check"
-                    ><input id="number-more" type="checkbox" /> Más de la
-                    cantidad elegida</label
-                  >
-                </div>
+              <div class="form-caption">
+                La escena <span>Solo la acción es necesaria</span>
               </div>
+              <p
+                id="flow-hint"
+                class="flow-hint"
+                role="status"
+                aria-live="polite"
+              >
+                Elige qué está pasando. Puedes concretarlo después.
+              </p>
               <div class="field">
                 <label for="scene-action">¿Qué está pasando?</label>
                 <select id="scene-action"></select>
@@ -104,14 +148,40 @@
                   </div>
                 </div>
                 <small class="hint"
-                  >Escribe una palabra o frase y pulsa «Usar mi texto» para
-                  concretar el detalle. Si lo dejas vacío, el aviso será
-                  general.</small
+                  >Opcional: elige un detalle o escríbelo y pulsa «Usar mi
+                  texto».</small
                 >
               </div>
               <div class="field">
                 <label for="place">Lugar</label
                 ><select id="place"></select>
+              </div>
+              <div class="form-caption">
+                Personas y apariencia <span>Añade lo que puedas ver</span>
+              </div>
+              <div class="field">
+                <label id="quantity-label">¿Cuántos sois?</label>
+                <div
+                  id="numbers"
+                  class="chips"
+                  role="group"
+                  aria-labelledby="quantity-label"
+                ></div>
+                <div class="number-options">
+                  <input
+                    id="manual-number"
+                    type="number"
+                    min="1"
+                    max="999"
+                    step="1"
+                    placeholder="Otra cantidad…"
+                    aria-label="Cantidad personalizada"
+                  />
+                  <label class="check"
+                    ><input id="number-more" type="checkbox" /> Más de la
+                    cantidad elegida</label
+                  >
+                </div>
               </div>
               <div id="wardrobe-controls" hidden>
                 <label class="wardrobe-same"
@@ -142,8 +212,16 @@
                 ><select id="face"></select>
               </div>
               <div class="field">
-                <label>Arma visible</label>
-                <div id="weapons" class="chips"></div>
+                <label id="weapons-label">Arma visible</label>
+                <div
+                  id="weapons"
+                  class="chips"
+                  role="group"
+                  aria-labelledby="weapons-label"
+                ></div>
+              </div>
+              <div class="form-caption">
+                Desplazamiento <span>Solo si lo has visto</span>
               </div>
               <div class="field">
                 <label>Vehículo</label>
@@ -222,7 +300,9 @@
                 />
               </details>
             </div>
-            <button class="primary full">Generar otra versión ↻</button>
+            <button id="generate" class="primary full">
+              Generar otra versión ↻
+            </button>
             <div class="hint">
               El texto se actualiza al elegir. Los favoritos se guardan en este
               navegador.
@@ -258,6 +338,26 @@
                   <option value="brief">Breve</option>
                   <option value="long">Largo</option>
                 </select>
+              </div>
+            </div>
+            <div id="empty-guide" class="empty-guide">
+              <strong>¿Qué has visto?</strong>
+              <p>
+                Elige una acción y el entorno aparecerá aquí. El resto de los
+                detalles los añades tú.
+              </p>
+              <div
+                class="quick-start"
+                role="group"
+                aria-label="Empezar con una acción"
+              >
+                <button type="button" data-quick-action="rob">Robar</button>
+                <button type="button" data-quick-action="kidnap">
+                  Secuestrar
+                </button>
+                <button type="button" data-quick-action="threat">
+                  Amenazar
+                </button>
               </div>
             </div>
             <div
@@ -378,13 +478,14 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261029-full-output"></script>
-    <script src="app.js?v=20261029-full-output"></script>
-    <script src="robbery-catalog.js?v=20261029-full-output"></script>
-    <script src="presets.js?v=20261029-full-output"></script>
-    <script src="situation-combo.js?v=20261029-full-output"></script>
-    <script src="searchable-selects.js?v=20261029-full-output"></script>
-    <script src="location-logic.js?v=20261029-full-output"></script>
-    <script src="fivem-bridge.js?v=20261029-full-output"></script>
+    <script src="voices.js?v=20261029-usability-final"></script>
+    <script src="app.js?v=20261029-usability-final"></script>
+    <script src="robbery-catalog.js?v=20261029-usability-final"></script>
+    <script src="presets.js?v=20261029-usability-final"></script>
+    <script src="situation-combo.js?v=20261029-usability-final"></script>
+    <script src="searchable-selects.js?v=20261029-usability-final"></script>
+    <script src="location-logic.js?v=20261029-usability-final"></script>
+    <script src="fivem-bridge.js?v=20261029-usability-final"></script>
+    <script src="experience.js?v=20261029-usability-final"></script>
   </body>
 </html>

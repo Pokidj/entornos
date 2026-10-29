@@ -5,6 +5,21 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Revisión de código, botones y guía integrada
+
+- Formulario ordenado por escena, personas/apariencia y desplazamiento, manteniendo
+  el editor a toda la altura disponible y las acciones inferiores alineadas.
+- Botones con estados coherentes, selección más visible, foco y respeto al movimiento
+  reducido. Generar en rojo, copiar en dorado y ejecución en verde con confirmación.
+- Guía rápida opcional en la cabecera, con enlaces que enfocan los campos; ayudas
+  contextuales y acciones de ejemplo en el resultado vacío. Sin recorrido obligatorio.
+- Corregidas etiquetas que apuntaban a selectores ocultos, sincronización de campos
+  desactivados, escritura después de Escape y cierre de búsquedas por el clic de la guía.
+- 1.182 comprobaciones de web y suites de copia, atajo y detección superadas.
+  JavaScript de producción y enlaces locales verificados. Puente: 23 pruebas correctas
+  y una omitida por aislamiento de RegisterHotKey. Sin envíos a una partida real ni
+  cambios en el inicio de Windows; EXE conservado porque no cambia su código.
+
 ## 2026-10-29 — Área del entorno a toda la altura disponible
 
 - El editor del entorno aprovecha el espacio libre de la columna derecha y crece
