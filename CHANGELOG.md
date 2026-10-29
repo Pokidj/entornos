@@ -5,6 +5,16 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 29/10/2026 — Guardados compactos y asistente paso a paso
+
+- Guardados como accesos pequeños, con formulario y gestión plegables.
+- Asistente de acción, detalle, personas y lugar; buscadores relacionados,
+  navegación atrás, omitir y finalización anticipada. Texto manual genera directamente.
+- Conservados los formatos de guardado y la lógica de escenas/lugares.
+- Pruebas funcionales y revisión de escritorio/móvil registradas en REVISION.md.
+  No se enviaron comandos a una partida real; puente y EXE conservados.
+
+
 ## 2026-10-29 — Mis entornos en la parte superior
 
 - Mis entornos se sitúa encima de Selección rápida y /entorno, conservando su ancho

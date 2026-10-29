@@ -154,6 +154,9 @@ $("situation-search").onkeydown = (e) => {
 function useCustomSituation() {
   const text = cleanCustomSituation($("situation-search").value);
   if (!text || !selectedSceneAction()) return;
+  // Focusing can open and rebuild the catalog: do that before adding custom.
+  $("situation-search").focus();
+  $("situation-search").value = text;
   const words = text.match(/^(\S+)(.*)$/u),
     key = norm(words[1]);
   if (
@@ -170,7 +173,6 @@ function useCustomSituation() {
   option.value = "custom";
   option.textContent = text;
   $("situation").append(option);
-  $("situation-search").focus();
   selectSituation("custom");
 }
 $("situation-use-custom").onclick = useCustomSituation;

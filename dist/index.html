@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261029-presets-top-final" />
+    <link rel="stylesheet" href="styles.css?v=20261029-assistant" />
   </head>
   <body>
     <header>
@@ -76,7 +76,7 @@
           >
         </div>
         <div id="slots">
-          <div class="preset-toolbar">
+          <details id="preset-manager" class="preset-manager"><summary>Guardar / gestionar</summary><div class="preset-toolbar">
             <input
               id="preset-name"
               maxlength="40"
@@ -91,7 +91,7 @@
               <button type="button" id="preset-delete">Eliminar</button>
             </div>
           </div>
-          <div
+          </details><div
             id="preset-list"
             role="group"
             aria-label="Accesos rápidos a entornos guardados"
@@ -375,24 +375,14 @@
               </div>
             </div>
             <div id="empty-guide" class="empty-guide">
-              <strong>¿Qué has visto?</strong>
-              <p>
-                Elige una acción y el entorno aparecerá aquí. El resto de los
-                detalles los añades tú.
-              </p>
-              <div
-                class="quick-start"
-                role="group"
-                aria-label="Empezar con una acción"
-              >
-                <button type="button" data-quick-action="rob">Robar</button>
-                <button type="button" data-quick-action="kidnap">
-                  Secuestrar
-                </button>
-                <button type="button" data-quick-action="threat">
-                  Amenazar
-                </button>
-              </div>
+              <div class="assistant-heading"><strong id="assistant-title" tabindex="-1">¿Qué has visto?</strong><span id="assistant-progress">Paso 1 de 4</span></div>
+              <p id="assistant-help">Elige una acción o escribe lo que ocurre para generar directamente.</p>
+              <div id="assistant-options" class="assistant-options"></div>
+              <form id="assistant-manual" class="assistant-manual">
+                <input id="assistant-text" maxlength="160" aria-label="Escribe qué está pasando" placeholder="O escríbelo a mano…" required />
+                <button type="submit">Generar</button>
+              </form>
+              <div class="assistant-nav"><button type="button" id="assistant-back" hidden>← Atrás</button><button type="button" id="assistant-finish" hidden>Ver entorno</button><button type="button" id="assistant-skip" hidden>Omitir →</button></div>
             </div>
             <div
               id="output"
@@ -509,15 +499,15 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261029-presets-top-final"></script>
-    <script src="app.js?v=20261029-presets-top-final"></script>
-    <script src="robbery-catalog.js?v=20261029-presets-top-final"></script>
-    <script src="presets.js?v=20261029-presets-top-final"></script>
-    <script src="situation-combo.js?v=20261029-presets-top-final"></script>
-    <script src="searchable-selects.js?v=20261029-presets-top-final"></script>
-    <script src="location-logic.js?v=20261029-presets-top-final"></script>
-    <script src="sent-history.js?v=20261029-presets-top-final"></script>
-    <script src="fivem-bridge.js?v=20261029-presets-top-final"></script>
-    <script src="experience.js?v=20261029-presets-top-final"></script>
+    <script src="voices.js?v=20261029-assistant"></script>
+    <script src="app.js?v=20261029-assistant"></script>
+    <script src="robbery-catalog.js?v=20261029-assistant"></script>
+    <script src="presets.js?v=20261029-assistant"></script>
+    <script src="situation-combo.js?v=20261029-assistant"></script>
+    <script src="searchable-selects.js?v=20261029-assistant"></script>
+    <script src="location-logic.js?v=20261029-assistant"></script>
+    <script src="sent-history.js?v=20261029-assistant"></script>
+    <script src="fivem-bridge.js?v=20261029-assistant"></script>
+    <script src="experience.js?v=20261029-assistant"></script>
   </body>
 </html>

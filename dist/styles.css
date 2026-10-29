@@ -1703,3 +1703,47 @@ button:disabled { cursor: not-allowed; opacity: .48; }
   .sent-preview { flex: 1 0 100%; padding-left: 15px; }
   .sent-history-toolbar p { flex-basis: 100%; }
 }
+
+/* Compact saved shortcuts and an optional inline assistant. */
+.named-presets{padding:10px 12px;margin-bottom:12px;position:relative}
+.named-presets .preset-heading{font-size:13px;margin:0;padding-right:150px;min-height:30px;display:flex;align-items:center;gap:8px}
+.named-presets .preset-heading small{font-size:10px}
+.preset-manager>summary{position:absolute;top:10px;right:12px;cursor:pointer;color:#dfcd9f;font-size:11px;min-height:30px;display:flex;align-items:center}
+.named-presets .preset-toolbar{max-width:none;margin:8px 0;gap:6px}
+.named-presets #preset-name{flex:1 1 160px;text-align:left}
+.named-presets #preset-list{display:flex;flex-wrap:wrap;gap:5px}
+.named-presets .preset-shortcut{width:auto;min-height:32px;padding:6px 11px;font-size:11px;max-width:100%;overflow-wrap:anywhere}
+.named-presets #preset-empty{margin:2px 0;font-size:11px}
+.named-presets #slot-status:empty{display:none}
+.assistant-heading{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#assistant-progress{font-size:10px;color:#c6b68d;white-space:nowrap}
+.assistant-options,.assistant-choices{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.assistant-options>input{width:100%;min-width:0}
+.assistant-choices{max-height:190px;overflow:auto;width:100%;padding:2px}
+.assistant-options button{flex:1 1 100px;min-height:34px;font-size:11px;padding:7px 9px}
+.assistant-manual{display:flex;gap:6px;margin-top:10px}
+.assistant-manual input{flex:1;min-width:0;width:0}
+.assistant-manual button,.assistant-nav button{min-height:34px;font-size:11px}
+.assistant-nav{display:flex;justify-content:flex-end;gap:6px;margin-top:10px}
+.assistant-nav:has(button:not([hidden])){border-top:1px solid #5e554055;padding-top:10px}
+.assistant-nav button:first-child{margin-right:auto}
+[hidden]{display:none!important}
+.named-presets{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.named-presets .preset-heading{order:1;padding:0;min-height:32px;gap:6px}
+.named-presets #slots{display:contents}
+.named-presets #preset-list{order:2;flex:1 1 240px}
+.named-presets .preset-manager{order:3;margin-left:auto}
+.named-presets .preset-manager>summary{position:static;min-height:32px}
+.named-presets .preset-manager[open]{flex-basis:100%;order:4}
+.named-presets .preset-manager[open]>summary{text-align:right;justify-content:flex-end}
+.named-presets #preset-empty,.named-presets #slot-status{order:5;width:100%}
+@media(max-width:600px){
+ .named-presets{padding:10px}.named-presets .preset-heading{padding-right:140px;min-height:44px}
+ .preset-manager>summary{right:10px;min-height:44px;top:10px}
+ .named-presets .preset-shortcut,.assistant-options button,.assistant-manual button,.assistant-nav button{min-height:44px}
+ .named-presets #preset-name{flex-basis:100%}
+ .assistant-heading{align-items:flex-start}.assistant-heading strong{font-size:14px}
+ .named-presets .preset-heading{padding:0;min-height:44px}
+ .named-presets #preset-list{order:4;flex-basis:100%}
+ .named-presets .preset-manager>summary{min-height:44px}
+}

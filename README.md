@@ -12,7 +12,9 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 ## Empezar
 
 La cabecera tiene una «Guía rápida» opcional con accesos a los campos. El panel
-del entorno ofrece ejemplos para empezar y las ayudas cambian al completar la escena.
+del entorno ofrece un asistente de cuatro pasos con opciones y buscadores. Escribir
+una situación a mano genera directamente. Los detalles restantes se completan en el formulario.
+Mis entornos muestra botones compactos y pliega el formulario bajo «Guardar / gestionar».
 
 1. Elige una acción general en «Qué está pasando», como Robar o Secuestrar.
    Puedes dejar «Detalle» vacío para un aviso general, elegir uno relacionado

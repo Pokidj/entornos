@@ -3,6 +3,22 @@
 Última actualización documental: **29 de octubre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
+## Asistente y guardados compactos — 29/10/2026
+
+«Mis entornos» permanece encima de los paneles. Muestra accesos rápidos pequeños
+que se ajustan al ancho disponible. «Guardar / gestionar» despliega el nombre,
+Guardar y las acciones del entorno seleccionado; los guardados anteriores se conservan.
+
+Con la selección vacía, «¿Qué has visto?» guía por cuatro pasos: acción, detalle
+relacionado, personas (1–10) y lugar compatible. Detalle y lugar tienen buscador;
+Atrás conserva las selecciones, Omitir mantiene los datos actuales y Ver entorno
+termina anticipadamente. El texto se actualiza como vista previa durante el recorrido.
+La vestimenta, armas, vehículo y cantidades manuales siguen en Selección rápida.
+Escribir una situación y pulsar Generar (o Intro) muestra directamente el entorno;
+también termina el asistente usar «Usar mi texto», editar el formulario o cargar
+un guardado. Vaciar todo devuelve el primer paso. El asistente nunca envía a FiveM.
+
+
 ## 1. Qué hace
 
 La web construye llamadas de testigos para roleplay. Combina una situación con
