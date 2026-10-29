@@ -58,6 +58,15 @@ async function app({ delayCatalog = false, storage = {} } = {}) {
   };
 }
 function set(a, id, value) {
+  if (id === 'situation' && /^\d+$/.test(value)) {
+    const action=a.w.eval('sceneActionFor(situations['+Number(value)+'][0]).id');
+    a.d.getElementById('scene-action').value=action;
+    a.d.getElementById('situation-search').value='';
+    a.w.renderSituations();
+    if (![...a.d.getElementById('situation').options].some(o=>o.value===value)) {
+      const option=a.d.createElement('option');option.value=value;option.textContent='Legacy detail';a.d.getElementById('situation').append(option);
+    }
+  }
   a.d.getElementById(id).value = value;
   a.d
     .getElementById(id)
@@ -375,9 +384,11 @@ for (const [query, expected] of [
   ['secuestrar','Secuestrando a alguien'], ['atrac','Atracando una peluquería'],
   ['barb','Atracando una barbería'], ['desguace','Robando metal de una chatarrería'],
 ]) {
+  const expectedId=labels.indexOf(expected.charAt(0).toLowerCase()+expected.slice(1));
+  set(crimes,'scene-action',crimes.w.eval('sceneActionFor(situations['+expectedId+'][0]).id'));
   crimes.d.getElementById('situation-search').value=query;
   crimes.d.getElementById('situation-search').dispatchEvent(new crimes.w.Event('input',{bubbles:true}));
-  ok([...crimes.d.querySelectorAll('#situation-list [role=option]')].some(o=>o.textContent===expected), 'Crime search: '+query);
+  ok([...crimes.d.getElementById('situation').options].some(o=>o.value===String(expectedId)&&!o.textContent.startsWith('Seleccionado:')), 'Crime search: '+query);
 }
 crimes.d.getElementById('situation-search').value='';
 crimes.d.getElementById('situation-search').dispatchEvent(new crimes.w.Event('input',{bubbles:true}));
@@ -406,7 +417,7 @@ scene(crimes,'secuestrando a alguien');
 ok([...crimes.d.getElementById('place').options].some(o=>o.textContent==='en una vivienda'), 'Generic kidnapping keeps location choices');
 ok(crimes.errors.length===0,'No expanded catalog runtime errors'); crimes.close();
 const custom = await app();
-button(custom,'#generic-situations','Robar');
+set(custom,'scene-action','rob');
 button(custom,'#numbers','2');
 ok(output(custom).includes('están robando'), 'Generic robbery is directly accessible');
 const writeCustom = text => {
@@ -447,7 +458,7 @@ custom.d.getElementById('situation-search').value='celebración espontánea';
 custom.d.getElementById('situation-search').dispatchEvent(new custom.w.Event('input',{bubbles:true}));
 custom.d.getElementById('situation-search').dispatchEvent(new custom.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
 ok(output(custom).includes('celebración espontánea'),'Enter accepts custom text without matches');
-button(custom,'#generic-situations','Secuestrar');
+set(custom,'scene-action','kidnap');
 ok(output(custom).includes('secuestrando a alguien') && custom.w.eval('customSituation')==='','Catalog selection replaces custom scene');
 custom.d.getElementById('reset').click();scene(custom,'robando la caja de una peluquería');
 set(custom,'place',String(place(custom,'en una peluquería')));
@@ -456,6 +467,45 @@ set(custom,'place',String(place(custom,'en Paleto Bay')));
 ok(output(custom).includes('Paleto Bay') && output(custom).includes('peluquería'),'Specific geography preserved');
 ok(custom.w.eval('cleanRepeatedWords("de color de color negro negro")')==='de color negro','Repeated color phrase removed');
 ok(custom.errors.length===0,'No custom scene runtime errors');custom.close();
+const split = await app();
+ok(split.d.getElementById('scene-action').value==='' && split.d.getElementById('situation-search').disabled, 'Blank action disables dependent detail');
+ok(split.d.getElementById('scene-action').options.length===21, 'Twenty general actions and blank choice');
+set(split,'scene-action','rob');
+ok(output(split).includes('está robando') && !output(split).includes('joyería'),'Robbery without detail is general');
+const robberyChoices=[...split.d.getElementById('situation').options];
+ok(robberyChoices.some(o=>o.textContent==='Una joyería') && robberyChoices.some(o=>o.textContent==='Un coche'),'Robbery details include businesses and vehicles');
+ok(!robberyChoices.some(o=>/reteniendo|secuestrando|disparando/i.test(o.textContent)),'Robbery excludes unrelated details');
+const jeweler=robberyChoices.find(o=>o.textContent==='Una joyería');
+set(split,'situation',jeweler.value);
+ok(output(split).includes('joyería'),'Specific robbery uses selected detail');
+set(split,'scene-action','kidnap');
+ok(output(split).includes('secuestrando a alguien') && !output(split).includes('joyería'),'Action change removes old detail');
+ok(split.d.getElementById('situation-search').value==='','General selection displays an empty optional detail');
+const hostages=[...split.d.getElementById('situation').options];
+ok(!hostages.some(o=>/robando|joyas|mercancía/i.test(o.textContent)),'Kidnapping details exclude robbery targets');
+split.d.getElementById('situation-search').value='una persona del muelle';
+split.d.getElementById('situation-search').dispatchEvent(new split.w.Event('input',{bubbles:true}));
+split.d.getElementById('situation-use-custom').click();
+ok(output(split).includes('secuestrando a alguien (una persona del muelle)'),'Own detail retains general action');
+split.d.getElementById('situation-clear').click();
+ok(output(split).includes('secuestrando a alguien') && !output(split).includes('muelle'),'Clearing detail preserves action and generic output');
+set(split,'scene-action','rob');
+split.d.getElementById('situation-search').value='amenazar al encargado';
+split.d.getElementById('situation-search').dispatchEvent(new split.w.Event('input',{bubbles:true}));split.d.getElementById('situation-use-custom').click();
+ok(split.d.getElementById('scene-action').value==='threat' && output(split).includes('amenazando al encargado'),'Explicit custom action updates category');
+const splitSaved=split.w.eval('JSON.stringify(snapshot())');
+split.d.getElementById('reset').click();split.w.eval('loadConfig('+splitSaved+')');
+ok(split.d.getElementById('scene-action').value==='threat' && output(split).includes('amenazando al encargado'),'Custom action and detail survive saved config');
+split.w.eval('loadConfig('+JSON.stringify({fields:{situation:String(labels.indexOf('atracando una chatarrería'))}})+')');
+ok(split.d.getElementById('scene-action').value==='rob' && output(split).includes('chatarrería'),'Old configuration infers action without changing scene');
+for (const id of split.w.eval('sceneActions.map(x=>x.id)')) {
+  set(split,'scene-action',id);
+  ok(output(split).startsWith('/entorno ') && !/undefined|NaN/.test(output(split)), 'General action generates: '+id);
+}
+const generateSplit=split.w.generate; let splitCalls=0; split.w.generate=()=>{splitCalls++;generateSplit()};
+set(split,'scene-action','rob');ok(splitCalls===1,'Action selection generates exactly once');
+split.w.generate=generateSplit;
+ok(split.errors.length===0,'No split selector runtime errors');split.close();
 console.log(
   `PASS: ${checks} comprobaciones; ${total} situaciones; configuraciones, catálogo lento, filtros, cantidades, armas, longitudes, teclado y rotación.`,
 );

@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261029-custom-scenes" />
+    <link rel="stylesheet" href="styles.css?v=20261029-action-detail" />
   </head>
   <body>
     <header>
@@ -44,31 +44,37 @@
                 </div>
               </div>
               <div class="field">
-                <label for="situation">¿Qué está pasando?</label>
+                <label for="scene-action">¿Qué está pasando?</label>
+                <select id="scene-action"></select>
+              </div>
+              <div class="field">
+                <label for="situation-search"
+                  >Detalle <span class="hint">· opcional</span></label
+                >
                 <div class="situation-combo" id="situation-combo">
                   <div class="combo-entry">
                     <input
                       id="situation-search"
                       type="text"
                       role="combobox"
-                      aria-label="Qué está pasando: buscar y seleccionar"
+                      aria-label="Detalle: buscar y seleccionar"
                       aria-autocomplete="list"
                       aria-expanded="false"
                       aria-controls="situation-list"
-                      placeholder="Busca, elige o escribe tu situación…"
+                      placeholder="Elige primero una acción…"
                       maxlength="160"
                       autocomplete="off"
                     /><button
                       type="button"
                       id="situation-toggle"
-                      aria-label="Mostrar situaciones"
+                      aria-label="Mostrar detalles"
                       tabindex="-1"
                     >
                       ⌄</button
                     ><button
                       type="button"
                       id="situation-clear"
-                      aria-label="Quitar situación"
+                      aria-label="Quitar detalle"
                       hidden
                     >
                       ×
@@ -79,7 +85,7 @@
                     <div
                       id="situation-list"
                       role="listbox"
-                      aria-label="Situaciones"
+                      aria-label="Detalles de la acción"
                     ></div>
                     <div
                       id="situation-results"
@@ -99,27 +105,9 @@
                 </div>
                 <small class="hint"
                   >Escribe una palabra o frase y pulsa «Usar mi texto» para
-                  crear tu situación.</small
+                  concretar el detalle. Si lo dejas vacío, el aviso será
+                  general.</small
                 >
-                <div
-                  id="generic-situations"
-                  class="chips"
-                  role="group"
-                  aria-label="Situaciones genéricas"
-                >
-                  <button type="button" data-scene="robando">Robar</button>
-                  <button type="button" data-scene="atracando">Atracar</button>
-                  <button type="button" data-scene="secuestrando a alguien">
-                    Secuestrar
-                  </button>
-                  <button type="button" data-scene="amenazando a alguien">
-                    Amenazar
-                  </button>
-                  <button type="button" data-scene="peleándose">Pelear</button>
-                  <button type="button" data-scene="disparando">
-                    Disparar
-                  </button>
-                </div>
               </div>
               <div class="field">
                 <label for="place">Lugar</label
@@ -390,12 +378,12 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261029-custom-scenes"></script>
-    <script src="app.js?v=20261029-custom-scenes"></script>
-    <script src="presets.js?v=20261029-custom-scenes"></script>
-    <script src="situation-combo.js?v=20261029-custom-scenes"></script>
-    <script src="searchable-selects.js?v=20261029-custom-scenes"></script>
-    <script src="location-logic.js?v=20261029-custom-scenes"></script>
-    <script src="fivem-bridge.js?v=20261029-custom-scenes"></script>
+    <script src="voices.js?v=20261029-action-detail"></script>
+    <script src="app.js?v=20261029-action-detail"></script>
+    <script src="presets.js?v=20261029-action-detail"></script>
+    <script src="situation-combo.js?v=20261029-action-detail"></script>
+    <script src="searchable-selects.js?v=20261029-action-detail"></script>
+    <script src="location-logic.js?v=20261029-action-detail"></script>
+    <script src="fivem-bridge.js?v=20261029-action-detail"></script>
   </body>
 </html>

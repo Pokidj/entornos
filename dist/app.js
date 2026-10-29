@@ -853,6 +853,173 @@ for (const action of [
   if (!situations.some((scene) => scene[0] === action))
     situations.push([action, "está " + action, "están " + action]);
 }
+// Categories reference the existing scenes; saved numeric IDs stay unchanged.
+const sceneActions = [
+  {
+    id: "rob",
+    label: "Robar / atracar",
+    general: "robando",
+    match:
+      /\b(?:rob|atrac|asalt|hurt|sustra|arrebata)|mercancía sin pagar|objetos robados|vaciando una caja/,
+  },
+  {
+    id: "kidnap",
+    label: "Secuestrar",
+    general: "secuestrando a alguien",
+    match:
+      /secuestr|rehén|rehen|contra su voluntad|obligando.*(?:subir|acompañar)|persona.*maletero|persona.*por la fuerza|atando a una persona/,
+  },
+  {
+    id: "retain",
+    label: "Retener a alguien",
+    general: "reteniendo a alguien",
+    match: /reten|impidiendo que alguien/,
+  },
+  {
+    id: "extort",
+    label: "Extorsionar / coaccionar",
+    general: "extorsionando a alguien",
+    match: /extors|coaccio|exigiendo dinero|exigir dinero/,
+  },
+  {
+    id: "threat",
+    label: "Amenazar / intimidar",
+    general: "amenazando a alguien",
+    match: /amenaz|intimid|acorral/,
+  },
+  {
+    id: "fight",
+    label: "Pelear / agredir",
+    general: "peleándose",
+    match: /pelea|golpea|agredi|empuja|patada|puñetazo/,
+  },
+  {
+    id: "shoot",
+    label: "Disparar",
+    general: "disparando",
+    match: /dispar|tirote/,
+  },
+  {
+    id: "fire",
+    label: "Incendiar",
+    general: "provocando un incendio",
+    match: /incendi|prendiendo fuego|quemando/,
+  },
+  {
+    id: "intrude",
+    label: "Entrar por la fuerza",
+    general: "entrando por la fuerza",
+    match: /forza|entrando|colando|saltando.*valla|allana|abordando/,
+  },
+  {
+    id: "damage",
+    label: "Destrozar / causar daños",
+    general: "causando daños",
+    match: /rompi|destro|dañ|vandal|pintad|grafiti|arranc|derriba/,
+  },
+  {
+    id: "chase",
+    label: "Perseguir / acosar",
+    general: "persiguiendo a alguien",
+    match: /persig|siguiendo|acosa/,
+  },
+  {
+    id: "flee",
+    label: "Huir",
+    general: "huyendo del lugar",
+    match: /huy|fug|escap/,
+  },
+  {
+    id: "block",
+    label: "Bloquear / impedir el paso",
+    general: "bloqueando el paso",
+    match: /bloque|cortando|obstru|barricad/,
+  },
+  {
+    id: "driving",
+    label: "Conducir de forma peligrosa",
+    general: "conduciendo de forma peligrosa",
+    match: /condu|derrap|carrera|atropell|circul|maniobra/,
+  },
+  {
+    id: "drugs",
+    label: "Vender sustancias ilegales",
+    general: "vendiendo sustancias ilegales",
+    match: /droga|sustancia|estupefaciente/,
+  },
+  {
+    id: "smuggle",
+    label: "Mover mercancía sospechosa",
+    general: "moviendo mercancía sospechosa",
+    match:
+      /contraband|mercanc|cargando|descargando|transport|sacando|llevando.*caja/,
+  },
+  {
+    id: "weapons",
+    label: "Exhibir un arma",
+    general: "exhibiendo un arma",
+    match: /\b(?:arma|apuntando|blandiendo)/,
+  },
+  {
+    id: "disorder",
+    label: "Alterar el orden",
+    general: "alterando el orden",
+    match: /discut|grita|alborot|molest|disturb|ruido/,
+  },
+  {
+    id: "suspicious",
+    label: "Merodear / actuar de forma sospechosa",
+    general: "actuando de forma sospechosa",
+    match: /merode|vigil|sospechos|ocult|registrando/,
+  },
+  {
+    id: "other",
+    label: "Otra situación",
+    general: "en una situación sospechosa",
+    match: /.*/,
+  },
+];
+for (const action of sceneActions) {
+  let index = situations.findIndex((scene) => scene[0] === action.general);
+  if (index < 0) {
+    index = situations.length;
+    situations.push([
+      action.general,
+      action.id === "other"
+        ? "ocurre algo sospechoso"
+        : "está " + action.general,
+      action.id === "other"
+        ? "ocurre algo sospechoso"
+        : "están " + action.general,
+    ]);
+  }
+  action.index = String(index);
+  const option = document.createElement("option");
+  option.value = action.id;
+  option.textContent = action.label;
+  $("scene-action").append(option);
+}
+function sceneActionFor(text) {
+  const generic = sceneActions.find((action) => action.general === text);
+  return (
+    generic ||
+    sceneActions.find((action) =>
+      action.match.test(text.toLocaleLowerCase("es")),
+    ) ||
+    sceneActions.at(-1)
+  );
+}
+function selectedSceneAction() {
+  return sceneActions.find((action) => action.id === $("scene-action").value);
+}
+function detailLabel(scene) {
+  return situationLabel(
+    scene.replace(
+      /^(?:robando(?: en)?|atracando|asaltando|hurtando|sustrayendo|arrebatando|secuestrando|reteniendo|amenazando|intimidando|extorsionando|persiguiendo|disparando|peleándose)\s+/i,
+      "",
+    ),
+  );
+}
 let customSituation = "";
 const customVerbs = {
   robar: "robando",
@@ -900,7 +1067,15 @@ function currentSituation() {
   const match = raw.match(/^([^\s]+)(.*)$/u),
     key = norm(match[1]),
     verb = Object.hasOwn(customVerbs, key) ? customVerbs[key] : "";
-  const action = verb ? verb + match[2] : raw;
+  let action = verb ? verb + match[2] : raw;
+  const group = selectedSceneAction();
+  if (
+    !verb &&
+    !/^(?:\S+ando|\S+iendo|\S+yendo)(?:\s|$)/iu.test(action) &&
+    group &&
+    group.id !== "other"
+  )
+    action = group.general + " (" + raw + ")";
   // Unrecognised words remain verbatim; never guess a conjugation or invent a fact.
   return /^(?:\S+ando|\S+iendo|\S+yendo)(?:\s|$)/iu.test(action)
     ? [action, "está " + action, "están " + action]
@@ -925,16 +1100,52 @@ function situationSearchText(text) {
 }
 function renderSituations() {
   const selected = $("situation").value;
+  const group = selectedSceneAction();
+  $("situation-search").disabled = !group;
+  $("situation-toggle").disabled = !group;
   const terms = situationSearchText($("situation-search").value)
     .trim()
     .split(/\s+/)
     .filter(Boolean);
+  const usedLabels = new Set();
   const list = situations
-    .map((x, i) => ({ text: situationLabel(x[0]), id: String(i) }))
+    .map((x, i) => ({
+      text:
+        String(i) === group?.index
+          ? "Sin detalle — aviso general"
+          : detailLabel(x[0]),
+      raw: x[0],
+      id: String(i),
+    }))
+    .filter(
+      (x) =>
+        group &&
+        (x.id === group.index || sceneActionFor(x.raw).id === group.id),
+    )
     .filter((x) =>
       terms.every((term) =>
-        (norm(x.text) + " " + situationSearchText(x.text)).includes(term),
+        (
+          norm(x.text) +
+          " " +
+          norm(x.raw) +
+          " " +
+          situationSearchText(x.raw)
+        ).includes(term),
       ),
+    )
+    .filter((x) => {
+      const key = norm(x.text);
+      if (usedLabels.has(key)) return false;
+      usedLabels.add(key);
+      return true;
+    });
+  if (group)
+    list.sort((a, b) =>
+      a.id === group.index
+        ? -1
+        : b.id === group.index
+          ? 1
+          : a.text.localeCompare(b.text, "es"),
     );
   const placeholder = document.createElement("option");
   placeholder.value = "";
@@ -960,12 +1171,12 @@ function renderSituations() {
   }
   $("situation").replaceChildren(...nodes);
   $("situation").value = selected;
-  $("situation-results").textContent =
-    list.length +
-    " de " +
-    situations.length +
-    " situaciones" +
-    (!list.length ? " · Prueba con otra palabra." : "");
+  $("situation-results").textContent = group
+      ? list.length +
+        (list.length === 1 ? " opción para " : " opciones para ") +
+      group.label +
+      (!list.length ? " · Puedes escribir un detalle propio." : "")
+    : "Elige primero una acción general.";
 }
 options(
   "situation",
@@ -1789,6 +2000,7 @@ $("form").onsubmit = (e) => {
   generate();
 };
 $("form").addEventListener("change", (e) => {
+  if (e.target.id === "scene-action") return;
   if (
     configFields.includes(e.target.id) ||
     e.target.id === "number-more" ||
@@ -1874,6 +2086,7 @@ function renderTravelButtons() {
 renderTravelButtons();
 
 const configFields = [
+  "scene-action",
   "situation",
   "place",
   "clothing",
@@ -1966,6 +2179,17 @@ function snapshot() {
 function loadConfig(data) {
   if (!data || typeof data !== "object") data = {};
   clearConfig();
+  const savedScene = data.fields?.situation;
+  if (
+    typeof savedScene === "string" &&
+    /^\d+$/.test(savedScene) &&
+    situations[+savedScene]
+  ) {
+    const option = document.createElement("option");
+    option.value = savedScene;
+    option.textContent = situations[+savedScene][0];
+    $("situation").append(option);
+  }
   if (data.fields?.situation === "custom") {
     customSituation = cleanCustomSituation(data.customSituation);
     if (customSituation) {
@@ -1980,6 +2204,12 @@ function loadConfig(data) {
       $(id).value =
         id === "length" ? data.fields[id] || "normal" : data.fields[id];
   }
+  if ($("situation").value && $("situation").value !== "custom")
+    $("scene-action").value = sceneActionFor(
+      situations[+$("situation").value][0],
+    ).id;
+  else if ($("situation").value === "custom" && !selectedSceneAction())
+    $("scene-action").value = sceneActionFor(customSituation).id;
   number = /^[1-9]\d{0,2}$/.test(String(data.number))
     ? String(data.number)
     : data.number === "Más de 6"

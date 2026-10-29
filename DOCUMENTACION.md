@@ -21,20 +21,24 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
   y casilla para expresar «más de» la cantidad elegida. La entrada manual y
   los botones representan la misma cantidad. Los valores manuales inválidos
   impiden generar y copiar un resultado.
-- **Situación:** buscador integrado con 621 situaciones en el catálogo actual.
-  Incluye robos, amenazas, daños, persecuciones, secuestros y escenas en negocios,
-  viviendas, yates, cargueros y furgones blindados. También ofrece robos en peluquerías,
-  chatarrerías, desguaces, comercios, oficinas y otros negocios; robos de vehículos,
-  mercancía y pertenencias; y acciones genéricas como «Robando» o «Secuestrando a alguien».
-  Se puede buscar por varias palabras en cualquier orden («robar peluquería»),
-  con o sin tildes. Reconoce infinitivos y variantes de robo/atraco y secuestro,
-  así como peluquería/barbería y chatarrería/desguace.
-  Debajo del campo están los accesos directos Robar, Atracar, Secuestrar, Amenazar,
-  Pelear y Disparar. Para una situación propia, escribe hasta 160 caracteres y
-  pulsa «Usar mi texto». Con teclado, Tab lleva a ese botón; Enter también acepta
-  un texto sin coincidencias. Los infinitivos habituales se adaptan a la narración;
-  otras palabras o frases se conservan literalmente como descripción de la situación.
-  Las situaciones propias se guardan en Mis entornos y usan las mismas reglas de lugar.
+- **Qué está pasando:** selector con búsqueda y 20 acciones generales: robar/atracar,
+  secuestrar, retener, extorsionar, amenazar, pelear, disparar, incendiar, entrar por
+  la fuerza, causar daños, perseguir, huir, bloquear, conducir de forma peligrosa,
+  vender sustancias ilegales, mover mercancía sospechosa, exhibir un arma, alterar
+  el orden, actuar de forma sospechosa u otra situación.
+- **Detalle (opcional):** depende de la acción anterior. Con Robar muestra negocios,
+  vehículos, objetos y mercancía; con Secuestrar, sus escenas relacionadas. La base
+  contiene 629 escenas generales y concretas, agrupadas sin repetir etiquetas iguales.
+  Sin detalle se genera un aviso general de la acción. «Quitar detalle» vuelve al
+  aviso general; cambiar de acción elimina el detalle anterior, también si era libre.
+  La búsqueda admite varias palabras en cualquier orden, sin tildes e infinitivos
+  o sinónimos. Para escribir un detalle propio, introduce hasta 160 caracteres y
+  pulsa «Usar mi texto». Tab lleva al botón; Enter acepta un texto sin coincidencias.
+  Un detalle libre se asocia con la acción elegida. Si escribes una acción completa
+  reconocida, como «amenazar al encargado», se ajusta la acción general para mantener
+  la coherencia. «Otra situación» conserva descripciones libres sin inferir un delito.
+  Ambos campos se guardan en Mis entornos. Al cargar guardados anteriores se identifica
+  la acción general y se conserva la escena original y su texto propio.
 - **Lugar:** barrios y zonas de GTA V, como Paleto o Grapeseed, y lugares concretos.
   La lista se filtra según la situación. Si un lugar previo deja de ser compatible,
   se elimina y se informa del cambio. Es posible dejarlo sin especificar.

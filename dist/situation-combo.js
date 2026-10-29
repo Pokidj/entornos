@@ -10,9 +10,9 @@ function drawSituationList() {
   const box = $("situation-list");
   box.replaceChildren();
   const options = situationItems();
-  $("situation-use-custom").hidden = !cleanCustomSituation(
-    $("situation-search").value,
-  );
+  $("situation-use-custom").hidden =
+    !selectedSceneAction() ||
+    !cleanCustomSituation($("situation-search").value);
   options.forEach((option, i) => {
     const row = document.createElement("div");
     row.id = "situation-option-" + i;
@@ -52,8 +52,15 @@ function syncSituationLabel() {
       ? ""
       : $("situation").value === "custom"
         ? customSituation
-        : situationLabel(situations[+$("situation").value][0]);
-  $("situation-clear").hidden = $("situation").value === "";
+        : $("situation").value === selectedSceneAction()?.index
+          ? ""
+          : detailLabel(situations[+$("situation").value][0]);
+  $("situation-clear").hidden =
+    $("situation").value === "" ||
+    $("situation").value === selectedSceneAction()?.index;
+  $("situation-search").placeholder = selectedSceneAction()
+    ? "Sin detalle · aviso general"
+    : "Elige primero una acción…";
 }
 function openSituation() {
   document.dispatchEvent(
@@ -80,6 +87,13 @@ function selectSituation(value) {
   closeSituation();
   $("situation").dispatchEvent(new Event("change", { bubbles: true }));
 }
+$("scene-action").addEventListener("change", () => {
+  customSituation = "";
+  $("situation").value = "";
+  $("situation-search").value = "";
+  renderSituations();
+  selectSituation(selectedSceneAction()?.index || "");
+});
 $("situation-search").onfocus = () => {
   if (!situationOpen) openSituation();
 };
@@ -139,7 +153,17 @@ $("situation-search").onkeydown = (e) => {
 };
 function useCustomSituation() {
   const text = cleanCustomSituation($("situation-search").value);
-  if (!text) return;
+  if (!text || !selectedSceneAction()) return;
+  const words = text.match(/^(\S+)(.*)$/u),
+    key = norm(words[1]);
+  if (
+    Object.hasOwn(customVerbs, key) ||
+    /^(?:\S+ando|\S+iendo|\S+yendo)(?:\s|$)/iu.test(text)
+  ) {
+    $("scene-action").value = sceneActionFor(
+      (customVerbs[key] || words[1]) + words[2],
+    ).id;
+  }
   customSituation = text;
   $("situation").querySelector('option[value="custom"]')?.remove();
   const option = document.createElement("option");
@@ -151,17 +175,6 @@ function useCustomSituation() {
 }
 $("situation-use-custom").onclick = useCustomSituation;
 $("situation-use-custom").onmousedown = (e) => e.preventDefault();
-document.querySelectorAll("#generic-situations button").forEach((button) => {
-  button.onclick = () => {
-    $("situation-search").value = "";
-    renderSituations();
-    selectSituation(
-      String(
-        situations.findIndex((scene) => scene[0] === button.dataset.scene),
-      ),
-    );
-  };
-});
 $("situation-toggle").onmousedown = (e) => e.preventDefault();
 $("situation-toggle").onclick = () => {
   if (situationOpen) closeSituation();
@@ -172,7 +185,9 @@ $("situation-toggle").onclick = () => {
 };
 $("situation-clear").onmousedown = (e) => e.preventDefault();
 $("situation-clear").onclick = () => {
-  selectSituation("");
+  $("situation-search").value = "";
+  renderSituations();
+  selectSituation(selectedSceneAction()?.index || "");
   $("situation-search").blur();
 };
 document.addEventListener("click", (e) => {

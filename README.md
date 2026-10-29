@@ -11,8 +11,9 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 
 ## Empezar
 
-1. Selecciona una situación, usa un acceso genérico como Robar o escribe una propia
-   y pulsa «Usar mi texto». Añade los detalles que quieras.
+1. Elige una acción general en «Qué está pasando», como Robar o Secuestrar.
+   Puedes dejar «Detalle» vacío para un aviso general, elegir uno relacionado
+   o escribirlo y pulsar «Usar mi texto».
 2. Ajusta tono y extensión. Puedes editar el resultado directamente.
 3. Copia el entorno o envíalo con el puente.
 

@@ -5,6 +5,18 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Acción general y detalle relacionado
+
+- Separado Qué está pasando en 20 acciones generales y un Detalle opcional con búsqueda.
+- Los detalles se filtran por acción; Robar ofrece negocios, vehículos, objetos y
+  mercancía. Sin detalle se genera la acción general, sin inventar un objetivo.
+- Cambiar la acción o quitar el detalle elimina los datos específicos anteriores.
+  El texto libre se vincula a la acción y reconoce acciones completas para ajustar el grupo.
+- Se conservan los índices originales, los guardados antiguos y las situaciones propias.
+  Añadidas ocho plantillas generales; base de 629 escenas, con etiquetas de detalle deduplicadas.
+- 793 comprobaciones principales y suites de copia, atajo y detección del puente superadas.
+  Sin envíos reales a FiveM.
+
 ## 2026-10-29 — Situaciones propias y menos repeticiones
 
 - Accesos directos para Robar, Atracar, Secuestrar, Amenazar, Pelear y Disparar.

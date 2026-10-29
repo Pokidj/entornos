@@ -4,8 +4,14 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 29/10/2026
 
-- 749 comprobaciones principales superadas, incluidas 621 situaciones y ropa
+- 793 comprobaciones principales superadas, incluidas 629 situaciones y ropa
   individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
+- Acción/detalle: 20 acciones generales, detalles relacionados, aviso sin detalle,
+  cambio y limpieza de detalle, texto propio, migración de guardados anteriores y
+  una sola generación por cambio de acción comprobados.
+- Vista acción/detalle revisada en navegador: aviso general de Robar, joyería como
+  detalle, cambio a Secuestrar sin arrastrar la joyería, botones alineados y móvil
+  a 375 px sin desbordamiento horizontal.
 - Situaciones propias: infinitivos, texto literal, límite, teclado, texto tratado como
   contenido y no HTML, guardado, recarga y sustitución por catálogo comprobados.
   Repeticiones de palabras, frases de color y lugar comprobadas. Interacción real
