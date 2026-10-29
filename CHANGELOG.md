@@ -5,6 +5,15 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Mis entornos en la parte superior
+
+- Mis entornos se sitúa encima de Selección rápida y /entorno, conservando su ancho
+  completo y sus controles de guardado centrados.
+- Estilo compartido con «¿Qué has visto?»: borde discontinuo, fondo sutil, tonos
+  dorados y accesos que aprovechan el ancho disponible.
+- Cambio de HTML/CSS sin modificar los datos ni la lógica de guardado. Carga de un
+  guardado y acciones disponibles comprobadas en navegador; documentación y ZIP actualizados.
+
 ## 2026-10-29 — Historial de entornos enviados
 
 - Historial local con los últimos 100 envíos confirmados del botón y del atajo,

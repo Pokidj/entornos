@@ -24,7 +24,7 @@ del entorno ofrece ejemplos para empezar y las ayudas cambian al completar la es
 botón y del atajo. Se guarda en este navegador; mantén la web abierta para registrar
 los envíos del puente. Vaciar ese historial no borra Mis entornos ni los favoritos.
 
-En el recuadro independiente «Mis entornos», debajo de los dos paneles,
+En el recuadro independiente «Mis entornos», encima de los dos paneles,
 pon un nombre a tu selección y pulsa «Guardar».
 Tendrás un botón para cargarla con un clic, sin espacios fijos. Las configuraciones
 anteriores se conservan mediante migración automática.

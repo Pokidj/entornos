@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261029-history-final" />
+    <link rel="stylesheet" href="styles.css?v=20261029-presets-top-final" />
   </head>
   <body>
     <header>
@@ -67,6 +67,40 @@
           ¿Quieres enviarlo al juego? El puente de Windows es opcional. Su ayuda
           y descarga están al final de la página.
         </p>
+      </section>
+      <section class="presets named-presets" aria-label="Mis entornos">
+        <div class="preset-heading">
+          Mis entornos
+          <small id="preset-count" title="Guardados en este navegador"
+            >0 guardados</small
+          >
+        </div>
+        <div id="slots">
+          <div class="preset-toolbar">
+            <input
+              id="preset-name"
+              maxlength="40"
+              placeholder="Nombre del entorno…"
+              aria-label="Nombre del entorno"
+              autocomplete="off"
+            />
+            <button type="button" id="preset-save">Guardar</button>
+            <div id="preset-actions" class="preset-actions" hidden>
+              <button type="button" id="preset-update">Actualizar datos</button>
+              <button type="button" id="preset-rename">Renombrar</button>
+              <button type="button" id="preset-delete">Eliminar</button>
+            </div>
+          </div>
+          <div
+            id="preset-list"
+            role="group"
+            aria-label="Accesos rápidos a entornos guardados"
+          ></div>
+          <p id="preset-empty" class="hint">
+            Guarda tu selección con un nombre y aparecerá aquí.
+          </p>
+        </div>
+        <div id="slot-status" role="status" aria-live="polite"></div>
       </section>
       <div class="grid">
         <section class="card">
@@ -396,40 +430,7 @@
           </div>
         </section>
       </div>
-      <section class="presets named-presets" aria-label="Mis entornos">
-        <div class="preset-heading">
-          Mis entornos
-          <small id="preset-count" title="Guardados en este navegador"
-            >0 guardados</small
-          >
-        </div>
-        <div id="slots">
-          <div class="preset-toolbar">
-            <input
-              id="preset-name"
-              maxlength="40"
-              placeholder="Nombre del entorno…"
-              aria-label="Nombre del entorno"
-              autocomplete="off"
-            />
-            <button type="button" id="preset-save">Guardar</button>
-            <div id="preset-actions" class="preset-actions" hidden>
-              <button type="button" id="preset-update">Actualizar datos</button>
-              <button type="button" id="preset-rename">Renombrar</button>
-              <button type="button" id="preset-delete">Eliminar</button>
-            </div>
-          </div>
-          <div
-            id="preset-list"
-            role="group"
-            aria-label="Accesos rápidos a entornos guardados"
-          ></div>
-          <p id="preset-empty" class="hint">
-            Guarda tu selección con un nombre y aparecerá aquí.
-          </p>
-        </div>
-        <div id="slot-status" role="status" aria-live="polite"></div>
-      </section>
+
       <details id="sent-history" class="sent-history">
         <summary>
           <span>Historial de envíos</span
@@ -508,15 +509,15 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261029-history-final"></script>
-    <script src="app.js?v=20261029-history-final"></script>
-    <script src="robbery-catalog.js?v=20261029-history-final"></script>
-    <script src="presets.js?v=20261029-history-final"></script>
-    <script src="situation-combo.js?v=20261029-history-final"></script>
-    <script src="searchable-selects.js?v=20261029-history-final"></script>
-    <script src="location-logic.js?v=20261029-history-final"></script>
-    <script src="sent-history.js?v=20261029-history-final"></script>
-    <script src="fivem-bridge.js?v=20261029-history-final"></script>
-    <script src="experience.js?v=20261029-history-final"></script>
+    <script src="voices.js?v=20261029-presets-top-final"></script>
+    <script src="app.js?v=20261029-presets-top-final"></script>
+    <script src="robbery-catalog.js?v=20261029-presets-top-final"></script>
+    <script src="presets.js?v=20261029-presets-top-final"></script>
+    <script src="situation-combo.js?v=20261029-presets-top-final"></script>
+    <script src="searchable-selects.js?v=20261029-presets-top-final"></script>
+    <script src="location-logic.js?v=20261029-presets-top-final"></script>
+    <script src="sent-history.js?v=20261029-presets-top-final"></script>
+    <script src="fivem-bridge.js?v=20261029-presets-top-final"></script>
+    <script src="experience.js?v=20261029-presets-top-final"></script>
   </body>
 </html>

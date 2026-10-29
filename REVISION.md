@@ -4,6 +4,12 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 29/10/2026
 
+- Último ajuste de distribución: Mis entornos encima de ambos paneles, con estilo
+  de «¿Qué has visto?». Posición, borde y carga de guardados comprobados en navegador.
+  A 320 px, acciones de guardado de 44 px y sin desbordamiento horizontal.
+  Cambio de presentación: se conservan los resultados de las suites anteriores;
+  no se han repetido las pruebas funcionales completas para mover y estilizar el bloque.
+
 - Historial: 27 comprobaciones específicas superadas además de las 1.182 generales
   y suites previas. Atajo con rotación desactivada, botón, respuesta/evento en ambos
   órdenes, cancelaciones, fallos, incertidumbre, recarga, límite, copia, vaciado,

@@ -96,7 +96,7 @@ el texto para copiarlo manualmente.
 
 ### Historial de envíos
 
-«Ver historial de envíos», debajo de copiar, abre el recuadro situado tras Mis entornos.
+«Ver historial de envíos», debajo de copiar, abre el recuadro situado bajo los dos paneles del generador.
 Conserva los últimos 100 envíos confirmados, más recientes primero, con hora de registro,
 texto y origen: Botón web o Atajo del puente. Cada entrada se despliega para leer el
 texto completo y copiarlo. «Vaciar historial» pide confirmación y no borra favoritos
@@ -121,8 +121,10 @@ automáticamente; se puede vaciar expresamente para recuperarlo.
 
 ### Configuraciones con nombre y acceso rápido
 
-«Mis entornos» tiene un recuadro independiente debajo de los paneles,
-con el mismo ancho que el bloque de conexión con FiveM. Permanece visible, sin
+«Mis entornos» tiene un recuadro independiente encima de los paneles,
+con el mismo ancho que el bloque de conexión con FiveM y el estilo de «¿Qué has visto?»:
+borde discontinuo, fondo sutil, título y botones dorados. Los accesos se reparten por
+el ancho disponible y se adaptan a filas en móvil. Permanece visible, sin
 espacios preestablecidos ni límite fijo de cinco elementos. Escribe un nombre
 de hasta 40 caracteres y pulsa «Guardar» (también puedes pulsar Enter).
 El campo de nombre y el botón están centrados en la parte superior del recuadro;

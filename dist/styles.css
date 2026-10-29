@@ -1457,14 +1457,18 @@ button:disabled {
 @media(max-width: 600px) { .copy-bottom .actions #execute-fivem, .copy-bottom .actions #copy { font-size: 12px; padding: 10px 7px; } }
 
 /* Compact layout: shared spacing and control sizes across both panels. */
-.named-presets { width: 100%; min-width: 0; box-sizing: border-box; padding: 16px 18px; margin: 16px 0 0; background: #26272c; border: 1px solid #47484e; border-radius: 12px; }
-.named-presets #preset-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.named-presets { width: 100%; min-width: 0; box-sizing: border-box; padding: 16px; margin: 0 0 16px; background: #c9b77d07; border: 1px dashed #5e5540; border-radius: 10px; }
+.named-presets #preset-list { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 .named-presets .preset-toolbar { display: flex; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 560px; margin: 0 auto 12px; }
 .named-presets .preset-toolbar:has(.preset-actions:not([hidden])) { max-width: 860px; }
 .named-presets .preset-actions { display: contents; margin: 0; }
 .named-presets #preset-name { flex: 1 1 220px; width: auto; min-width: 0; text-align: center; }
 .named-presets #preset-delete { margin-left: 0; }
-.named-presets .preset-heading { padding: 0; margin: 0 0 10px; cursor: default; }
+.named-presets .preset-heading { padding: 0; margin: 0 0 12px; cursor: default; font-size: 16px; color: #e0cf9f; }
+.named-presets .preset-shortcut { background: #302b24; border: 1px solid #66583d; color: #dfcd9f; }
+.named-presets .preset-shortcut:hover { background: #453a2a; border-color: #b59b62; }
+.named-presets .preset-shortcut[aria-pressed="true"] { background: #55462b; border-color: #d4b879; color: #fff0c9; }
+.named-presets #preset-empty { font-size: 12px; line-height: 1.7; color: #aaa9b1; }
 .named-presets .preset-heading::before { display: none; }
 #preset-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; }
 #preset-list:empty { display: none; }
@@ -1481,7 +1485,7 @@ button:disabled {
 #slot-status button { font-size: 11px; padding: 3px 7px; margin-left: 7px; }
 @media(max-width:600px) {
   .named-presets { padding: 14px; }
-  .named-presets #preset-list { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+  .named-presets #preset-list { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
   #preset-name { height: 44px; font-size: 16px; }
   .named-presets #preset-name { flex-basis: 100%; }
   .preset-shortcut, .preset-toolbar button, .preset-actions button { min-height: 44px; }
