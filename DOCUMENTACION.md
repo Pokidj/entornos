@@ -28,7 +28,12 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
   el orden, actuar de forma sospechosa u otra situación.
 - **Detalle (opcional):** depende de la acción anterior. Con Robar muestra negocios,
   vehículos, objetos y mercancía; con Secuestrar, sus escenas relacionadas. La base
-  contiene 629 escenas generales y concretas, agrupadas sin repetir etiquetas iguales.
+  contiene 974 escenas generales y concretas, agrupadas sin repetir etiquetas iguales.
+  Robar / atracar ofrece 496 detalles concretos y la opción de aviso general. Incluye
+  Fleeca, Pacific Standard, Banco de Paleto, Union Depository, Vangelico, casino,
+  comercios, viviendas, industria, logística, valores, trenes, barcos, aeronaves,
+  maquinaria, mercancía y pertenencias. Son propuestas de roleplay: cada servidor
+  determina qué robos o recursos existen en su partida.
   Sin detalle se genera un aviso general de la acción. «Quitar detalle» vuelve al
   aviso general; cambiar de acción elimina el detalle anterior, también si era libre.
   La búsqueda admite varias palabras en cualquier orden, sin tildes e infinitivos
@@ -39,6 +44,8 @@ La web conserva su configuración de acceso existente; este manual no cambia su 
   la coherencia. «Otra situación» conserva descripciones libres sin inferir un delito.
   Ambos campos se guardan en Mis entornos. Al cargar guardados anteriores se identifica
   la acción general y se conserva la escena original y su texto propio.
+  La búsqueda también relaciona nombres con su tipo: «banco Pacific», «armería Ammu»,
+  badulaques 24/7 o LTD, restaurantes Burger Shot/Cluckin' Bell y licorerías.
 - **Lugar:** barrios y zonas de GTA V, como Paleto o Grapeseed, y lugares concretos.
   La lista se filtra según la situación. Si un lugar previo deja de ser compatible,
   se elimina y se informa del cambio. Es posible dejarlo sin especificar.
@@ -278,6 +285,7 @@ outputs/
       index.html              Estructura y formularios
       styles.css              Estilo y adaptación móvil
       app.js                  Parámetros, generación, catálogo y configuraciones
+      robbery-catalog.js      Ampliación de robos y términos de búsqueda
       presets.js              Configuraciones con nombre, migración y accesos rápidos
       voices.js               Tonos y bancos de variantes
       situation-combo.js      Buscador de situaciones

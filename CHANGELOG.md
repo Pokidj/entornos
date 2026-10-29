@@ -5,6 +5,22 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 2026-10-29 — Catálogo ampliado de robos
+
+- Añadidas 345 escenas de robo: 974 escenas totales y 496 detalles concretos
+  disponibles en Robar / atracar, además del aviso general.
+- Bancos y depósitos, casino, joyerías, comercios, viviendas, instalaciones,
+  transportes de valores, trenes, barcos, aeronaves, maquinaria, mercancía y objetos.
+- Búsquedas por nombre y tipo: Fleeca/Pacific/Union, Vangelico, Ammu-Nation,
+  24/7, LTD, Rob's Liquor, Burger Shot y Cluckin' Bell.
+- Nuevas reglas de lugar para nombres y tipos específicos. Almacenes de electrónica
+  y depósitos de combustible no se confunden con tiendas ni gasolineras.
+- Extensión separada en robbery-catalog.js, cargada después del catálogo original
+  para conservar también los índices de las acciones generales y los guardados.
+- 1.165 comprobaciones principales superadas, además de copia, atajo y detección.
+  Sin duplicados de escenas ni etiquetas de robo; búsqueda, lugares y guardado
+  comprobados. Sin envíos reales a FiveM.
+
 ## 2026-10-29 — Acción general y detalle relacionado
 
 - Separado Qué está pasando en 20 acciones generales y un Detalle opcional con búsqueda.

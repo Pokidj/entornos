@@ -4,8 +4,12 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
 
 ## Última revisión web — 29/10/2026
 
-- 793 comprobaciones principales superadas, incluidas 629 situaciones y ropa
+- 1.165 comprobaciones principales superadas, incluidas 974 situaciones y ropa
   individual, modo compartido, cambios de cantidad, guardados y compatibilidad antigua.
+- Robos ampliados: 345 escenas nuevas y 496 detalles concretos más el aviso general.
+  Índices anteriores intactos, escenas y etiquetas sin duplicados, categorías,
+  búsquedas por nombres/tipos, lugares y recuperación de guardados comprobados.
+  Revisión en navegador de Fleeca, Pacific Standard y búsqueda por «banco».
 - Acción/detalle: 20 acciones generales, detalles relacionados, aviso sin detalle,
   cambio y limpieza de detalle, texto propio, migración de guardados anteriores y
   una sola generación por cambio de acción comprobados.

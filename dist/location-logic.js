@@ -1,7 +1,116 @@
 // Compatibilidad entre la escena y el lugar, conservando los índices guardados.
 const locationGroups = [
+  { words: ["plataforma petrolífera"], places: [], coastal: true },
   {
-    words: ["yate", "carguero", "embarcación", "lancha", "moto de agua"],
+    words: [
+      "Fleeca",
+      "Pacific Standard",
+      "Banco de Paleto",
+      "Union Depository",
+    ],
+    places: ["banco"],
+  },
+  { words: ["Vangelico", "relojería"], places: ["joyería"] },
+  { words: ["Ammu-Nation", "tienda de caza"], places: ["armería"] },
+  {
+    words: ["24/7", "LTD", "Rob's Liquor"],
+    places: ["tienda", "supermercado", "licorería"],
+  },
+  {
+    words: [
+      "Burger Shot",
+      "Cluckin' Bell",
+      "pizzería",
+      "heladería",
+      "pastelería",
+      "puesto de comida",
+      "camión de comida",
+    ],
+    places: ["restaurante", "local de comida rápida", "cafetería"],
+  },
+  { words: ["casa de cambio"], places: ["oficina", "banco"] },
+  {
+    words: [
+      "tienda de telefonía",
+      "tienda de informática",
+      "tienda de videojuegos",
+      "tienda de electrodomésticos",
+    ],
+    places: ["tienda de electrónica"],
+  },
+  {
+    words: ["depósito de combustible"],
+    places: ["refinería", "nave industrial"],
+  },
+  {
+    words: ["marina", "club náutico", "astillero"],
+    places: ["puerto", "muelle", "embarcadero"],
+    coastal: true,
+  },
+  {
+    words: [
+      "centro logístico",
+      "terminal de mercancías",
+      "depósito de contenedores",
+      "distribuidora",
+      "centro de paquetería",
+    ],
+    places: [
+      "almacén",
+      "nave industrial",
+      "terminal de carga",
+      "zona de contenedores",
+    ],
+  },
+  { words: ["galería de arte", "galería de un museo"], places: ["museo"] },
+  {
+    words: [
+      "apartamento",
+      "ático",
+      "chalet",
+      "casa rural",
+      "bungalow",
+      "vivienda vacacional",
+      "propiedad de alquiler",
+    ],
+    places: ["vivienda", "mansión", "bloque de apartamentos", "urbanización"],
+  },
+  {
+    words: [
+      "tienda de bolsos",
+      "zapatería",
+      "tienda de deportes",
+      "tienda de bicicletas",
+      "tienda de muebles",
+      "tienda de instrumentos",
+      "tienda de herramientas",
+      "tienda de repuestos",
+      "tienda de pesca",
+      "tienda de buceo",
+      "tienda de souvenirs",
+      "tienda de antigüedades",
+      "tienda de juguetes",
+      "tabacalera",
+      "estanco",
+      "floristería",
+      "óptica",
+      "perfumería",
+      "librería",
+      "local de compraventa",
+    ],
+    places: ["tienda", "centro comercial"],
+  },
+  { words: ["tienda de empeños"], places: ["tienda"] },
+  {
+    words: [
+      "yate",
+      "carguero",
+      "embarcación",
+      "lancha",
+      "moto de agua",
+      "barco",
+      "velero",
+    ],
     places: [
       "puerto",
       "muelle",
@@ -17,7 +126,7 @@ const locationGroups = [
   { words: ["licorería"], places: ["licorería"] },
   { words: ["badulaque"], places: ["tienda", "supermercado"] },
   {
-    words: ["tienda digital", "electrónica"],
+    words: ["tienda digital", "tienda de electrónica"],
     places: ["tienda de electrónica"],
   },
   { words: ["pawnshop", "casa de empeños"], places: [] },
@@ -29,7 +138,7 @@ const locationGroups = [
   },
   { words: ["joyería"], places: ["joyería"] },
   {
-    words: ["gasolinera", "combustible"],
+    words: ["gasolinera"],
     places: ["gasolinera", "estación de servicio abandonada"],
   },
   { words: ["banco"], places: ["banco"] },
@@ -43,7 +152,14 @@ const locationGroups = [
     places: ["banco", "tienda", "supermercado", "centro comercial", "calle"],
   },
   {
-    words: ["helicóptero", "avioneta"],
+    words: [
+      "helicóptero",
+      "avioneta",
+      "avión",
+      "taller aeronáutico",
+      "escuela de vuelo",
+      "terminal de aeropuerto",
+    ],
     places: ["aeropuerto", "helipuerto", "hangar", "pista de aterrizaje"],
   },
   {
@@ -202,9 +318,7 @@ locationHint.className = "hint";
 $("place").parentElement.after(locationHint);
 function syncCompatiblePlaces() {
   const action =
-    $("situation").value === ""
-      ? ""
-      : currentSituation()?.[0] || "";
+    $("situation").value === "" ? "" : currentSituation()?.[0] || "";
   const allowed = compatiblePlaceIndices(action),
     key = allowed.join(",");
   const selected = $("place").value;

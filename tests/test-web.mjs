@@ -506,6 +506,50 @@ const generateSplit=split.w.generate; let splitCalls=0; split.w.generate=()=>{sp
 set(split,'scene-action','rob');ok(splitCalls===1,'Action selection generates exactly once');
 split.w.generate=generateSplit;
 ok(split.errors.length===0,'No split selector runtime errors');split.close();
+const heists = await app();
+set(heists,'scene-action','rob');
+const expanded = heists.w.eval('robberyCatalogAdded.length');
+ok(expanded>250,'More than 250 distinct robbery scenes added');
+ok(heists.w.eval('robberyCatalogAdded.every(action=>situations.findIndex(scene=>scene[0]===action)>=629)'), 'Old catalog including generic IDs stays in place');
+ok(heists.w.eval('robberyCatalogAdded.every(action=>sceneActionFor(action).id==="rob")'),'All new heists appear under robbery');
+ok(heists.w.eval('new Set(situations.map(scene=>scene[0])).size===situations.length'),'Expanded scenes have no duplicates');
+const detailNames=[...heists.d.getElementById('situation').options].filter(o=>o.value).map(o=>o.textContent);
+ok(new Set(detailNames).size===detailNames.length,'Robbery detail labels have no duplicates');
+for(const [query,expected] of [
+  ['fleeca','Una sucursal Fleeca'], ['pacific','El Pacific Standard'],
+  ['union depository','El Union Depository'], ['vangelico','La joyería Vangelico'],
+  ['burger shot','Un Burger Shot'], ['tren de carga','Un tren de carga'],
+  ['plataforma','Una plataforma petrolífera'], ['ganado','Ganado de una granja'],
+  ['clandestino','Un laboratorio clandestino'], ['parquimetro','Un parquímetro'],
+  ['banco pacific','El Pacific Standard'], ['armeria ammu','Un Ammu-Nation'],
+]) {
+  heists.d.getElementById('situation-search').value=query;
+  heists.d.getElementById('situation-search').dispatchEvent(new heists.w.Event('input',{bubbles:true}));
+  ok([...heists.d.getElementById('situation').options].some(o=>o.textContent===expected),'Expanded heist search: '+query);
+}
+for(const [action,allowed,denied] of [
+  ['robando en una sucursal Fleeca','en un banco','en una tienda'],
+  ['robando en la joyería Vangelico','en una joyería','en un banco'],
+  ['robando en un Burger Shot','en un restaurante','en una farmacia'],
+  ['robando en un almacén de electrónica','en un almacén','en una tienda de electrónica'],
+  ['robando en un depósito de combustible','en una refinería','en una gasolinera'],
+  ['robando un avión privado','en el aeropuerto','en una tienda'],
+  ['robando un barco pesquero','en el puerto','en una tienda'],
+]) {
+  scene(heists,action);
+  const locations=[...heists.d.getElementById('place').options].map(o=>o.textContent);
+  ok(locations.includes(allowed)&&!locations.includes(denied),'Expanded heist location: '+action);
+}
+scene(heists,'robando en el Union Depository');
+const savedHeist=heists.w.eval('JSON.stringify(snapshot())');
+heists.d.getElementById('reset').click();heists.w.eval('loadConfig('+savedHeist+')');
+ok(output(heists).includes('Union Depository')&&heists.d.getElementById('scene-action').value==='rob','Expanded heist survives saved config');
+set(heists,'scene-action','kidnap');
+ok(![...heists.d.getElementById('situation').options].some(o=>o.textContent.includes('Union Depository')),'Other categories exclude new robbery details');
+ok(heists.errors.length===0,'No expanded heist runtime errors');
+set(heists,'scene-action','rob');
+console.log('HEISTS: '+expanded+' new scenes; '+[...heists.d.getElementById('situation').options].filter(o=>o.value).length+' robbery options including general.');
+heists.close();
 console.log(
   `PASS: ${checks} comprobaciones; ${total} situaciones; configuraciones, catálogo lento, filtros, cantidades, armas, longitudes, teclado y rotación.`,
 );

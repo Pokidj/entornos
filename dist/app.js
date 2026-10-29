@@ -1129,7 +1129,11 @@ function renderSituations() {
           " " +
           norm(x.raw) +
           " " +
-          situationSearchText(x.raw)
+          situationSearchText(x.raw) +
+          " " +
+          (typeof robberySearchAliases === "function"
+            ? robberySearchAliases(x.raw)
+            : "")
         ).includes(term),
       ),
     )
@@ -1172,8 +1176,8 @@ function renderSituations() {
   $("situation").replaceChildren(...nodes);
   $("situation").value = selected;
   $("situation-results").textContent = group
-      ? list.length +
-        (list.length === 1 ? " opción para " : " opciones para ") +
+    ? list.length +
+      (list.length === 1 ? " opción para " : " opciones para ") +
       group.label +
       (!list.length ? " · Puedes escribir un detalle propio." : "")
     : "Elige primero una acción general.";
