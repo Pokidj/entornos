@@ -9,8 +9,10 @@ Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHAN
   archivos necesarios y exclusión de las capturas. Copias locales conservadas.
 - Cambio de distribución, sin modificar el generador ni el puente. Se conservan
   las pruebas funcionales de la revisión anterior; EXE sin recompilar.
-- Activación de Pages y ejecución remota pendientes de confirmación. La dirección
-  prevista no se declara publicada hasta un despliegue correcto de GitHub Actions.
+- Cambios subidos a main en cd63d291bc80986acd1725da9c37b18e77558309.
+  Ejecución 41933534665: checkout y comprobación de archivos correctos;
+  configure-pages falla con Not Found porque Pages no está habilitado/configurado
+  para GitHub Actions. Activación pendiente en Settings → Pages; aún no publicado.
 
 
 ## Conexión GitHub — 05/11/2026
