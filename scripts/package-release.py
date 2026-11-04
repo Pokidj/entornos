@@ -8,6 +8,8 @@ import zipfile
 PROJECT = Path(__file__).resolve().parents[1]
 OUTPUTS = PROJECT.parent
 BRIDGE = OUTPUTS / 'puente-fivem-configurable'
+if not BRIDGE.is_dir():
+    BRIDGE = PROJECT / 'bridge'
 DOCUMENTS = ('README.md', 'DOCUMENTACION.md', 'CHANGELOG.md', 'REVISION.md', 'INSTALACION.md')
 
 
@@ -29,13 +31,16 @@ def add_documents(archive, prefix=''):
 
 
 def build():
+    bridge_exe = BRIDGE / 'Puente Entorno.exe'
+    if not bridge_exe.is_file():
+        bridge_exe = PROJECT / 'dist' / 'downloads' / 'Puente Entorno.exe'
     required = [PROJECT / name for name in DOCUMENTS]
-    required += [PROJECT / 'dist' / 'index.html', BRIDGE / 'Puente Entorno.exe',
+    required += [PROJECT / 'dist' / 'index.html', bridge_exe,
                  PROJECT / 'dist' / 'downloads' / 'Puente Entorno.exe']
     for file in required:
         if not file.is_file():
             raise FileNotFoundError(f'Falta un archivo de entrega: {file}')
-    if (BRIDGE / 'Puente Entorno.exe').read_bytes() != (PROJECT / 'dist' / 'downloads' / 'Puente Entorno.exe').read_bytes():
+    if bridge_exe.read_bytes() != (PROJECT / 'dist' / 'downloads' / 'Puente Entorno.exe').read_bytes():
         raise ValueError('El EXE del puente y el de descarga de la web son distintos.')
 
     pending = []
@@ -52,6 +57,8 @@ def build():
                     add_documents(archive)
                 elif kind == 'bridge':
                     add_tree(archive, BRIDGE)
+                    if bridge_exe.parent != BRIDGE:
+                        archive.write(bridge_exe, 'Puente Entorno.exe')
                     add_documents(archive, 'docs/')
                 else:
                     add_documents(archive)

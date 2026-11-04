@@ -5,6 +5,17 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 05/11/2026 — Autorización del puente desde cualquier dominio
+
+- Detección pública mínima y autorización nativa por dominio desde Conectar puente.
+- Dominios recordados, sesión renovada y borrador descartado al cambiar de web.
+  Denegación, timeout y solicitudes simultáneas no conceden acceso.
+- Compatibilidad con puentes antiguos y con web_url conservada; nuevo protocolo v3.
+- EXE reconstruido y descarga renovada. Código del puente incluido en bridge/ para
+  mantenimiento en GitHub; empaquetador compatible con un clon independiente.
+- Pruebas y límites registrados en REVISION.md. Sin envíos a una partida real.
+
+
 ## 05/11/2026 — Preparación y limpieza para GitHub Pages
 
 - Workflow de publicación de dist en main, con ejecución manual y permisos mínimos.

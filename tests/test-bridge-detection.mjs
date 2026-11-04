@@ -19,7 +19,7 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
     timeouts = [],
     healthOptions = [];
   let mode = "offline",
-    executions = 0;
+    executions = 0, pairs = 0, authorized = false;
   w.HTMLElement.prototype.scrollIntoView = function () {};
   w.confirm = () => true;
   w.Request = localOption
@@ -36,6 +36,17 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
         return new w.AbortController().signal;
       };
   w.fetch = async (url, options = {}) => {
+    if (url.endsWith('/discover') && ['pair', 'deny-pair'].includes(mode))
+      return {ok:true,json:async()=>({bridge:'entorno-fivem',version:3,authorized})};
+    if (url.endsWith('/pair')) {
+      pairs++;
+      assert.equal(options.method,'POST');
+      assert.equal(options.body,'{}');
+      assert.equal(options.headers['X-Entorno-Token'],undefined);
+      if(mode==='deny-pair') return {ok:false,status:403,json:async()=>({error:'Autorización rechazada.'})};
+      authorized=true;
+      return {ok:true,json:async()=>({ok:true})};
+    }
     if (url === "vehicles.json")
       return {
         ok: true,
@@ -53,7 +64,7 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
         status: 200,
         json: async () => ({
           bridge: mode === "invalid" ? "other-service" : "entorno-fivem",
-          version: 2,
+          version: ['pair','deny-pair'].includes(mode) ? 3 : 2,
           connected: true,
           token: "test-token",
           capabilities: ["prepare"],
@@ -91,6 +102,7 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
     healthOptions,
     setMode: (value) => (mode = value),
     executions: () => executions,
+    pairs: () => pairs,
   };
 }
 const a = await setup();
@@ -153,6 +165,26 @@ await b.d.getElementById('execute-fivem').onclick();
 assert.match(b.d.getElementById('bridge-status').textContent,/No se pudo confirmar.*Comprueba el juego/);
 assert.equal(b.executions(),1,'only explicit mocked execute attempts a send');
 b.dom.window.close();
+const pair = await setup();
+pair.setMode('pair');
+await pair.w.checkBridge();
+assert.equal(pair.pairs(),0,'background discovery never opens a native approval');
+assert.match(pair.d.getElementById('bridge-connection-message').textContent,/Puente detectado.*autoriza/);
+assert(pair.d.getElementById('execute-fivem').hidden,'no session before approval');
+await pair.d.getElementById('connect-bridge').onclick();
+assert.equal(pair.pairs(),1,'manual connection requests approval');
+assert(!pair.d.getElementById('execute-fivem').hidden,'v3 available after native approval');
+await pair.w.checkBridge();
+assert.equal(pair.pairs(),1,'approved domain does not request again');
+assert.equal(pair.executions(),0,'pairing never sends an environment');
+pair.dom.window.close();
+const denied = await setup();
+denied.setMode('deny-pair');
+await denied.d.getElementById('connect-bridge').onclick();
+assert.match(denied.d.getElementById('bridge-connection-message').textContent,/rechazada/);
+assert(denied.d.getElementById('execute-fivem').hidden);
+assert.equal(denied.executions(),0);
+denied.dom.window.close();
 console.log(
   "PASS: manual connection, timeout fallback, loopback compatibility, blocked requests, HTTP 403, unexpected service and reconnect; no game commands sent.",
 );

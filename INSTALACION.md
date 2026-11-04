@@ -15,7 +15,7 @@ del seguimiento de Git, conservando sus copias locales. `dist/.nojekyll` evita
 procesamiento Jekyll. No se requiere compilación ni dependencias en el despliegue.
 Las rutas de recursos y del catálogo son relativas y admiten `/entornos/`.
 
-Para conectar el puente desde Pages, editar `configuracion.json` junto al EXE:
+Configuración manual para puentes anteriores; el EXE actual autoriza desde su ventana:
 
 ```json
 {"hotkey":"CTRL+F9","web_url":"https://pokidj.github.io/entornos/"}
@@ -44,37 +44,20 @@ Funciona como sitio estático en Apache, Nginx o un hosting compatible. No es un
 recurso que se instale en la carpeta `resources` de FXServer. El comando
 `/entorno` debe existir en tu servidor de juego para que este lo procese.
 
-## Configurar el puente para tu dominio
+## Conectar el puente desde tu dominio
 
-La generación y copia funcionan sin puente. Para enviar a FiveM, cada jugador
-debe abrir `Puente Entorno.exe` en su PC de Windows, donde está jugando.
-El EXE está incluido en `downloads/` y puede descargarse desde la web.
+Descarga y abre la versión actual de `Puente Entorno.exe` en el PC de Windows
+con FiveM. Pulsa «Conectar puente» en la web y autoriza el dominio en la ventana
+del puente. Lo recordará; no necesitas editar archivos al cambiar de alojamiento.
+Al actualizar, cierra primero el puente anterior y conserva el ejecutable nuevo
+en una carpeta fija donde pueda guardar su configuración. Si usas inicio con
+Windows y cambias de carpeta, vuelve a activar esa opción desde la nueva copia.
 
-Al cambiar de alojamiento, cierra el puente y crea o edita `configuracion.json`
-**junto al EXE**, en una carpeta donde puedas guardar cambios. Conserva los
-otros ajustes existentes. Ejemplo:
-
-```json
-{
-  "hotkey": "CTRL+F9",
-  "web_url": "https://tudominio.es/generador/"
-}
-```
-
-Sustituye la dirección por la tuya y vuelve a abrir el puente. Cada jugador que
-use la nueva web debe tener ese ajuste. No hace falta recompilar el EXE.
-Esquema, dominio y puerto deben coincidir: `www` y sin `www` son orígenes distintos.
-No pongas comodines ni credenciales en la dirección.
-
-Abre FiveM y la web en ese mismo PC. Si el navegador pide acceso a la red local,
-permítelo y pulsa «Conectar puente». El servicio escucha solo en
-`127.0.0.1:39173`: no abras puertos del router ni lo expongas desde el servidor.
-El móvil puede generar y copiar, pero no controlar el puente del PC por Wi-Fi.
-
-Si tu hosting aplica una Content Security Policy, permite los archivos locales
-del sitio y las conexiones a `http://127.0.0.1:39173` en `connect-src`.
-No añadas `upgrade-insecure-requests` sin comprobar su efecto sobre la conexión
-HTTP al puente. El acceso local depende también de los permisos del navegador.
+La autorización no envía ningún entorno. Si cancelas o caduca, la web sigue sin
+poder preparar ni ejecutar comandos. Los permisos locales del navegador siguen
+siendo necesarios. No abras puertos del router. El móvil no controla el puente del PC.
+Los ajustes manuales web_url anteriores siguen siendo válidos, pero no hacen falta
+para autorizar dominios nuevos. Más detalles y revocación en DOCUMENTACION.md.
 
 ## Comprobar después de subir
 

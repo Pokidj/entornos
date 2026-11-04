@@ -3,6 +3,39 @@
 Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
+## Conectar desde cualquier alojamiento — 05/11/2026
+
+Requiere actualizar Puente Entorno.exe y la web. No hay que editar el dominio
+manualmente: abrir el puente, pulsar «Conectar puente» y aceptar el dominio exacto
+en la ventana de Windows. Cancelar, cerrar o dejar caducar la ventana no autoriza.
+El dominio se recuerda en configuracion.json; el puente arranca con la última web.
+Cambiar a otro dominio recordado requiere pulsar Conectar puente; no aparece
+otra confirmación. Solo una web está conectada a la sesión activa a la vez.
+
+La detección automática consulta /discover: identifica el puente sin exponer
+su token, borrador, estado del juego ni historial. Solo la conexión manual llama
+/pair. Un dominio nuevo necesita aprobación en la interfaz nativa. Hay una
+solicitud pendiente como máximo, límite entre solicitudes y caducidad de 60 s.
+Al cambiar de dominio, se renueva la sesión y se borra el borrador anterior.
+Preparar, enviar y consultar eventos mantienen validación de origen y token.
+No se guardan tokens en disco. Orígenes null/file, Host incorrecto y solicitudes
+inválidas se rechazan. No se usa Access-Control-Allow-Origin con comodines.
+
+Los dominios recordados están en trusted_origins. Para retirar uno, cerrar
+el puente, eliminarlo de esa lista y, si es la web activa, retirar también
+web_url o cambiarlo por otro dominio autorizado; después reiniciar.
+Se conserva el ajuste web_url para configuraciones anteriores. La web sigue
+admitiendo puentes v1/v2 en su origen configurado; para conexión por aprobación
+hace falta el EXE nuevo (protocolo v3). El modo consola no puede aprobar webs
+nuevas: usar el puente con bandeja.
+
+El servicio sigue escuchando solo en 127.0.0.1:39173. El navegador puede requerir
+permiso de red local; esta función no elimina sus restricciones de contenido
+mixto o CSP. No conecta el móvil con el puente del PC por compartir Wi-Fi.
+El código del puente también se incluye en bridge/ en GitHub; el EXE descargable
+permanece en dist/downloads. El empaquetador admite esa estructura al clonar.
+
+
 ## GitHub Pages — 05/11/2026
 
 Repositorio: https://github.com/Pokidj/entornos. Código estático en `dist/`.
@@ -18,7 +51,8 @@ del seguimiento de Git, conservando sus copias locales. `dist/.nojekyll` evita
 procesamiento Jekyll. No se requiere compilación ni dependencias en el despliegue.
 Las rutas de recursos y del catálogo son relativas y admiten `/entornos/`.
 
-Para conectar el puente desde Pages, editar `configuracion.json` junto al EXE:
+Para versiones antiguas del puente, el dominio de Pages se configura manualmente.
+Con el EXE actual basta pulsar Conectar puente y autorizar la web. Ajuste antiguo:
 
 ```json
 {"hotkey":"CTRL+F9","web_url":"https://pokidj.github.io/entornos/"}

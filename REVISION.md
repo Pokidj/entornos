@@ -2,6 +2,24 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Puente para cualquier alojamiento — 05/11/2026
+
+- Puente: 34 pruebas, 33 correctas y una omitida por RegisterHotKey en el entorno
+  aislado. Diez pruebas nuevas de descubrimiento, rechazo, origen/Host inválido,
+  aprobación, tokens antiguos, borrado de preparación, persistencia, duplicados,
+  límite, caducidad, callback tardío y rotación durante solicitudes en curso. Sin envíos a una partida real.
+- Web: 1.192 comprobaciones generales, suites de copia, atajo y 27 de historial.
+  Detección ampliada: no solicita autorización en segundo plano, conexión manual,
+  rechazo, compatibilidad de v3, dominio recordado y ausencia de envíos al emparejar.
+- EXE GUI reconstruido con dependencias fijadas. Módulos pairing, bridge_ui,
+  hotkeys y startup incluidos; arranque --help correcto, sin abrir el servicio.
+- Ventana nativa de prueba completó la aceptación con callback verdadero, sin
+  autorizar un servidor real. Vista de detección pendiente revisada en navegador
+  con fixture que bloquea toda conexión al puente real.
+- El estado de publicación se consulta en el workflow de GitHub Pages y en el
+  despliegue de Sites; ninguna prueba simulada confirma un envío en partida.
+
+
 ## Preparación de GitHub Pages — 05/11/2026
 
 - Carga inicial de main confirmada por el conector en el commit 7872e796a378981271807009c8aba1180933aad2.

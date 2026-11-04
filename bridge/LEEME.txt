@@ -1,0 +1,76 @@
+PUENTE ENTORNO — WINDOWS
+
+ACTUALIZAR
+Cierra el puente anterior desde su icono junto al reloj. Descarga y abre
+Puente Entorno.exe. No requiere Python ni una consola abierta.
+Guárdalo en una carpeta fija antes de activar el inicio con Windows.
+
+USO
+El historial de la web registra los envíos del botón y del atajo mientras la web
+está abierta y conectada. Conserva los últimos 100 en ese navegador; no requiere
+otro EXE si tu puente actual admite eventos de envío.
+La web tiene una Guía rápida en la cabecera para preparar el entorno paso a paso.
+Abre el puente y entra al servidor de FiveM. Abre el generador por tu cuenta,
+prepara un entorno y espera a que indique Entorno preparado. Vuelve a FiveM
+y pulsa Ctrl + F9. El atajo envía sin confirmación; el botón de la web sigue
+pidiendo confirmación. No repite el mismo texto ni envía desde otras apps.
+
+OTRA VERSIÓN TRAS EL ATAJO
+En la web, activa Generar otra versión después de usar el atajo.
+Cada envío completado con el atajo genera y prepara otro texto conservando
+todos los parámetros. La siguiente versión NO se envía sola: pulsa de nuevo
+el atajo cuando quieras usarla. Funciona en breve, normal y largo.
+Mantén el generador abierto, aunque esté en segundo plano. Si el navegador
+suspende o cierra la pestaña, no podrá preparar el siguiente texto hasta volver.
+Los errores y los envíos inciertos no generan otra versión. El botón manual
+de la web tampoco la genera. La opción se recuerda en este navegador.
+Requiere esta versión del puente, que avisa a la web al terminar el envío.
+
+MENÚ DE BANDEJA
+- Comprobar estado: conexión, preparación y atajo.
+- Elegir atajo de teclado: pulsa una tecla o combinación y después Guardar.
+  Admite letras, números, funciones, flechas, teclado numérico, signos y
+  combinaciones con Ctrl, Alt, Shift o Win. Si Windows reserva la combinación
+  o está ocupada, el selector lo indica. Un modificador solo no es un atajo.
+  Predeterminado restaura Ctrl + F9. Desactivar quita el atajo al guardar.
+  Cancelar conserva el anterior. Se guarda en configuracion.json.
+- Iniciar con Windows: activa o desactiva el inicio al entrar en tu sesión.
+  Desactivado por defecto; no requiere administrador. Mantén el EXE en una
+  carpeta fija. Si lo mueves, abre el nuevo y vuelve a activar la opción.
+  Desactívala antes de borrar el puente.
+- Cerrar puente: libera el atajo y cierra el servicio.
+El puente ya no abre la web ni muestra opciones para configurar su dirección.
+
+CONEXIÓN
+Escucha solo en 127.0.0.1:39173. No abras puertos del router. Solo acepta el
+origen autorizado y un token de sesión. No guarda los entornos en disco.
+Permite acceso a red local para el generador si el navegador lo solicita.
+Para cualquier alojamiento: pulsa Conectar puente y autoriza el dominio exacto
+en la ventana del puente. Se recuerda automáticamente; no hay que editar archivos.
+Cancelar o esperar 60 segundos no autoriza la web. Al cambiar de web se elimina
+el borrador anterior y se renueva la sesión. web_url antiguo sigue siendo válido.
+El modo --slash envía /entorno con barra; --cl2 usa el segundo cliente.
+El inicio automático conserva ambos modos si estaban activos al habilitarlo.
+Enviar a la consola no confirma que el servidor publique el mensaje.
+
+DESARROLLO Y PRUEBAS
+Código: puente.py, pairing.py, hotkeys.py, bridge_ui.py y startup.py.
+RegisterHotKey con MOD_NOREPEAT; interfaz en hilo principal y bandeja separada.
+Inicio automático: solo valor PuenteEntorno de
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run.
+No modifica entradas de otras aplicaciones.
+
+Reconstruir con Python 3.12 en Windows:
+  pip install -r requirements-build.txt
+  python -m PyInstaller --onefile --windowed --name "Puente Entorno" --hidden-import pystray._win32 --exclude-module numpy puente.py
+Pruebas con simuladores:
+  python -m unittest discover -s tests -p "test_*.py" -v
+El registro nativo del atajo puede estar bloqueado en entornos aislados.
+La partida y un inicio real de sesión requieren comprobación en tu equipo.
+
+DOCUMENTACIÓN COMPLETA
+Para alojar la web en tu dominio: docs/INSTALACION.md. Incluye el ajuste web_url
+junto al EXE; cada jugador debe autorizar la dirección del nuevo alojamiento.
+En el ZIP del puente: docs/DOCUMENTACION.md y docs/CHANGELOG.md.
+La fuente canónica está en la carpeta entorno-rp; las copias del ZIP se generan
+con scripts/package-release.py al actualizar una entrega.

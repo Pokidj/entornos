@@ -1,0 +1,57 @@
+Autorización por dominio (05/11/2026)
+
+34 pruebas: 33 correctas y una omitida por RegisterHotKey. Descubrimiento sin
+sesión, autorización/denegación, origen y Host, rotación de token, borrador,
+persistencia, límite, timeout y callbacks tardíos comprobados con simuladores.
+Web: 1.192 comprobaciones generales y suites de copia, atajo, detección ampliada
+e historial (27). Sin envíos a una partida real. EXE reconstruido; GUI, módulos
+y arranque --help comprobados. Las ventanas y el envío en tu partida requieren
+comprobación final en tu PC; no se sustituyen por los simuladores.
+
+Revisión actual (29/10/2026)
+
+Entrega para servidor propio: repetidas 24 pruebas del puente, 23 correctas
+y una omitida por RegisterHotKey. Ejecución con permiso de red para los sockets
+locales del simulador; sin envíos a FiveM ni cambios reales del inicio de Windows.
+Se conserva el EXE existente; coincide con la descarga de la web.
+Web en esta entrega: 1.192 comprobaciones principales y suites de copia,
+atajo, detección e historial (27 comprobaciones); sin envíos reales.
+
+24 pruebas del puente: 23 correctas y una omitida por RegisterHotKey en el
+entorno aislado. Protocolo, origen/token, validación, duplicados, eventos,
+foco e inicio automático comprobados con simuladores. Las pruebas temporales
+se ejecutaron dentro del proyecto. Sin envíos al juego ni cambios de inicio real.
+
+Web: 1.182 comprobaciones principales correctas y suites de copia, confirmación,
+atajo y detección superadas. Guía, buscadores, teclado, estados vacíos y acciones
+de ejemplo comprobados. El código del puente no cambia: se conserva el EXE.
+
+Historial web (29/10/2026): 27 comprobaciones específicas superadas, con eventos
+simulados y respuestas de botón. Sin envíos reales; el EXE no cambia.
+
+Comprobaciones anteriores del puente (28/10/2026)
+
+23 pruebas del puente superadas y 1 omitida: el entorno aislado rechaza
+RegisterHotKey con error 5. Se verificaron protocolo, origen, token, validación
+de comandos, preparación sin envío, duplicados, cambio de foco, tipos de tecla,
+inicio automático activado/desactivado con registro simulado, rutas con espacios,
+modos --slash/--cl2 y errores de permisos. No se modificó el inicio del equipo.
+
+442 comprobaciones de la web superadas, además de las suites de copia,
+confirmación de envío, preparación, estado del atajo y compatibilidad.
+
+Interfaz: se pulsó Aceptar en dos ventanas consecutivas; ambas se cerraron.
+Se capturó Ctrl+Shift+G y se guardó desde el selector con gestor simulado.
+
+Ejecutable: comprobados formato GUI sin consola, módulos incluidos, tamaño,
+igualdad con la descarga y arranque real del servicio /health. Sin envíos al juego.
+
+Pendiente de comprobar en un escritorio sin aislamiento: registro global real
+de la tecla, envío dentro de una partida y arranque tras iniciar sesión Windows.
+Estas comprobaciones no se pueden sustituir por el simulador.
+
+Actualización de versiones tras el atajo: eventos autenticados y secuenciados,
+solo emitidos después de completar el envío; fallos, duplicados y escrituras
+inciertas no emiten eventos. La web conserva los parámetros, genera en las
+tres longitudes incluso con documento oculto (simulado), prepara sin enviar,
+ignora eventos viejos y del botón manual y recuerda la opción en localStorage.

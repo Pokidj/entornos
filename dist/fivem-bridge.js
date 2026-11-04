@@ -51,6 +51,9 @@ function connectionFeedback(message) {
     connectionMessage.textContent = message;
 }
 function bridgeConnectionError(error) {
+  if (error.code === "pair-required")
+    return "Puente detectado. Pulsa Conectar puente y autoriza esta web en la ventana del puente de Windows.";
+  if (error.code === "pair-failed") return error.message;
   if (localCspBlocked)
     return "La política de esta página bloquea la conexión local. Prueba la web en una pestaña de Chrome o Edge.";
   if (error.status === 403)
@@ -318,6 +321,28 @@ async function checkBridge(options = {}) {
     );
   }
   try {
+    let discovery = null;
+    try {
+      const response = await bridgeFetch("/discover");
+      if (response.ok) {
+        const info = await response.json();
+        if (info.bridge === "entorno-fivem" && info.version === 3 &&
+            typeof info.authorized === "boolean") discovery = info;
+      }
+    } catch {}
+    if (discovery && !discovery.authorized) {
+      if (options.manual !== true)
+        throw Object.assign(Error("Autorización necesaria"), {code: "pair-required"});
+      connectionFeedback("Acepta la autorización de esta web en la ventana del puente de Windows.");
+      bridgeConnect.textContent = "Esperando autorización…";
+      const response = await bridgeFetch("/pair", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: "{}", timeoutMs: 65000,
+      });
+      const result = await response.json();
+      if (!response.ok || result.ok !== true)
+        throw Object.assign(Error(result.error || "No se ha autorizado esta web."), {code: "pair-failed"});
+    }
     const response = await bridgeFetch("/health", {
       timeoutMs: options.manual === true ? 20000 : 3000,
     });
@@ -326,7 +351,7 @@ async function checkBridge(options = {}) {
     const data = await response.json();
     if (
       data.bridge !== "entorno-fivem" ||
-      ![1, 2].includes(data.version) ||
+      ![1, 2, 3].includes(data.version) ||
       typeof data.token !== "string"
     )
       throw Object.assign(Error("Bridge identity"), {

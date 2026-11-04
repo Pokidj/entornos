@@ -80,3 +80,10 @@ subidos a main activan su publicación; documentación y pruebas quedan fuera.
 El resto del repositorio se conserva para mantenimiento. Las capturas de revisión
 se excluyen de Git. Consulta `INSTALACION.md` para autorizar Pages en el puente.
 El sitio de Sites se mantiene independiente; no se sincroniza automáticamente.
+
+## Puente en cualquier alojamiento
+
+Actualiza el EXE, pulsa **Conectar puente** en la web y autoriza el dominio en
+la ventana de Windows. Se recuerda automáticamente. Ya no necesitas editar
+web_url al cambiar de alojamiento. El permiso local del navegador puede seguir
+siendo necesario. Código del puente en `bridge/`; descarga en `dist/downloads/`.
