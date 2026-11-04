@@ -8,7 +8,7 @@ import zipfile
 PROJECT = Path(__file__).resolve().parents[1]
 OUTPUTS = PROJECT.parent
 BRIDGE = OUTPUTS / 'puente-fivem-configurable'
-DOCUMENTS = ('README.md', 'DOCUMENTACION.md', 'CHANGELOG.md', 'REVISION.md')
+DOCUMENTS = ('README.md', 'DOCUMENTACION.md', 'CHANGELOG.md', 'REVISION.md', 'INSTALACION.md')
 
 
 def included(file):

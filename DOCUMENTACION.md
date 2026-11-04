@@ -1,7 +1,37 @@
 # Documentación del Generador de /entornos
 
-Última actualización documental: **29 de octubre de 2026**, Europa/Madrid.
+Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
+
+## Conexión con GitHub — 05/11/2026
+
+Repositorio elegido: https://github.com/Pokidj/entornos (rama de destino main).
+El remoto local se llama github. El conector de GitHub confirmó el repositorio
+vacío y permisos de lectura/escritura. La carga inicial no se ha completado:
+el gestor de credenciales de Git de Windows no es accesible desde el entorno aislado.
+La conexión del plugin y la autenticación de Git local son mecanismos diferentes.
+
+Tras iniciar sesión de Git en Windows, subir desde la carpeta entorno-rp con:
+
+```powershell
+git push -u github HEAD:main
+```
+
+El código está en dist/. Publicar en GitHub no despliega automáticamente el
+sitio de Sites ni un servidor externo. La identidad de Sites se conserva en
+.openai/hosting.json. No se ha cambiado la audiencia ni publicado otra versión.
+
+
+## Entrega para alojamiento propio — 29/10/2026
+
+El ZIP `entorno-generator-ultima-version.zip` contiene la web lista para subir
+al directorio público del servidor, el EXE descargable y la documentación actual.
+La guía [INSTALACION.md](INSTALACION.md) explica HTTPS, carpetas, comprobaciones,
+actualizaciones y la autorización del nuevo dominio en `configuracion.json`
+junto al puente. No requiere base de datos ni compilación en el alojamiento.
+No es un recurso para instalar en FXServer. Cambiar de dominio no migra los
+guardados del navegador. La revisión y sus límites figuran en `REVISION.md`.
+El empaquetador incluye la guía en los tres ZIP y conserva el EXE existente.
 
 ## Asistente y guardados compactos — 29/10/2026
 

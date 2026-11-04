@@ -2,13 +2,37 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Conexión GitHub — 05/11/2026
+
+- Repositorio Pokidj/entornos confirmado vacío mediante el conector, con permisos
+  de escritura. Remoto local github añadido y lectura remota sin referencias.
+- Push de prueba bloqueado por el gestor de credenciales de Windows en el entorno
+  aislado. No se ha subido código ni configurado un despliegue automático.
+- Cambio de configuración/documentación: se mantienen los resultados funcionales
+  anteriores; no se repiten suites de ejecución. EXE conservado y ZIP regenerados.
+
+
 ## Última revisión web — 29/10/2026
+
+- Revisión para alojamiento propio: guía de instalación y cambio de dominio
+  añadida a los tres ZIP. Sin cambios del código de la web ni del puente.
+  Sintaxis JavaScript/Python, archivos JSON, enlaces locales, contenido de ZIP
+  y coincidencia del EXE con la descarga comprobados en esta entrega.
+  Pruebas del puente repetidas: 23 correctas y una omitida por RegisterHotKey.
+  Los sockets de prueba requirieron permiso de red local en el entorno aislado;
+  la ejecución con ese permiso terminó correctamente. Solo se usaron simuladores.
+  No se ha instalado en el servidor del usuario ni enviado nada a una partida.
+  Web: repetidas 1.192 comprobaciones generales sobre 974 situaciones y las suites
+  de copia, preparación/atajo, detección y 27 comprobaciones de historial.
 
 - Último ajuste: guardados compactos con gestión plegada y asistente de cuatro
   pasos. Pruebas de navegación, filtros, cantidad, lugares compatibles, omisión,
   escritura directa, carga de guardados y restablecimiento añadidas a la suite.
   Vista móvil a 320 px comprobada sin desbordamiento horizontal. Sin cambios
   del puente ni del EXE; sin envíos a una partida real.
+  Resultado: 1.192 comprobaciones generales y suites de copia, atajo, detección
+  e historial (27 comprobaciones) superadas. Corregida la inserción del detalle
+  manual al abrirse el buscador; escritorio y móvil revisados en navegador.
 
 - Historial: 27 comprobaciones específicas superadas además de las 1.182 generales
   y suites previas. Atajo con rotación desactivada, botón, respuesta/evento en ambos

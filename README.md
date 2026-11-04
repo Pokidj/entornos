@@ -7,6 +7,7 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 - [Manual de uso y documentación técnica](DOCUMENTACION.md)
 - [Historial de cambios](CHANGELOG.md)
 - [Resumen de verificación](REVISION.md)
+- [Instalación en tu servidor](INSTALACION.md)
 - [Web actual](https://entorno-rp-radio-2710.balmyguppy1.chatgpt.site/)
 
 ## Empezar
@@ -61,3 +62,13 @@ python scripts/package-release.py
 El script reconstruye los tres ZIP a partir de los archivos actuales. No publica
 la web ni recompila el ejecutable. Las copias de documentación dentro de los ZIP
 se generan desde estos documentos; no deben editarse por separado.
+
+Para alojarlo en tu servidor, sube el contenido del ZIP de la web al directorio
+público y sigue `INSTALACION.md`, incluido en los tres paquetes. No requiere
+instalar herramientas de desarrollo en el servidor.
+
+## Repositorio GitHub
+
+Remoto local `github`: https://github.com/Pokidj/entornos. Carga inicial pendiente
+de autenticación de Git en Windows; instrucciones en DOCUMENTACION.md.
+El código de la web vive en `dist/`. GitHub no implica despliegue automático.

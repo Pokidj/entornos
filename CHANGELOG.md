@@ -5,6 +5,36 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## Conexión con GitHub — 05/11/2026
+
+Repositorio elegido: https://github.com/Pokidj/entornos (rama de destino main).
+El remoto local se llama github. El conector de GitHub confirmó el repositorio
+vacío y permisos de lectura/escritura. La carga inicial no se ha completado:
+el gestor de credenciales de Git de Windows no es accesible desde el entorno aislado.
+La conexión del plugin y la autenticación de Git local son mecanismos diferentes.
+
+Tras iniciar sesión de Git en Windows, subir desde la carpeta entorno-rp con:
+
+```powershell
+git push -u github HEAD:main
+```
+
+El código está en dist/. Publicar en GitHub no despliega automáticamente el
+sitio de Sites ni un servidor externo. La identidad de Sites se conserva en
+.openai/hosting.json. No se ha cambiado la audiencia ni publicado otra versión.
+
+
+## 29/10/2026 — Revisión y entrega para servidor propio
++
++- Nueva INSTALACION.md: subida de archivos estáticos, HTTPS, cambio de dominio
++  autorizado por el puente, comprobación y actualización del alojamiento.
++- Guía incluida en los tres ZIP; documentación canónica y LEEME/PRUEBAS coherentes.
++- Revisión de sintaxis, JSON, enlaces locales, EXE y contenido de los paquetes.
++  Pruebas y límites recogidos en REVISION.md. No hay cambios del código de
++  ejecución, recompilación del EXE ni publicación adicional de la web.
++  No se ha instalado en el servidor del usuario ni probado una partida real.
++
++
 ## 29/10/2026 — Guardados compactos y asistente paso a paso
 
 - Guardados como accesos pequeños, con formulario y gestión plegables.
