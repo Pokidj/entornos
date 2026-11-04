@@ -1,5 +1,32 @@
 # Instalación en tu servidor
 
+## GitHub Pages — 05/11/2026
+
+Repositorio: https://github.com/Pokidj/entornos. Código estático en `dist/`.
+En Settings → Pages → Build and deployment → Source, seleccionar **GitHub Actions**.
+El workflow `.github/workflows/pages.yml` publica solo `dist` al cambiar la web
+(o el propio workflow) en main. También puede ejecutarse con Run workflow.
+La dirección prevista, una vez completado el despliegue, es:
+https://pokidj.github.io/entornos/
+
+No se publica la raíz del repositorio: documentación, pruebas, capturas ni
+metadatos de Sites quedan fuera del artefacto. Las capturas de revisión se retiran
+del seguimiento de Git, conservando sus copias locales. `dist/.nojekyll` evita
+procesamiento Jekyll. No se requiere compilación ni dependencias en el despliegue.
+Las rutas de recursos y del catálogo son relativas y admiten `/entornos/`.
+
+Para conectar el puente desde Pages, editar `configuracion.json` junto al EXE:
+
+```json
+{"hotkey":"CTRL+F9","web_url":"https://pokidj.github.io/entornos/"}
+```
+
+Reiniciar el puente y permitir el acceso local en el navegador si lo solicita.
+El dominio original de Sites sigue siendo una publicación independiente.
+La conexión a GitHub y la carga inicial de main ya están confirmadas; Pages
+requiere su configuración y un workflow completado antes de darlo por publicado.
+
+
 ## Subir la web
 
 1. Descomprime `entorno-generator-ultima-version.zip`.

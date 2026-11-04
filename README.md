@@ -67,8 +67,16 @@ Para alojarlo en tu servidor, sube el contenido del ZIP de la web al directorio
 público y sigue `INSTALACION.md`, incluido en los tres paquetes. No requiere
 instalar herramientas de desarrollo en el servidor.
 
-## Repositorio GitHub
+## GitHub y despliegue
 
-Remoto local `github`: https://github.com/Pokidj/entornos. Carga inicial pendiente
-de autenticación de Git en Windows; instrucciones en DOCUMENTACION.md.
-El código de la web vive en `dist/`. GitHub no implica despliegue automático.
+Repositorio: [Pokidj/entornos](https://github.com/Pokidj/entornos).
+
+1. En **Settings → Pages → Source**, selecciona **GitHub Actions**.
+2. Abre **Actions → Publicar en GitHub Pages** y comprueba el despliegue.
+3. La dirección prevista es https://pokidj.github.io/entornos/.
+
+El workflow publica únicamente `dist/`, sin compilación. Los cambios de la web
+subidos a main activan su publicación; documentación y pruebas quedan fuera.
+El resto del repositorio se conserva para mantenimiento. Las capturas de revisión
+se excluyen de Git. Consulta `INSTALACION.md` para autorizar Pages en el puente.
+El sitio de Sites se mantiene independiente; no se sincroniza automáticamente.

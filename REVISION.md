@@ -2,6 +2,17 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Preparación de GitHub Pages — 05/11/2026
+
+- Carga inicial de main confirmada por el conector en el commit 7872e796a378981271807009c8aba1180933aad2.
+- Revisados publicación limitada a dist, recursos relativos bajo /entornos/, JSON,
+  archivos necesarios y exclusión de las capturas. Copias locales conservadas.
+- Cambio de distribución, sin modificar el generador ni el puente. Se conservan
+  las pruebas funcionales de la revisión anterior; EXE sin recompilar.
+- Activación de Pages y ejecución remota pendientes de confirmación. La dirección
+  prevista no se declara publicada hasta un despliegue correcto de GitHub Actions.
+
+
 ## Conexión GitHub — 05/11/2026
 
 - Repositorio Pokidj/entornos confirmado vacío mediante el conector, con permisos

@@ -3,23 +3,31 @@
 Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
-## Conexión con GitHub — 05/11/2026
+## GitHub Pages — 05/11/2026
 
-Repositorio elegido: https://github.com/Pokidj/entornos (rama de destino main).
-El remoto local se llama github. El conector de GitHub confirmó el repositorio
-vacío y permisos de lectura/escritura. La carga inicial no se ha completado:
-el gestor de credenciales de Git de Windows no es accesible desde el entorno aislado.
-La conexión del plugin y la autenticación de Git local son mecanismos diferentes.
+Repositorio: https://github.com/Pokidj/entornos. Código estático en `dist/`.
+En Settings → Pages → Build and deployment → Source, seleccionar **GitHub Actions**.
+El workflow `.github/workflows/pages.yml` publica solo `dist` al cambiar la web
+(o el propio workflow) en main. También puede ejecutarse con Run workflow.
+La dirección prevista, una vez completado el despliegue, es:
+https://pokidj.github.io/entornos/
 
-Tras iniciar sesión de Git en Windows, subir desde la carpeta entorno-rp con:
+No se publica la raíz del repositorio: documentación, pruebas, capturas ni
+metadatos de Sites quedan fuera del artefacto. Las capturas de revisión se retiran
+del seguimiento de Git, conservando sus copias locales. `dist/.nojekyll` evita
+procesamiento Jekyll. No se requiere compilación ni dependencias en el despliegue.
+Las rutas de recursos y del catálogo son relativas y admiten `/entornos/`.
 
-```powershell
-git push -u github HEAD:main
+Para conectar el puente desde Pages, editar `configuracion.json` junto al EXE:
+
+```json
+{"hotkey":"CTRL+F9","web_url":"https://pokidj.github.io/entornos/"}
 ```
 
-El código está en dist/. Publicar en GitHub no despliega automáticamente el
-sitio de Sites ni un servidor externo. La identidad de Sites se conserva en
-.openai/hosting.json. No se ha cambiado la audiencia ni publicado otra versión.
+Reiniciar el puente y permitir el acceso local en el navegador si lo solicita.
+El dominio original de Sites sigue siendo una publicación independiente.
+La conexión a GitHub y la carga inicial de main ya están confirmadas; Pages
+requiere su configuración y un workflow completado antes de darlo por publicado.
 
 
 ## Entrega para alojamiento propio — 29/10/2026

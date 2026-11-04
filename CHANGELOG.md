@@ -5,6 +5,18 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 05/11/2026 — Preparación y limpieza para GitHub Pages
+
+- Workflow de publicación de dist en main, con ejecución manual y permisos mínimos.
+- .nojekyll y comprobación previa de archivos; rutas relativas compatibles con /entornos/.
+- Capturas de revisión retiradas del seguimiento, con copias locales conservadas;
+  cachés, dependencias, ZIP y capturas excluidos de Git.
+- Manual, instalación y README actualizados tras confirmar la carga inicial de main.
+  Documentado el dominio de Pages en la configuración del puente; EXE conservado.
+- Verificación estática y ZIP regenerados. Estado del despliegue en REVISION.md;
+  sin pruebas nuevas de una partida real ni cambios funcionales del generador.
+
+
 ## Conexión con GitHub — 05/11/2026
 
 Repositorio elegido: https://github.com/Pokidj/entornos (rama de destino main).

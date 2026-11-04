@@ -1,1 +1,9 @@
 tests/node_modules/
+__pycache__/
+*.pyc
+.venv/
+*.zip
+*.zip.tmp
+aviso-copiado.png
+descarga-puente.png
+revision-movil.png
