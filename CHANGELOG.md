@@ -5,6 +5,17 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 05/11/2026 — Detalles de guardados al pasar el cursor
+
+- Botones con solo el nombre, conservando carga directa, selección y ventana Guardar.
+- Resumen flotante al apuntar/enfocar; en móvil se muestra al activar el guardado.
+- Recuadro contenido en pantalla, legible al mover el cursor sobre él y cerrable
+  con Escape, clic fuera, desplazamiento o cambio de tamaño. Descripción accesible
+  propia de cada botón y ausencia de cambios de selección al consultar detalles.
+- Pruebas y comprobación visual registradas en REVISION.md. Documentación y ZIP
+  actualizados, conservando el EXE. Sin envíos a una partida real.
+
+
 ## 05/11/2026 — Guardado con popup y tarjetas descriptivas
 
 - Guardar abre un diálogo de nombre con sugerencia y vista previa. Intro confirma;

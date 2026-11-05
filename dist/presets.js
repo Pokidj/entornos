@@ -153,7 +153,55 @@ function presetSummary(data) {
   return {scene: title, vehicle: car, wardrobe: clothing,
     search: [title, car, clothing, ...people].join(" ")};
 }
+const presetHoverTooltip = document.createElement("div");
+presetHoverTooltip.id = "preset-hover-tooltip";
+presetHoverTooltip.className = "preset-hover-tooltip";
+presetHoverTooltip.hidden = true;
+// Each button has its own accessible description; this is its visual duplicate.
+presetHoverTooltip.setAttribute("aria-hidden", "true");
+document.body.append(presetHoverTooltip);
+let presetHoverAnchor = null, presetHoverTimer;
+function hidePresetTooltip() {
+  clearTimeout(presetHoverTimer);
+  presetHoverTooltip.hidden = true;
+  presetHoverAnchor = null;
+}
+function showPresetTooltip(button, name, summary) {
+  clearTimeout(presetHoverTimer);
+  presetHoverAnchor = button;
+  const title = document.createElement("strong"); title.textContent = name;
+  presetHoverTooltip.replaceChildren(title);
+  for (const value of [summary.scene, summary.vehicle, summary.wardrobe]) {
+    const row = document.createElement("p"); row.textContent = value;
+    presetHoverTooltip.append(row);
+  }
+  const width = document.documentElement.clientWidth || window.innerWidth;
+  presetHoverTooltip.style.width = Math.min(340, width - 24) + "px";
+  presetHoverTooltip.hidden = false;
+  const anchor = button.getBoundingClientRect(), tip = presetHoverTooltip.getBoundingClientRect();
+  presetHoverTooltip.style.left = Math.max(12, Math.min(anchor.left, width - tip.width - 12)) + "px";
+  const below = anchor.bottom + 8;
+  presetHoverTooltip.style.top = (below + tip.height <= window.innerHeight - 12
+    ? below : Math.max(12, anchor.top - tip.height - 8)) + "px";
+}
+function schedulePresetTooltipHide() {
+  clearTimeout(presetHoverTimer);
+  presetHoverTimer = setTimeout(() => {
+    if (!presetHoverAnchor?.matches(":focus-visible")) hidePresetTooltip();
+  }, 140);
+}
+presetHoverTooltip.onpointerenter = () => clearTimeout(presetHoverTimer);
+presetHoverTooltip.onpointerleave = schedulePresetTooltipHide;
+document.addEventListener("keydown", event => {if (event.key === "Escape") hidePresetTooltip();});
+document.addEventListener("pointerdown", event => {
+  if (!event.target.closest?.(".preset-shortcut") && !presetHoverTooltip.contains(event.target)) hidePresetTooltip();
+});
+window.addEventListener("resize", hidePresetTooltip);
+window.addEventListener("scroll", event => {
+  if (event.target !== presetHoverTooltip) hidePresetTooltip();
+}, true);
 function renderPresets() {
+  hidePresetTooltip();
   const list = $("preset-list"), search = $("preset-search");
   list.replaceChildren();
   $("preset-count").textContent = `${savedPresets.length} guardado${savedPresets.length === 1 ? "" : "s"}`;
@@ -171,14 +219,20 @@ function renderPresets() {
     button.dataset.presetId = preset.id;
     button.setAttribute("aria-label", preset.name);
     button.setAttribute("aria-pressed", String(preset.id === activePresetId));
-    button.title = `Cargar ${preset.name}\n${summary.scene}\n${summary.vehicle}\n${summary.wardrobe}`;
     const name = document.createElement("strong"); name.textContent = preset.name;
     const details = document.createElement("span"); details.id = "preset-summary-" + index;
+    details.className = "preset-summary-text";
     const scene = document.createElement("span"); scene.className = "preset-card-scene"; scene.textContent = summary.scene;
     const car = document.createElement("span"); car.className = "preset-card-car"; car.textContent = summary.vehicle;
     const wardrobe = document.createElement("span"); wardrobe.className = "preset-card-wardrobe"; wardrobe.textContent = summary.wardrobe;
     details.append(scene, car, wardrobe); button.append(name, details);
     button.setAttribute("aria-describedby", details.id);
+    button.onpointerenter = event => {
+      if (event.pointerType !== "touch") showPresetTooltip(button, preset.name, summary);
+    };
+    button.onpointerleave = schedulePresetTooltipHide;
+    button.onfocus = () => showPresetTooltip(button, preset.name, summary);
+    button.onblur = () => {if (presetHoverAnchor === button) hidePresetTooltip();};
     button.onclick = () => {
       loadConfig(preset.data);
       activePresetId = preset.id;
@@ -224,6 +278,7 @@ function capturePresetData() {
 }
 function openPresetDialog(mode = "save") {
   if (presetDialog.open || !presetsReadable) return;
+  hidePresetTooltip();
   const selected = savedPresets.find(p => p.id === activePresetId);
   if (mode === "save" ? !validPresetScene() : !selected) return;
   presetDialogMode = mode; presetDialogId = mode === "rename" ? selected.id : null;

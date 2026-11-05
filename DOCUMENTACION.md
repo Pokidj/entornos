@@ -3,6 +3,23 @@
 Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
+## Guardados compactos con detalles al apuntar — 05/11/2026
+
+Los guardados muestran solo el nombre en botones compactos. El resumen de escena,
+detalle, vehículo y ropa aparece al pasar el cursor o enfocar con el teclado.
+El recuadro flota sobre la página y no agranda la sección; se mantiene dentro del
+ancho disponible. Se puede pasar el cursor al recuadro para leerlo y cerrar con Escape.
+También se oculta al salir, pulsar fuera, desplazarse o cambiar el tamaño de la ventana.
+
+Un clic sigue cargando directamente el entorno. En móvil, activarlo carga la
+selección y muestra sus detalles; tocar fuera los cierra. El botón mide al menos
+44 px de alto en móvil. Los lectores de pantalla conservan una descripción propia
+de cada guardado. No se usa solo el atributo title como medio de acceso.
+
+La ventana Guardar, el buscador y las acciones de los guardados se conservan.
+Consultar un resumen no cambia ni carga parámetros y no escribe en almacenamiento.
+
+
 ## Mis entornos: guardar con ventana y tarjetas — 05/11/2026
 
 Pulsa Guardar después de preparar una escena. Se abre una ventana con un nombre
@@ -10,8 +27,8 @@ sugerido y una vista previa de la selección: escena/detalle, vehículo/color y 
 Puedes escribir otro nombre y confirmar con Guardar o Intro. Cancelar o Escape
 cierra sin escribir nada. El foco vuelve al botón desde el que abriste la ventana.
 
-Cada guardado es una tarjeta que se carga con un clic. Muestra nombre, cantidad,
-acción, detalle y lugar si se conocen, vehículo y vestimenta compartida o individual.
+Cada guardado es un botón compacto con nombre que se carga con un clic. Su resumen
+flotante muestra cantidad, acción, detalle y lugar si se conocen, vehículo y ropa.
 Los resúmenes reflejan los parámetros guardados y no cambian por editar el formulario.
 Los datos no elegidos se indican como «sin indicar», sin inventar detalles.
 
@@ -131,7 +148,7 @@ El empaquetador incluye la guía en los tres ZIP y conserva el EXE existente.
 ## Asistente y guardados compactos — 29/10/2026
 
 «Mis entornos» permanece encima de los paneles. Guardar abre la ventana de nombre
-y vista previa; las tarjetas muestran un resumen y conservan los guardados anteriores.
+y vista previa; los botones muestran los detalles al apuntarlos y conservan los guardados anteriores.
 
 Con la selección vacía, «¿Qué has visto?» guía por cuatro pasos: acción, detalle
 relacionado, personas (1–10) y lugar compatible. Detalle y lugar tienen buscador;
@@ -262,9 +279,9 @@ automáticamente; se puede vaciar expresamente para recuperarlo.
 ### Configuraciones con nombre y acceso rápido
 
 El recuadro Mis entornos está encima de los paneles. Usa Guardar para abrir la
-ventana de nombre y vista previa descrita al principio de este manual. Las tarjetas
-cargan de un clic, muestran escena, detalle, coche/color y ropa, y resaltan la última
-seleccionada. Actualizar, Renombrar y Eliminar actúan sobre esa tarjeta.
+ventana de nombre y vista previa descrita al principio de este manual. Los botones
+cargan de un clic, ofrecen escena, detalle, coche/color y ropa al apuntarlos, y
+resaltan el último seleccionado. Actualizar, Renombrar y Eliminar actúan sobre esa tarjeta.
 
 No hay espacios fijos ni límite de cinco elementos. Los nombres no se repiten
 ignorando mayúsculas y espacios sobrantes. La búsqueda aparece con más de seis

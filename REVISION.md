@@ -2,6 +2,17 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Guardados compactos y resumen flotante — 05/11/2026
+
+- Suite completa npm superada, incluidas copia, atajo, detección e historial.
+  Se añaden nueve comprobaciones de resumen, foco, Escape, salida del cursor,
+  interacción táctil y cambio de tamaño. Prueba dirigida de diálogo: 31 superadas.
+- Navegador real: botones con solo el nombre, resumen al enfocar sin cargar la
+  selección y cierre con Escape. A 320 px: carga con un toque, botón de 44 px,
+  resumen dentro de la pantalla y sin desbordamiento horizontal.
+- Documentación y ZIP actualizados. Puente y EXE conservados; no se repiten las
+  pruebas de Windows ni se realizan envíos a una partida real.
+
 ## Mis entornos: diálogo y resúmenes — 05/11/2026
 
 - 1.255 comprobaciones generales y suites de copia, atajo, detección e historial
