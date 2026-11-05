@@ -87,3 +87,9 @@ Actualiza el EXE, pulsa **Conectar puente** en la web y autoriza el dominio en
 la ventana de Windows. Se recuerda automáticamente. Ya no necesitas editar
 web_url al cambiar de alojamiento. El permiso local del navegador puede seguir
 siendo necesario. Código del puente en `bridge/`; descarga en `dist/downloads/`.
+
+## Redacción de la ropa
+
+La llamada describe al grupo con «uno de ellos», «otro» y, cuando corresponde,
+«el último». Colores combinados disponibles en ropa y coche; se eligen como
+negro/blanco y se redactan como «negro y blanco». Se conservan los guardados anteriores.

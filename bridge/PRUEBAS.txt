@@ -1,3 +1,7 @@
+Redacción de la web (05/11/2026): 1.233 comprobaciones principales y suites de
+copia, atajo, detección e historial (27) superadas. Código y EXE del puente sin
+cambios; no se han repetido sus pruebas de Windows ni enviado a una partida.
+
 Autorización por dominio (05/11/2026)
 
 34 pruebas: 33 correctas y una omitida por RegisterHotKey. Descubrimiento sin

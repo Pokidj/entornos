@@ -5,6 +5,18 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 05/11/2026 — Ropa y narración más naturales
+
+- Eliminados los puntos y coma de la generación, incluidos tonos y texto adicional.
+- Descripción individual integrada con uno de ellos/otro/el último, artículos
+  adecuados, variantes de verbos y accesorios, sin etiquetas Persona N en la llamada.
+- 210 combinaciones de dos colores añadidas a ropa y coche. La barra se expresa
+  como «y»; se mantienen los 26 índices anteriores y los guardados.
+- 1.233 comprobaciones principales y suites de copia, atajo, detección e historial
+  superadas. Prueba visual con tres personas, colores simples y combinados.
+- Puente y EXE sin cambios; documentación y ZIP actualizados. Sin envíos a una partida.
+
+
 ## 05/11/2026 — Autorización del puente desde cualquier dominio
 
 - Detección pública mínima y autorización nativa por dominio desde Conectar puente.

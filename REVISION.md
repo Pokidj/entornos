@@ -2,6 +2,21 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Redacción, ropa y colores — 05/11/2026
+
+- 1.233 comprobaciones generales superadas sobre 974 escenas. Pruebas nuevas de
+  redacción individual, descripción incompleta, más de, ropa compartida, artículos,
+  210 parejas de colores, compatibilidad de índices, guardado y ropa/coche bicolores.
+- Ausencia de puntos y coma comprobada en generación larga repetida, tonos y texto
+  propio; sustitución por puntos y mayúsculas. Versiones breves conservan los detalles.
+- Suites de copia, preparación/atajo, detección y 27 comprobaciones de historial
+  superadas. No se ha enviado nada a una partida real. Código y EXE del puente
+  conservados; no se repiten sus pruebas de Windows al no haber cambios en él.
+- En navegador: tres personas con negro, blanco y azul; después sudadera y pantalón
+  con negro/blanco. Resultado natural sin etiquetas técnicas ni barras en la llamada.
+- Documentación canónica y ZIP regenerados y verificados con el EXE existente.
+
+
 ## Puente para cualquier alojamiento — 05/11/2026
 
 - Puente: 34 pruebas, 33 correctas y una omitida por RegisterHotKey en el entorno

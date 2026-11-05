@@ -171,6 +171,13 @@ const colors = [
   "varios colores",
   "no se distingue",
 ];
+// Append only: saved environments keep the original color indexes.
+const twoToneColors = ["negro", "blanco", "gris", "rojo", "azul", "verde",
+  "amarillo", "naranja", "morado", "rosa", "marrón", "beige", "dorado",
+  "plateado", "turquesa"];
+for (const primary of twoToneColors)
+  for (const secondary of twoToneColors)
+    if (primary !== secondary) colors.push(primary + "/" + secondary);
 const situations = [
   [
     "amenazando a alguien",
@@ -1782,7 +1789,7 @@ $("clothing-person").onchange = () => {
 };
 $("same-clothing").onchange = () => generate();
 function individualWardrobeParts(brief) {
-  return wardrobePeople
+  const described = wardrobePeople
     .slice(0, wardrobeQuantity())
     .flatMap((outfit, index) => {
       if (!outfit) return [];
@@ -1792,21 +1799,65 @@ function individualWardrobeParts(brief) {
       const clothing = outfit.clothing ? text("clothing") : "";
       const color = outfit.clothcolor ? text("clothcolor") : "";
       const face = outfit.face ? text("face") : "";
-      const visibleClothes = clothing && clothing !== "no se distingue";
-      let description =
-        visibleClothes || color
-          ? (visibleClothes ? clothing : "ropa") +
-            (color
-              ? color === "no se distingue"
-                ? " de color desconocido"
-                : " de color " + color
-              : "")
-          : "";
-      if (face && face !== "sin detalle visible")
-        description += (description ? ", " : "") + face;
-      if (!description) return [];
-      return ["Persona " + (index + 1) + ": " + description + "."];
+      const description = outfitDescription(clothing, color, face, false, index);
+      return description ? [{description, index}] : [];
     });
+  const allDescribed = described.length === wardrobeQuantity() && !$("number-more").checked;
+  const phrases = described.map(({description}, index) => {
+    const subject = index === 0 ? "uno de ellos" :
+      index === described.length - 1 && allDescribed ?
+        (described.length === 2 ? "el otro" : "el último") : "otro";
+    return subject + " " + description;
+  });
+  if (!phrases.length) return [];
+  let sentence = phrases.length === 1 ? phrases[0] :
+    phrases.slice(0, -1).join(", ") + (phrases.length === 2 ? ", y " : " y ") + phrases.at(-1);
+  return [sentence.charAt(0).toUpperCase() + sentence.slice(1) + "."];
+}
+function spokenColor(color) {
+  return color.replaceAll("/", " y ");
+}
+function garmentDescription(clothing) {
+  const garments = {
+    "sudadera y pantalón largo": "una sudadera y un pantalón largo",
+    "sudadera y pantalón corto": "una sudadera y un pantalón corto",
+    "traje": "un traje", "chándal": "un chándal",
+    "chaqueta y vaqueros": "una chaqueta y unos vaqueros",
+    "camiseta y vaqueros": "una camiseta y unos vaqueros",
+    "camiseta y pantalón corto": "una camiseta y un pantalón corto",
+    "chaleco y pantalón largo": "un chaleco y un pantalón largo",
+    "camisa y pantalón": "una camisa y un pantalón",
+    "cazadora de cuero y vaqueros": "una cazadora de cuero y unos vaqueros",
+    "jersey y pantalón largo": "un jersey y un pantalón largo",
+    "chaqueta de cuero y pantalón de moto": "una chaqueta de cuero y un pantalón de moto",
+  };
+  if (garments[clothing]) return garments[clothing];
+  if (/^(mono|uniforme|abrigo|chaleco|impermeable|poncho)\b/.test(clothing)) return "un " + clothing;
+  if (/^(chaqueta|camisa|camiseta)\b/.test(clothing)) return "una " + clothing;
+  return clothing;
+}
+function outfitDescription(clothing, color, face = "", plural = false, variant = 0) {
+  if (clothing === "ropa diferente entre sí" && !plural) clothing = "ropa variada";
+  const visible = clothing && clothing !== "no se distingue";
+  const shade = color && color !== "no se distingue" ? spokenColor(color) : "";
+  let description = "";
+  if (visible) {
+    description = (plural ? "llevan " : ["lleva ", "viste ", "va con "][variant % 3]) + garmentDescription(clothing);
+    if (shade && !clothing.includes(shade))
+      description += shade === "camuflaje" ? " de camuflaje" : " en " + shade;
+  } else if (shade) {
+    if (shade === "camuflaje") description = plural ? "van de camuflaje" : "va de camuflaje";
+    else if (shade === "varios colores") description = (plural ? "llevan" : "lleva") + " ropa de varios colores";
+    else description = (plural ? "van vestidos de " : ["va vestido de ", "viste de ", "va de "][variant % 3]) + shade;
+  } else if (color === "no se distingue")
+    description = (plural ? "llevan" : "lleva") + " ropa cuyo color no distingo";
+  if (face && face !== "sin detalle visible") {
+    const accessory = /^llev[ae]n?\b/.test(description)
+      ? (plural ? "van " : "va ") + face
+      : (plural ? "llevan " : "lleva ") + face.replace(/^con /, "");
+    description += (description ? " y " : "") + accessory;
+  }
+  return description;
 }
 function restoreWardrobe(data) {
   wardrobePeople = Array.isArray(data.wardrobe?.people)
@@ -1892,33 +1943,18 @@ function generate() {
         action +
         (place ? " " + place : "") +
         "."
-      : "Veo a " + qty + (place ? " " + place : "") + "; " + action + ".",
+      : "Veo a " + qty + " que " + action + (place ? " " + place : "") + ".",
   ];
   parts[0] = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
   const clothing = $("clothing").value === "" ? "" : selectedText("clothing"),
     color = $("clothcolor").value === "" ? "" : selectedText("clothcolor");
   const individualClothing = !$("wardrobe-controls").hidden && !wardrobeShared;
   if (individualClothing) parts.push(...individualWardrobeParts(brief));
-  else if (clothing || color) {
-    let desc = brief
-      ? color
-        ? "Ropa " +
-          (color === "no se distingue"
-            ? "de color desconocido"
-            : "de color " + color)
-        : clothing
-      : (one || !number ? "Lleva " : "Llevan ") +
-        (clothing && clothing !== "no se distingue" ? clothing : "ropa") +
-        (color && color !== "no se distingue" ? " de color " + color : "");
-    if (clothing !== "no se distingue" || color) parts.push(desc + ".");
+  else {
+    const face = !brief && $("face").value !== "" ? selectedText("face") : "";
+    const desc = outfitDescription(clothing, color, face, !(one || !number));
+    if (desc) parts.push(desc.charAt(0).toUpperCase() + desc.slice(1) + ".");
   }
-  if (
-    !individualClothing &&
-    !brief &&
-    $("face").value !== "" &&
-    selectedText("face") !== "sin detalle visible"
-  )
-    parts.push((one || !number ? "Va " : "Van ") + selectedText("face") + ".");
   const arms = weaponDescription;
   if (arms[weapon])
     parts.push(
@@ -1942,7 +1978,7 @@ function generate() {
     parts.push(
       (brief ? "Vehículo: " : "El vehículo que veo es un ") +
         vehicle.name +
-        (col && col !== "no se distingue" ? " de color " + col : "") +
+        (col && col !== "no se distingue" ? " de color " + spokenColor(col) : "") +
         (!brief && finish && finish !== "sin especificar"
           ? ", con acabado " + finish
           : "") +
@@ -1961,7 +1997,9 @@ function generate() {
     parts = voiceScene(parts, tone, $("length").value === "long");
   }
   const seenParts = new Set();
-  parts = parts.map(cleanRepeatedWords).filter((part) => {
+  parts = parts.map((part) => cleanRepeatedWords(part
+    .replace(/;\s*([¿¡]?\p{L})/gu, (_, first) => ". " + first.toLocaleUpperCase("es"))
+    .replace(/;/g, "."))).filter((part) => {
     const key = norm(part)
       .replace(/[^\p{L}\p{N}]+/gu, " ")
       .trim();

@@ -3,6 +3,30 @@
 Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
+## Redacción natural y colores combinados — 05/11/2026
+
+Los entornos generados no llevan puntos y coma. La escena enlaza con «que está»
+o «que están» y los puntos y coma de los tonos o del texto adicional se convierten
+en frases separadas, con mayúscula inicial.
+
+La ropa individual se cuenta en una frase: «uno de ellos…», «otro…» y «el último…».
+«El último» solo se utiliza cuando todas las personas de una cantidad exacta
+están descritas; con «más de» o descripciones incompletas no se da por identificado
+al resto. El selector del editor conserva Persona 1, Persona 2, etc. para elegir
+qué datos modificar; esas etiquetas no se copian a la llamada.
+
+Las prendas usan artículos y verbos variados: «lleva una sudadera y un pantalón
+largo», «viste un traje» o «va con ropa deportiva». Los accesorios se integran
+sin repetir innecesariamente el mismo verbo. Los datos desconocidos o vacíos no
+se sustituyen por ropa inventada. El modo compartido se redacta en plural.
+
+Se añaden 210 parejas ordenadas de colores, por ejemplo negro/blanco, rojo/negro
+y azul/blanco, tanto para ropa como para coche. En el entorno se leen «negro y
+blanco», sin la barra. No se atribuye un color a una prenda concreta si no se
+ha indicado. Hay 236 opciones: los 26 colores anteriores conservan sus índices,
+por lo que los favoritos, guardados y configuraciones antiguas siguen siendo válidos.
+
+
 ## Conectar desde cualquier alojamiento — 05/11/2026
 
 Requiere actualizar Puente Entorno.exe y la web. No hay que editar el dominio
