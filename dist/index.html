@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261105-natural" />
+    <link rel="stylesheet" href="styles.css?v=20261105-preset-dialog" />
   </head>
   <body>
     <header>
@@ -69,39 +69,36 @@
         </p>
       </section>
       <section class="presets named-presets" aria-label="Mis entornos">
-        <div class="preset-heading">
-          Mis entornos
-          <small id="preset-count" title="Guardados en este navegador"
-            >0 guardados</small
-          >
+        <div class="preset-bar">
+          <div class="preset-heading">Mis entornos <small id="preset-count" title="Guardados en este navegador">0 guardados</small></div>
+          <div id="preset-actions" class="preset-actions" hidden>
+            <button type="button" id="preset-update" title="Guardar la selección actual en el entorno seleccionado">Actualizar</button>
+            <button type="button" id="preset-rename">Renombrar</button>
+            <button type="button" id="preset-delete">Eliminar</button>
+          </div>
+          <button type="button" id="preset-save">Guardar</button>
         </div>
         <div id="slots">
-          <details id="preset-manager" class="preset-manager"><summary>Guardar / gestionar</summary><div class="preset-toolbar">
-            <input
-              id="preset-name"
-              maxlength="40"
-              placeholder="Nombre del entorno…"
-              aria-label="Nombre del entorno"
-              autocomplete="off"
-            />
-            <button type="button" id="preset-save">Guardar</button>
-            <div id="preset-actions" class="preset-actions" hidden>
-              <button type="button" id="preset-update">Actualizar datos</button>
-              <button type="button" id="preset-rename">Renombrar</button>
-              <button type="button" id="preset-delete">Eliminar</button>
-            </div>
-          </div>
-          </details><div
-            id="preset-list"
-            role="group"
-            aria-label="Accesos rápidos a entornos guardados"
-          ></div>
-          <p id="preset-empty" class="hint">
-            Guarda tu selección con un nombre y aparecerá aquí.
-          </p>
+          <input id="preset-search" type="search" aria-label="Buscar mis entornos" placeholder="Buscar por nombre, escena, coche o ropa…" hidden />
+          <div id="preset-list" role="group" aria-label="Accesos rápidos a entornos guardados"></div>
+          <p id="preset-empty" class="hint">Prepara una escena y pulsa Guardar para tenerla aquí a un clic.</p>
         </div>
         <div id="slot-status" role="status" aria-live="polite"></div>
       </section>
+      <dialog id="preset-dialog" class="preset-dialog" aria-labelledby="preset-dialog-title" aria-describedby="preset-dialog-help">
+        <form id="preset-dialog-form">
+          <h2 id="preset-dialog-title">Guardar entorno</h2>
+          <p id="preset-dialog-help" class="hint">Ponle un nombre para volver a esta selección con un clic.</p>
+          <div id="preset-dialog-summary" class="preset-dialog-summary"></div>
+          <label for="preset-name">Nombre del entorno</label>
+          <input id="preset-name" maxlength="40" required autocomplete="off" placeholder="Por ejemplo: Atraco de noche" autofocus />
+          <p id="preset-error" role="alert" aria-live="polite"></p>
+          <div class="preset-dialog-buttons">
+            <button type="button" id="preset-cancel">Cancelar</button>
+            <button type="submit" id="preset-confirm">Guardar</button>
+          </div>
+        </form>
+      </dialog>
       <div class="grid">
         <section class="card">
           <div class="head">
@@ -499,15 +496,15 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261105-natural"></script>
-    <script src="app.js?v=20261105-natural"></script>
-    <script src="robbery-catalog.js?v=20261105-natural"></script>
-    <script src="presets.js?v=20261105-natural"></script>
-    <script src="situation-combo.js?v=20261105-natural"></script>
-    <script src="searchable-selects.js?v=20261105-natural"></script>
-    <script src="location-logic.js?v=20261105-natural"></script>
-    <script src="sent-history.js?v=20261105-natural"></script>
-    <script src="fivem-bridge.js?v=20261105-natural"></script>
-    <script src="experience.js?v=20261105-natural"></script>
+    <script src="voices.js?v=20261105-preset-dialog"></script>
+    <script src="app.js?v=20261105-preset-dialog"></script>
+    <script src="robbery-catalog.js?v=20261105-preset-dialog"></script>
+    <script src="presets.js?v=20261105-preset-dialog"></script>
+    <script src="situation-combo.js?v=20261105-preset-dialog"></script>
+    <script src="searchable-selects.js?v=20261105-preset-dialog"></script>
+    <script src="location-logic.js?v=20261105-preset-dialog"></script>
+    <script src="sent-history.js?v=20261105-preset-dialog"></script>
+    <script src="fivem-bridge.js?v=20261105-preset-dialog"></script>
+    <script src="experience.js?v=20261105-preset-dialog"></script>
   </body>
 </html>

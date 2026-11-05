@@ -29,6 +29,8 @@ async function app({ delayCatalog = false, storage = {} } = {}) {
     virtualConsole: vc,
   });
   const w = dom.window;
+  w.HTMLDialogElement.prototype.showModal = function(){this.setAttribute('open','');};
+  w.HTMLDialogElement.prototype.close = function(){this.removeAttribute('open');this.dispatchEvent(new w.Event('close'));};
   for (const [key,value] of Object.entries(storage)) w.localStorage.setItem(key,value);
   let release;
   w.HTMLElement.prototype.scrollIntoView = function () {};
@@ -74,10 +76,16 @@ function set(a, id, value) {
 }
 function button(a, container, label) {
   const b = [...a.d.querySelectorAll(container + " button")].find(
-    (b) => b.textContent.trim() === label,
+    (b) => (b.getAttribute("aria-label") || b.textContent.trim()) === label,
   );
   assert.ok(b, "Button " + label);
   b.click();
+}
+function presetDialogAction(a, name, mode='save') {
+  if(a.d.getElementById('preset-dialog').open) a.d.getElementById('preset-cancel').click();
+  a.d.getElementById(mode==='rename'?'preset-rename':'preset-save').click();
+  a.d.getElementById('preset-name').value=name;
+  a.d.getElementById('preset-dialog-form').dispatchEvent(new a.w.Event('submit',{bubbles:true,cancelable:true}));
 }
 function scene(a, label) {
   const id = a.w.eval(
@@ -174,8 +182,7 @@ button(a, "#travel-buttons", "Seleccionar coche");
 ok(a.d.getElementById('vehicle-picker').open, 'Catalog starts expanded');
 [...a.d.querySelectorAll('#cars .choose')].find(b=>b.firstChild.textContent==='Massacro').click();
 ok(!a.d.getElementById('vehicle-picker').open, 'Choosing a car collapses catalog');
-a.d.querySelector("#slots input").value = "Revisión";
-button(a, "#slots", "Guardar");
+presetDialogAction(a, "Revisión");
 await tick();
 a.d.getElementById("reset").click();
 ok(output(a) === "", "Clear all");
@@ -192,7 +199,7 @@ await tick();
 ok(a.w.copied === output(a).trim(), "Clipboard");
 // 40 updates must not leak detached selector handlers.
 for (let i = 0; i < 40; i++) {
-  button(a, "#slots", "Actualizar datos");
+  button(a, "#preset-actions", "Actualizar");
   await tick();
 }
 ok(
@@ -282,17 +289,15 @@ ok(stored()[1].name==='Atraco (2)','Migration disambiguates duplicate names');
 button(p,'#preset-list','Atraco');
 ok(output(p).includes('Massacro') && output(p).includes('3 personas'),'Legacy preset retains full parameters');
 for(let i=0;i<7;i++){
-  p.d.getElementById('preset-name').value='Nueva '+i;
-  p.d.getElementById('preset-save').click();
+  presetDialogAction(p,'Nueva '+i);
 }
 ok(stored().length===9,'No five-entry limit');
 const before=stored().length;
-p.d.getElementById('preset-name').value='  nueva 0  ';
-p.d.getElementById('preset-save').click();
+presetDialogAction(p,'  nueva 0  ');
 ok(stored().length===before,'Duplicate name cannot overwrite');
-p.d.getElementById('preset-name').value='';p.d.getElementById('preset-save').click();
+presetDialogAction(p,'');
 ok(stored().length===before,'Empty name rejected');
-p.d.getElementById('preset-name').value='Renombrada';p.d.getElementById('preset-rename').click();
+presetDialogAction(p,'Renombrada','rename');
 ok(stored().some(x=>x.name==='Renombrada'),'Rename stored');
 p.d.getElementById('manual-number').value='27';p.d.getElementById('manual-number').dispatchEvent(new p.w.Event('input',{bubbles:true}));
 p.d.getElementById('preset-update').click();
@@ -318,11 +323,64 @@ ok(broken.w.localStorage.getItem('entorno-configs-v2')==='broken','Corrupt origi
 const memoryBefore=p.w.localStorage.getItem('entorno-configs-v2');
 const proto=Object.getPrototypeOf(p.w.localStorage), originalSet=proto.setItem;
 proto.setItem=()=>{throw new Error('quota')};
-p.d.getElementById('preset-name').value='No guardar';p.d.getElementById('preset-save').click();
+presetDialogAction(p,'No guardar');
 ok(p.w.localStorage.getItem('entorno-configs-v2')===memoryBefore,'Failed write keeps old data');
 ok(/No se ha podido guardar/.test(p.d.getElementById('slot-status').textContent),'Storage error reported');
 proto.setItem=originalSet;
 ok(p.errors.length===0,'No preset runtime errors');p.close();
+const modal = await app();
+const modalStore=()=>JSON.parse(modal.w.localStorage.getItem('entorno-configs-v2')||'[]');
+modal.d.getElementById('preset-save').focus();modal.d.getElementById('preset-save').click();
+ok(!modal.d.getElementById('preset-dialog').open&&modalStore().length===0,'Empty selection cannot open or save a preset');
+scene(modal,'atracando un yate');
+modal.d.getElementById('preset-save').click();
+ok(modal.d.getElementById('preset-dialog').open&&modal.d.activeElement.id==='preset-name','Save opens naming dialog with focus');
+ok(modalStore().length===0,'Opening dialog never writes storage');
+ok(modal.d.getElementById('preset-dialog-summary').textContent.includes('yate'),'Dialog previews the selected scene');
+modal.d.getElementById('preset-cancel').click();
+ok(modalStore().length===0&&!modal.d.getElementById('preset-dialog').open,'Cancel leaves storage untouched');
+ok(modal.d.activeElement.id==='preset-save','Cancel restores focus to opener');
+modal.d.getElementById('preset-save').click();
+modal.d.getElementById('preset-dialog').dispatchEvent(new modal.w.Event('cancel',{cancelable:true}));
+ok(!modal.d.getElementById('preset-dialog').open&&modalStore().length===0,'Escape/cancel event closes without saving');
+presetDialogAction(modal,'Yate de noche');
+const card=modal.d.querySelector('#preset-list button');
+ok(card.getAttribute('aria-label')==='Yate de noche'&&card.querySelector('strong').textContent==='Yate de noche','Card preserves a clear accessible name');
+ok(card.textContent.includes('yate')&&card.textContent.includes('Vehículo sin indicar')&&card.textContent.includes('Ropa sin indicar'),'Card shows scene and missing details without inventing');
+card.click();
+ok(!modal.d.getElementById('preset-actions').hidden&&output(modal).includes('yate'),'One click loads and enables actions');
+modal.d.getElementById('preset-save').click();
+ok(modal.d.getElementById('preset-name').value!=='','Default name is suggested for fast saving');
+modal.d.getElementById('preset-cancel').click();
+const oldDraft=JSON.stringify(modalStore()[0].data);
+presetDialogAction(modal,'Nuevo nombre','rename');
+ok(modalStore()[0].name==='Nuevo nombre'&&JSON.stringify(modalStore()[0].data)===oldDraft,'Rename changes only the name');
+for(let i=0;i<7;i++)presetDialogAction(modal,'Guardado '+i);
+ok(!modal.d.getElementById('preset-search').hidden,'Search appears with more than six presets');
+modal.d.getElementById('preset-search').value='guardado 3';modal.d.getElementById('preset-search').dispatchEvent(new modal.w.Event('input'));
+ok(modal.d.querySelectorAll('#preset-list button').length===1,'Search filters saved names');
+modal.d.getElementById('preset-search').value='yate';modal.d.getElementById('preset-search').dispatchEvent(new modal.w.Event('input'));
+ok(modal.d.querySelectorAll('#preset-list button').length===8,'Search also finds scene summaries');
+modal.d.getElementById('preset-search').value='no existe';modal.d.getElementById('preset-search').dispatchEvent(new modal.w.Event('input'));
+ok(!modal.d.getElementById('preset-empty').hidden&&modal.d.getElementById('preset-empty').textContent.includes('búsqueda'),'No-match state explains filter');
+modal.d.getElementById('preset-search').value='';modal.w.renderPresets();
+modal.d.getElementById('preset-save').click();
+const captured=modal.w.eval('JSON.stringify(presetDraft)');
+set(modal,'scene-action','kidnap');
+modal.d.getElementById('preset-name').value='Captura estable';
+modal.d.getElementById('preset-dialog-form').dispatchEvent(new modal.w.Event('submit',{cancelable:true}));
+ok(JSON.stringify(modalStore().at(-1).data)===captured,'Modal saves the captured selection even if background state changes');
+const malicious={fields:{situation:'custom','scene-action':'other',clothing:'0',clothcolor:'0',travel:'vehicle'},customSituation:'<img src=x onerror=alert(1)>',number:{toString:'bad'},vehicleName:'<svg onload=alert(1)>'};
+ok(typeof modal.w.presetSummary(malicious).scene==='string','Malformed legacy quantities cannot crash summaries');
+modal.w.eval('savedPresets.push('+JSON.stringify({id:'safe-card',name:'<img src=x>',data:malicious})+');renderPresets()');
+ok(!modal.d.querySelector('#preset-list img, #preset-list svg'),'Summary and names are text, never HTML');
+const modalDelayed=await app({delayCatalog:true,storage:{'entorno-configs-v2':JSON.stringify([{id:'car',name:'Coche guardado',data:saved}])}});
+ok(!modalDelayed.d.querySelector('#preset-list button').textContent.includes('Massacro'),'Old card can render before catalog');
+modalDelayed.release();await tick();await tick();
+ok(modalDelayed.d.querySelector('#preset-list button').textContent.includes('Massacro'),'Catalog completion refreshes vehicle summary');
+modalDelayed.close();
+ok(modal.errors.length===0,'No dialog/card runtime errors');modal.close();
+
 const outfits = await app();
 scene(outfits, "amenazando a alguien");
 button(outfits, "#numbers", "2");
@@ -362,7 +420,7 @@ outfits.w.eval('loadConfig('+JSON.stringify({number:'2',fields:{situation:'0',cl
 ok(outfits.d.getElementById('same-clothing').checked && !output(outfits).includes('Persona 1:'), 'Legacy group clothing remains shared');
 outfits.w.eval('loadConfig('+wardrobeSaved+')');
 set(outfits,'clothing-person','1');
-outfits.d.getElementById('preset-name').value='Ropa individual'; outfits.d.getElementById('preset-save').click();
+presetDialogAction(outfits,'Ropa individual');
 outfits.d.getElementById('reset').click(); button(outfits,'#preset-list','Ropa individual');
 ok(output(outfits).includes('Uno de ellos lleva ropa de calle') && output(outfits).includes('el otro viste ropa deportiva'), 'Named preset retains both outfits from second-person editor');
 outfits.d.getElementById('manual-number').value='999';
@@ -466,7 +524,7 @@ for (const length of ['normal','brief','long']) {
 }
 ok(custom.d.getElementById('situation').value==='custom','Custom scene selected');
 ok(![...custom.d.getElementById('place').options].some(o=>o.textContent==='en una tienda'),'Custom scene uses place compatibility');
-custom.d.getElementById('preset-name').value='Mi situación';custom.d.getElementById('preset-save').click();
+presetDialogAction(custom,'Mi situación');
 const customStorage=custom.w.localStorage.getItem('entorno-configs-v2');
 custom.d.getElementById('reset').click();button(custom,'#preset-list','Mi situación');
 ok(output(custom).includes('robando en una peluquería'),'Custom scene restored from preset');
@@ -604,7 +662,7 @@ ok(ux.d.getElementById('scene-action').value==='rob' && output(ux).includes('rob
 ok(ux.d.getElementById('assistant-progress').textContent==='Paso 2 de 4','Action advances to related detail');
 ok(!ux.d.getElementById('empty-guide').hidden && !ux.d.getElementById('generate').disabled,'Assistant stays available with generated preview');
 ok(ux.d.getElementById('flow-hint').textContent.includes('aviso general'),'Contextual help describes generic action');
-ok(!ux.d.getElementById('preset-manager').open,'Save management starts collapsed');
+ok(!ux.d.getElementById('preset-dialog').open,'Naming dialog starts closed');
 const detailSearch=ux.d.querySelector('#assistant-options input');
 detailSearch.value='yate';detailSearch.dispatchEvent(new ux.w.Event('input'));
 const yacht=[...ux.d.querySelectorAll('.assistant-choices button')].find(b=>b.textContent==='Un yate');

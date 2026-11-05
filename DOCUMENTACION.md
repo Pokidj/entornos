@@ -3,6 +3,35 @@
 Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
+## Mis entornos: guardar con ventana y tarjetas — 05/11/2026
+
+Pulsa Guardar después de preparar una escena. Se abre una ventana con un nombre
+sugerido y una vista previa de la selección: escena/detalle, vehículo/color y ropa.
+Puedes escribir otro nombre y confirmar con Guardar o Intro. Cancelar o Escape
+cierra sin escribir nada. El foco vuelve al botón desde el que abriste la ventana.
+
+Cada guardado es una tarjeta que se carga con un clic. Muestra nombre, cantidad,
+acción, detalle y lugar si se conocen, vehículo y vestimenta compartida o individual.
+Los resúmenes reflejan los parámetros guardados y no cambian por editar el formulario.
+Los datos no elegidos se indican como «sin indicar», sin inventar detalles.
+
+Al cargar una tarjeta aparecen Actualizar, Renombrar y Eliminar junto a Guardar.
+Actualizar sustituye los parámetros de esa tarjeta por la selección actual;
+Renombrar abre la misma ventana y solo cambia el nombre. Eliminar mantiene Deshacer
+hasta que se recargue la página. Un nombre repetido no sobrescribe otro guardado.
+
+Con más de seis guardados aparece un buscador por nombre y contenido del resumen,
+incluida la ropa individual. La lista tiene altura limitada y desplazamiento para
+mantener el generador compacto. En móvil las acciones se ajustan al ancho disponible.
+
+Los datos existentes y la migración de los cinco espacios antiguos se conservan
+sin cambiar la clave entorno-configs-v2. La vista previa captura la selección al
+abrir la ventana; cambios posteriores en segundo plano no sustituyen esa captura.
+Los nombres, situaciones y resúmenes se insertan como texto, nunca como HTML.
+Se guarda la selección, no la llamada literal; al cargar se genera un entorno con
+esos parámetros. Los guardados siguen siendo propios de cada navegador y dominio.
+
+
 ## Redacción natural y colores combinados — 05/11/2026
 
 Los entornos generados no llevan puntos y coma. La escena enlaza con «que está»
@@ -101,9 +130,8 @@ El empaquetador incluye la guía en los tres ZIP y conserva el EXE existente.
 
 ## Asistente y guardados compactos — 29/10/2026
 
-«Mis entornos» permanece encima de los paneles. Muestra accesos rápidos pequeños
-que se ajustan al ancho disponible. «Guardar / gestionar» despliega el nombre,
-Guardar y las acciones del entorno seleccionado; los guardados anteriores se conservan.
+«Mis entornos» permanece encima de los paneles. Guardar abre la ventana de nombre
+y vista previa; las tarjetas muestran un resumen y conservan los guardados anteriores.
 
 Con la selección vacía, «¿Qué has visto?» guía por cuatro pasos: acción, detalle
 relacionado, personas (1–10) y lugar compatible. Detalle y lugar tienen buscador;
@@ -233,37 +261,23 @@ automáticamente; se puede vaciar expresamente para recuperarlo.
 
 ### Configuraciones con nombre y acceso rápido
 
-«Mis entornos» tiene un recuadro independiente encima de los paneles,
-con el mismo ancho que el bloque de conexión con FiveM y el estilo de «¿Qué has visto?»:
-borde discontinuo, fondo sutil, título y botones dorados. Los accesos se reparten por
-el ancho disponible y se adaptan a filas en móvil. Permanece visible, sin
-espacios preestablecidos ni límite fijo de cinco elementos. Escribe un nombre
-de hasta 40 caracteres y pulsa «Guardar» (también puedes pulsar Enter).
-El campo de nombre y el botón están centrados en la parte superior del recuadro;
-los botones de acceso rápido se muestran debajo.
-Hace falta elegir una situación y utilizar una cantidad válida, si la especificas.
-Cada configuración se convierte en un botón: una pulsación carga sus parámetros.
-El botón activo queda resaltado. Los nombres no pueden repetirse ignorando
-mayúsculas y espacios sobrantes; guardar nunca sobrescribe otra configuración por nombre.
+El recuadro Mis entornos está encima de los paneles. Usa Guardar para abrir la
+ventana de nombre y vista previa descrita al principio de este manual. Las tarjetas
+cargan de un clic, muestran escena, detalle, coche/color y ropa, y resaltan la última
+seleccionada. Actualizar, Renombrar y Eliminar actúan sobre esa tarjeta.
 
-Al cargar una configuración aparecen «Actualizar datos», «Renombrar» y «Eliminar».
-Estas acciones se sitúan junto a «Guardar» en la barra superior; en pantallas
-estrechas se ajustan a varias filas para evitar desbordamientos.
-Actualizar conserva el nombre y sustituye sus parámetros por la selección actual;
-renombrar usa el nombre del campo sin cambiar sus parámetros. Tras eliminar se puede
-«Deshacer» mientras se conserve esa recuperación en la página; no sobrevive a una recarga.
-Se conservan parámetros, cantidad y su modificador, ropa individual y modo de
-vestimenta compartida, arma, vehículo y detalles. Los guardados anteriores conservan
-su vestimenta como descripción compartida del grupo.
-Cargar un vehículo funciona aunque el catálogo todavía esté descargándose.
-No se guarda el texto generado como si fuese un parámetro.
+No hay espacios fijos ni límite de cinco elementos. Los nombres no se repiten
+ignorando mayúsculas y espacios sobrantes. La búsqueda aparece con más de seis
+entornos. El resumen del vehículo se actualiza al terminar de cargar el catálogo;
+los nuevos guardados conservan también su nombre como respaldo descriptivo.
 
-Los cinco espacios anteriores se migran automáticamente: solo se convierten los
-ocupados, conservando sus datos. Los nombres repetidos reciben un sufijo para
-distinguirlos. El almacenamiento anterior se conserva como respaldo. No existe un
-límite artificial de configuraciones; se aplica la capacidad del navegador. Si una
-escritura falla se informa y se mantienen los datos anteriores. Si no se puede leer
-el formato guardado, se bloquea guardar para evitar sobrescribirlo.
+Se conservan cantidad, más de, ropa individual/compartida, arma, vehículo, tono,
+extensión y detalles. Los cinco espacios antiguos se migran automáticamente,
+conservando el almacenamiento previo como respaldo. Los guardados anteriores
+mantienen su ropa compartida. Si falla una escritura, se conserva el estado anterior
+y la ventana informa del error; si el formato existente no se puede leer, se bloquea
+Guardar para no sobrescribirlo. Los resúmenes se construyen sin cargar el entorno
+ni modificar los parámetros del formulario.
 
 ### Diseño y teclado
 

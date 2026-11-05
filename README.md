@@ -15,7 +15,7 @@ permite enviarlo a la consola de FiveM desde la web o mediante un atajo.
 La cabecera tiene una «Guía rápida» opcional con accesos a los campos. El panel
 del entorno ofrece un asistente de cuatro pasos con opciones y buscadores. Escribir
 una situación a mano genera directamente. Los detalles restantes se completan en el formulario.
-Mis entornos muestra botones compactos y pliega el formulario bajo «Guardar / gestionar».
+Mis entornos muestra tarjetas con resumen. Guardar abre una ventana para nombrar la selección.
 
 1. Elige una acción general en «Qué está pasando», como Robar o Secuestrar.
    Puedes dejar «Detalle» vacío para un aviso general, elegir uno relacionado
@@ -28,7 +28,7 @@ botón y del atajo. Se guarda en este navegador; mantén la web abierta para reg
 los envíos del puente. Vaciar ese historial no borra Mis entornos ni los favoritos.
 
 En el recuadro independiente «Mis entornos», encima de los dos paneles,
-pon un nombre a tu selección y pulsa «Guardar».
+pulsa «Guardar», pon un nombre en la ventana y confirma.
 Tendrás un botón para cargarla con un clic, sin espacios fijos. Las configuraciones
 anteriores se conservan mediante migración automática.
 
@@ -93,3 +93,7 @@ siendo necesario. Código del puente en `bridge/`; descarga en `dist/downloads/`
 La llamada describe al grupo con «uno de ellos», «otro» y, cuando corresponde,
 «el último». Colores combinados disponibles en ropa y coche; se eligen como
 negro/blanco y se redactan como «negro y blanco». Se conservan los guardados anteriores.
+
+Las tarjetas resumen escena/detalle, vehículo y vestimenta. Un clic carga la
+selección y muestra Actualizar, Renombrar y Eliminar. Con más de seis guardados
+aparece un buscador. Los guardados anteriores se mantienen.

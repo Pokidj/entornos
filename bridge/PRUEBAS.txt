@@ -1,3 +1,7 @@
+Guardado web (05/11/2026): 1.255 comprobaciones principales y suites de copia,
+atajo, detección e historial (27) superadas. Diálogo y tarjetas revisados en navegador
+y móvil. Código/EXE del puente conservados; sin envíos a una partida real.
+
 Redacción de la web (05/11/2026): 1.233 comprobaciones principales y suites de
 copia, atajo, detección e historial (27) superadas. Código y EXE del puente sin
 cambios; no se han repetido sus pruebas de Windows ni enviado a una partida.

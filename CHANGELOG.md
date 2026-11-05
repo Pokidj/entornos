@@ -5,6 +5,20 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 05/11/2026 — Guardado con popup y tarjetas descriptivas
+
+- Guardar abre un diálogo de nombre con sugerencia y vista previa. Intro confirma;
+  Cancelar/Escape no guarda y devuelve el foco. Renombrar reutiliza el diálogo.
+- Tarjetas con cantidad, escena/detalle, lugar, vehículo/color y ropa individual o
+  compartida. Carga de un clic y acciones rápidas de actualizar, renombrar y eliminar.
+- Buscador con más de seis guardados, altura limitada y controles adaptados a móvil.
+- Clave de almacenamiento y migración conservadas. Validación de nombres, resumen
+  seguro como texto, captura estable de datos y errores de almacenamiento mantenidos.
+- 1.255 comprobaciones generales y suites de copia, atajo, detección e historial
+  superadas. Ventana, Enter, Escape, carga, recarga y vista de 320 px comprobados.
+- Código y EXE del puente conservados; documentación y ZIP actualizados. Sin envíos reales.
+
+
 ## 05/11/2026 — Ropa y narración más naturales
 
 - Eliminados los puntos y coma de la generación, incluidos tonos y texto adicional.

@@ -2097,6 +2097,7 @@ fetch("vehicles.json")
     pendingVehicleId = null;
     if (vehicle) $("vehicle-picker").open = false;
     renderCars();
+    if (typeof renderPresets === "function") renderPresets();
     if ($("travel").value === "vehicle") generate();
   })
   .catch(() => {

@@ -2,6 +2,20 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Mis entornos: diálogo y resúmenes — 05/11/2026
+
+- 1.255 comprobaciones generales y suites de copia, atajo, detección e historial
+  (27) superadas. Se adaptan las pruebas antiguas al diálogo y se añaden 22 de
+  apertura/cancelación/foco, vista previa, tarjeta, acciones, búsqueda, captura
+  estable, datos malformados, HTML como texto y catálogo cargado con retraso.
+- En navegador real: farmacia, dos personas, ropa negro/blanco y Massacro gris;
+  guardar con Intro, recargar, cargar tarjeta y cancelar renombrado con Escape.
+- Ventana a 320 px sin desbordamiento horizontal, botones de 44 px y foco en el
+  nombre. Previsualización y tarjeta muestran los parámetros guardados.
+- Sin cambios del puente ni del EXE y sin envíos a una partida real. Documentación
+  y ZIP regenerados desde la fuente canónica, conservando el ejecutable actual.
+
+
 ## Redacción, ropa y colores — 05/11/2026
 
 - 1.233 comprobaciones generales superadas sobre 974 escenas. Pruebas nuevas de
