@@ -715,13 +715,30 @@ ok(ux.d.getElementById('usage-guide').hidden,'Guide closes with Escape');
 const ids=[...ux.d.querySelectorAll('[id]')].map(e=>e.id);
 ok(new Set(ids).size===ids.length,'No duplicate DOM IDs after widget creation');
 ok(ux.errors.length===0,'No guided experience runtime errors');ux.close();
+// Expanded models retain the old catalogue and work through the shared picker.
+const expandedCars = await app();
+set(expandedCars, "travel", "vehicle");
+for (const [query, expected] of [["karin sultan rsx","Sultan RSx"],["benefactor zeitgeist","Zeitgeist"],["annis romulus","Romulus"],["obey argento 7f","Argento 7F"],["pfister meteor","Meteor"],["vapid scout gsx","Scout GSX"],["dinka nexus rr","Nexus RR"],["grotti milano","Milano"]]) {
+  expandedCars.d.getElementById("search").value = query; expandedCars.w.renderCars();
+  const chosen = [...expandedCars.d.querySelectorAll("#cars .choose")].find(b => b.firstChild.textContent === expected);
+  ok(Boolean(chosen), "Expanded model searchable: " + query);
+  chosen.click();
+  const savedVehicle = expandedCars.w.snapshot(); expandedCars.w.loadConfig(savedVehicle);
+  ok(expandedCars.d.getElementById("selected").textContent.includes(expected), "Expanded model restores: " + expected);
+}
+ok(catalog.length === 996, "Expanded catalogue count verified");
+ok(new Set(catalog.map(c => c.id.toLowerCase())).size === catalog.length, "No duplicate catalogue IDs");
+ok(catalog.filter(c => c.category === "ADDON").every(c => /^https:\/\//.test(c.source)), "All addons retain public sources");
+ok(!catalog.some(c => /^(BMW|Audi|Mercedes-Benz|Nissan|Toyota|Volkswagen|Porsche|Land Rover|Ford|Honda|Mazda|Mitsubishi|Ferrari|McLaren|Yamaha)$/i.test(c.brand)), "Only GTA universe manufacturers");
+ok(!expandedCars.errors.length, "No expanded catalogue runtime errors");
+expandedCars.close();
 // Addon catalogue and manual vehicle persistence.
 const manualCar = await app();
 scene(manualCar, "atracando una farmacia");
 set(manualCar, "travel", "vehicle");
 manualCar.d.getElementById("category").value = "ADDON";
 manualCar.w.renderCars();
-ok(manualCar.d.querySelectorAll("#cars .vehicle").length === 15, "Addon filter contains sourced models");
+ok(manualCar.d.querySelectorAll("#cars .vehicle").length === catalog.filter(c => c.category === "ADDON").length, "Addon filter contains sourced models");
 manualCar.d.getElementById("search").value = "maibatsu archer";
 manualCar.w.renderCars();
 ok(manualCar.d.querySelectorAll("#cars .vehicle").length === 1, "Addon searchable by brand and model");

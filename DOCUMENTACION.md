@@ -3,9 +3,34 @@
 Última actualización documental: **11 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
 
+## Ampliación de marcas del universo GTA — 11/11/2026
+
+El catálogo actual contiene 996 vehículos: 921 modelos base y 75 addon. Esta
+ampliación incorpora 60 modelos adicionales, exclusivamente de marcas del
+universo GTA: Karin, Annis, Benefactor, Obey, Pfister, Vapid, Dinka, Grotti,
+Bravado, Pegassi, BF, Bollokan, Brute, Coil, Declasse, Dewbauchee, Dundreary,
+Emperor, Canis, MTL, Progen, Albany, Willard y Gallivanter.
+
+Se incluyen, por ejemplo, Sultan RSx, Elegy RH-2, Romulus, Zeitgeist, Argento 7F,
+Meteor, Scout GSX, Nexus RR, Buffalo HF y Baller Raid. No se añaden marcas reales.
+El campo manual sigue disponible para los nombres que utilice cada servidor.
+Todos los nuevos modelos se buscan por marca y nombre, aparecen en la categoría
+Addon y admiten favoritos y guardado con los mecanismos existentes.
+
+Fuentes consultadas el 11/11/2026:
+- [Catálogo de vehículos de Gabz](https://fivem.gabzv.com/category/subscription-2): 49 modelos añadidos.
+- [Publicaciones lore friendly de GTA5-Mods](https://www.gta5-mods.com/vehicles/tags/lore-friendly/32): 11 modelos añadidos.
+
+Se conservan fuentes por registro e identificadores internos estables, sin
+presentarlos como códigos de spawn. Se excluyen coincidencias con modelos ya
+incluidos y nombres de catálogo truncados o ambiguos. Los 936 registros previos
+se mantienen exactamente. La selección se basa en catálogos orientados a FiveM;
+no existe una medición de frecuencia de uso ni confirmación de su instalación en
+tu servidor. Solo se distribuyen nombres y metadatos, sin archivos de mods.
+
 ## Vehículos addon y modelo manual — 11/11/2026
 
-El catálogo incluye 936 modelos: los 921 anteriores y 15 vehículos addon. Busca
+El catálogo incluye modelos base y addon. Busca
 por marca y modelo, en cualquier orden, o elige «Addon · personalizados» en
 categorías. Los addon usan el mismo selector y favoritos que los demás coches.
 La inclusión en el generador no confirma que el modelo esté instalado en tu servidor.
@@ -244,7 +269,7 @@ del formulario. Generar otra versión se habilita al elegir una acción con cant
   Las categorías con armas despliegan sus tipos. La redacción utiliza nombres
   comprensibles como pistola, rifle o escopeta, sin exigir el modelo exacto.
 - **Transporte:** seleccionar coche, a pie o vehículo no visto. El catálogo actual
-  incluye 936 modelos (15 addon), búsqueda por nombre/marca, categorías y favoritos.
+  incluye 996 modelos (75 addon), búsqueda por nombre/marca, categorías y favoritos.
   Un campo manual permite escribir modelos que falten.
   Al elegir un vehículo se pliega el catálogo; «Ver catálogo» permite cambiarlo.
   Color y acabado quedan accesibles fuera de la lista plegada.

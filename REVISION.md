@@ -2,6 +2,17 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Ampliación del catálogo GTA — 11/11/2026
+
+- 37 comprobaciones dirigidas superadas: búsqueda y carga de ocho modelos de
+  distintas marcas, favoritos, entrada manual, resúmenes, guardados y catálogo
+  lento. 996 IDs únicos, fuentes en todos los addon y ausencia de marcas reales.
+- Los 936 registros anteriores se comparan con Git y se conservan exactamente.
+  Sintaxis de los scripts y enlaces locales comprobados. La suite general de
+  974 situaciones no se repite: el cambio afecta a datos y claves de caché.
+- No se repiten pruebas del puente: su código y ejecutable no cambian. Sin
+  envíos a partidas reales ni comprobación de disponibilidad en un servidor.
+
 ## Vehículos addon y entrada manual — 11/11/2026
 
 - Suite completa npm superada: 1.280 comprobaciones generales más copia, atajo,

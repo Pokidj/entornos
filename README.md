@@ -1,6 +1,6 @@
 # Generador de /entornos
 
-Vehículos: catálogo de 936 modelos, con 15 addon identificados y filtrables.
+Vehículos: catálogo de 996 modelos, con 75 addon identificados y filtrables.
 Si falta uno, escribe marca/modelo y pulsa Usar o Intro. El nombre manual se
 conserva en Mis entornos junto al color y acabado.
 

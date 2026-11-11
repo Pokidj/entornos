@@ -5,6 +5,18 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 11/11/2026 — Más marcas y modelos del universo GTA
+
+- Añadidos 60 vehículos de marcas ficticias de GTA desde catálogos públicos:
+  49 de Gabz y 11 de GTA5-Mods. Total: 996 modelos, de ellos 75 addon.
+- Sin marcas reales. Fuentes por registro, sin duplicar identificadores ni
+  modificar los 936 modelos anteriores. Compatibles con búsqueda, favoritos,
+  guardados y entrada manual. Catálogo y recursos con nueva clave de caché.
+- 37 comprobaciones dirigidas superadas; sintaxis, enlaces locales, metadatos,
+  ausencia de marcas reales y conservación del catálogo comprobados.
+- Documentación y ZIP actualizados; código y EXE del puente conservados.
+  Sin pruebas de envío a una partida real.
+
 ## 11/11/2026 — Vehículos addon y entrada manual
 
 - Añadidos 15 addon con fuentes públicas, incluido Maibatsu Archer Pro II;

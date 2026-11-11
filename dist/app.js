@@ -2103,7 +2103,7 @@ $("copy").onclick = async () => {
     $("status").textContent = "";
   }
 };
-fetch("vehicles.json?v=20261111-addon-vehicles")
+fetch("vehicles.json?v=20261111-expanded-catalog")
   .then((r) => {
     if (!r.ok) throw Error();
     return r.json();
