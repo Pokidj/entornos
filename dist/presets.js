@@ -130,7 +130,7 @@ function presetSummary(data) {
   if (fields.travel === "foot") car = "A pie";
   else if (fields.travel === "unknown") car = "No se ha visto vehículo";
   else if (fields.travel === "vehicle") {
-    const name = catalog.find(c => c.id === data.vehicleId)?.name ||
+    const name = cleanVehicleName(data.customVehicleName) || catalog.find(c => c.id === data.vehicleId)?.name ||
       (typeof data.vehicleName === "string" ? data.vehicleName.slice(0, 80) : "Vehículo guardado");
     const color = presetLabel(colors, fields.carcolor);
     car = name + (color ? " · " + color : "");

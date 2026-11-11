@@ -1625,6 +1625,7 @@ chips(
   (x) => (weapon = x),
 );
 const categories = {
+  ADDON: "Addon · personalizados",
   COMPACT: "Compactos",
   SEDAN: "Sedanes",
   SUV: "SUV",
@@ -1654,13 +1655,35 @@ const norm = (s) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
+function cleanVehicleName(value) {
+  return typeof value === "string" ? value.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/;/g, ",").replace(/\s+/g, " ").trim().slice(0, 80) : "";
+}
+function manualVehicle(name) {
+  const clean = cleanVehicleName(name);
+  return clean ? {id: "custom:" + clean, name: clean, brand: "", category: "CUSTOM", type: "CAR"} : null;
+}
+function useCustomVehicle() {
+  const chosen = manualVehicle($("custom-vehicle").value);
+  if (!chosen) {
+    $("custom-vehicle-status").textContent = "Escribe una marca o modelo para usarlo.";
+    $("custom-vehicle").focus(); return;
+  }
+  vehicle = chosen; pendingVehicleId = null;
+  $("custom-vehicle").value = chosen.name;
+  $("custom-vehicle-status").textContent = "Modelo manual seleccionado.";
+  renderCars(); $("vehicle-picker").open = false; generate();
+}
+$("use-custom-vehicle").onclick = useCustomVehicle;
+$("custom-vehicle").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {event.preventDefault(); useCustomVehicle();}
+});
 function filtered() {
   const q = norm($("search").value);
   return catalog.filter(
     (c) =>
       (!onlyFav || favs.has(c.id)) &&
       (!$("category").value || c.category === $("category").value) &&
-      norm(c.name + " " + c.brand + " " + c.id).includes(q),
+      q.split(/\s+/).every(term => norm(c.name + " " + c.brand + " " + c.id + (c.category === "ADDON" ? " addon" : "")).includes(term)),
   );
 }
 function renderCars() {
@@ -1681,6 +1704,8 @@ function renderCars() {
     b.append(small);
     b.onclick = () => {
       vehicle = c;
+      $("custom-vehicle").value = "";
+      $("custom-vehicle-status").textContent = "";
       pendingVehicleId = null;
       renderCars();
       $("vehicle-picker").open = false;
@@ -2078,7 +2103,7 @@ $("copy").onclick = async () => {
     $("status").textContent = "";
   }
 };
-fetch("vehicles.json")
+fetch("vehicles.json?v=20261111-addon-vehicles")
   .then((r) => {
     if (!r.ok) throw Error();
     return r.json();
@@ -2176,6 +2201,8 @@ function clearConfig() {
   $("number-more").checked = false;
   weapon = "";
   vehicle = null;
+  $("custom-vehicle").value = "";
+  $("custom-vehicle-status").textContent = "";
   pendingVehicleId = null;
   for (const id of configFields) $(id).value = id === "length" ? "normal" : "";
   wardrobePeople = [];
@@ -2214,6 +2241,7 @@ function snapshot() {
     numberMore: $("number-more").checked,
     weapon,
     vehicleId: vehicle?.id || pendingVehicleId || null,
+    customVehicleName: vehicle?.id.startsWith("custom:") ? vehicle.name : "",
     details: [...document.querySelectorAll("#details input:checked")].map(
       (c) => c.value,
     ),
@@ -2268,7 +2296,12 @@ function loadConfig(data) {
       ? data.weapon
       : "";
   pendingVehicleId = typeof data.vehicleId === "string" ? data.vehicleId : null;
-  vehicle = catalog.find((c) => c.id === pendingVehicleId) || null;
+  vehicle = manualVehicle(data.customVehicleName) || catalog.find((c) => c.id === pendingVehicleId) || null;
+  if (vehicle?.id.startsWith("custom:")) {
+    pendingVehicleId = null;
+    $("custom-vehicle").value = vehicle.name;
+    $("custom-vehicle-status").textContent = "Modelo manual seleccionado.";
+  }
   if (catalog.length) pendingVehicleId = null;
   document
     .querySelectorAll("#details input")

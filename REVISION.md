@@ -2,6 +2,18 @@
 
 Consulta el [manual completo](DOCUMENTACION.md) y el [historial de cambios](CHANGELOG.md).
 
+## Vehículos addon y entrada manual — 11/11/2026
+
+- Suite completa npm superada: 1.280 comprobaciones generales más copia, atajo,
+  detección e historial (27). Sintaxis y enlaces locales comprobados; 936 IDs
+  únicos y los 921 registros anteriores conservados sin cambios.
+- Prueba dirigida: 16 comprobaciones superadas de filtrado/búsqueda addon,
+  favoritos, nombre manual, normalización, Intro, vacío, guardado/carga/resumen,
+  texto seguro, cambio a catálogo, reinicio y carga lenta del catálogo.
+- Previsualización local en el navegador integrado no disponible: conexión a
+  127.0.0.1:8768 agotada. No se atribuye una revisión visual local a esta entrega.
+- Sin cambios del código ni EXE del puente y sin envíos a una partida real.
+
 ## Guardados compactos y resumen flotante — 05/11/2026
 
 - Suite completa npm superada, incluidas copia, atajo, detección e historial.

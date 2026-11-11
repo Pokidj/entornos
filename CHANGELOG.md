@@ -5,6 +5,17 @@ No se han asignado versiones semánticas retrospectivas: los hitos históricos s
 describen por su contenido. Las referencias de commit identifican estados de la
 web; no equivalen a números de versión comercial del puente.
 
+## 11/11/2026 — Vehículos addon y entrada manual
+
+- Añadidos 15 addon con fuentes públicas, incluido Maibatsu Archer Pro II;
+  filtro específico y favoritos. Búsqueda por palabras en cualquier orden.
+- Campo manual de marca/modelo con Usar e Intro, validación de vacío, limpieza
+  de espacios y límite de 80 caracteres. Se conserva en guardados y resúmenes,
+  incluso con catálogo lento. Elegir catálogo o vaciar elimina el nombre manual.
+- Catálogo versionado para actualizar cachés; identificadores anteriores intactos.
+- Comprobaciones y límites en REVISION.md. Documentación y ZIP actualizados;
+  código y EXE del puente conservados. Sin envíos a partidas reales.
+
 ## 05/11/2026 — Detalles de guardados al pasar el cursor
 
 - Botones con solo el nombre, conservando carga directa, selección y ventana Guardar.

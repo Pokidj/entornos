@@ -1,5 +1,9 @@
 # Generador de /entornos
 
+Vehículos: catálogo de 936 modelos, con 15 addon identificados y filtrables.
+Si falta uno, escribe marca/modelo y pulsa Usar o Intro. El nombre manual se
+conserva en Mis entornos junto al color y acabado.
+
 Herramienta para preparar avisos de roleplay con el comando `/entorno`.
 La web genera el texto a partir de selecciones; el puente opcional de Windows
 permite enviarlo a la consola de FiveM desde la web o mediante un atajo.

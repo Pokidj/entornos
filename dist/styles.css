@@ -1776,3 +1776,11 @@ button:disabled { cursor: not-allowed; opacity: .48; }
  .preset-dialog{padding:18px}.preset-dialog input,.preset-dialog-buttons button{min-height:44px}
  .preset-dialog-buttons button{flex:1}
 }
+
+/* Modelo manual disponible también con catálogo plegado. */
+.manual-vehicle {margin-top: 12px; min-width: 0;}
+.manual-vehicle-row {display: flex; gap: 6px; align-items: stretch;}
+.manual-vehicle-row input {flex: 1; min-width: 0; width: 0;}
+.manual-vehicle-row button {flex: 0 0 auto; min-width: 64px;}
+.manual-vehicle .hint:empty {display: none;}
+@media (max-width: 600px) {.manual-vehicle-row button {min-height: 44px;}}

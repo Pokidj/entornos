@@ -47,7 +47,7 @@ async function setup({ oldTimeout = false, localOption = true } = {}) {
       authorized=true;
       return {ok:true,json:async()=>({ok:true})};
     }
-    if (url === "vehicles.json")
+    if (String(url).split("?")[0] === "vehicles.json")
       return {
         ok: true,
         json: async () =>

@@ -6,7 +6,7 @@
     <title>Generador de /entornos</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="theme-color" content="#963441" />
-    <link rel="stylesheet" href="styles.css?v=20261105-preset-hover" />
+    <link rel="stylesheet" href="styles.css?v=20261111-addon-vehicles" />
   </head>
   <body>
     <header>
@@ -304,6 +304,14 @@
                       Cargando catálogo…
                     </div>
                   </details>
+                  <div class="manual-vehicle">
+                    <label for="custom-vehicle">¿No está? Escríbelo a mano</label>
+                    <div class="manual-vehicle-row">
+                      <input id="custom-vehicle" maxlength="80" placeholder="Marca y modelo…" aria-describedby="custom-vehicle-status" />
+                      <button type="button" id="use-custom-vehicle">Usar</button>
+                    </div>
+                    <span id="custom-vehicle-status" class="hint" role="status"></span>
+                  </div>
                   <div class="row optional">
                     <div>
                       <label for="carcolor">Color del vehículo</label
@@ -496,15 +504,15 @@
       aria-live="polite"
       hidden
     ></div>
-    <script src="voices.js?v=20261105-preset-hover"></script>
-    <script src="app.js?v=20261105-preset-hover"></script>
-    <script src="robbery-catalog.js?v=20261105-preset-hover"></script>
-    <script src="presets.js?v=20261105-preset-hover"></script>
-    <script src="situation-combo.js?v=20261105-preset-hover"></script>
-    <script src="searchable-selects.js?v=20261105-preset-hover"></script>
-    <script src="location-logic.js?v=20261105-preset-hover"></script>
-    <script src="sent-history.js?v=20261105-preset-hover"></script>
-    <script src="fivem-bridge.js?v=20261105-preset-hover"></script>
-    <script src="experience.js?v=20261105-preset-hover"></script>
+    <script src="voices.js?v=20261111-addon-vehicles"></script>
+    <script src="app.js?v=20261111-addon-vehicles"></script>
+    <script src="robbery-catalog.js?v=20261111-addon-vehicles"></script>
+    <script src="presets.js?v=20261111-addon-vehicles"></script>
+    <script src="situation-combo.js?v=20261111-addon-vehicles"></script>
+    <script src="searchable-selects.js?v=20261111-addon-vehicles"></script>
+    <script src="location-logic.js?v=20261111-addon-vehicles"></script>
+    <script src="sent-history.js?v=20261111-addon-vehicles"></script>
+    <script src="fivem-bridge.js?v=20261111-addon-vehicles"></script>
+    <script src="experience.js?v=20261111-addon-vehicles"></script>
   </body>
 </html>

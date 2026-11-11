@@ -1,7 +1,32 @@
 # Documentación del Generador de /entornos
 
-Última actualización documental: **5 de noviembre de 2026**, Europa/Madrid.
+Última actualización documental: **11 de noviembre de 2026**, Europa/Madrid.
 Este manual describe el estado actual. El [changelog](CHANGELOG.md) conserva su evolución.
+
+## Vehículos addon y modelo manual — 11/11/2026
+
+El catálogo incluye 936 modelos: los 921 anteriores y 15 vehículos addon. Busca
+por marca y modelo, en cualquier orden, o elige «Addon · personalizados» en
+categorías. Los addon usan el mismo selector y favoritos que los demás coches.
+La inclusión en el generador no confirma que el modelo esté instalado en tu servidor.
+
+Si falta un vehículo, selecciona «Seleccionar coche» y escribe su marca/modelo en
+«¿No está? Escríbelo a mano». Pulsa Usar o Intro. Se aplica al entorno con el color
+y acabado elegidos. El nombre admite hasta 80 caracteres, normaliza espacios y se
+trata como texto. Usar vacío muestra ayuda y conserva el vehículo anterior.
+Al elegir otro coche del catálogo o vaciar la configuración se limpia el campo.
+
+El vehículo manual se conserva en Mis entornos, en su resumen y al cargarlo de nuevo,
+incluso si el catálogo tarda o falla. Se guarda dentro de la configuración, sin
+crear entradas permanentes en el catálogo ni modificar los favoritos existentes.
+Las configuraciones y favoritos anteriores siguen siendo compatibles.
+
+Fuentes consultadas el 11/11/2026:
+- [Gabz: Maibatsu Archer Pro II](https://fivem.gabzv.com/package/7173766).
+- [GTA5-Mods: catálogo lore friendly](https://www.gta5-mods.com/vehicles/tags/lore-friendly/highest-rated).
+- [GTA5-Mods: otros addon](https://www.gta5-mods.com/vehicles/tags/lore-friendly/latest-uploads/6).
+Cada nuevo registro conserva su fuente; los identificadores internos «addon:» no
+pretenden ser códigos de spawn. No se descargan ni distribuyen modelos de terceros.
 
 ## Guardados compactos con detalles al apuntar — 05/11/2026
 
@@ -219,7 +244,8 @@ del formulario. Generar otra versión se habilita al elegir una acción con cant
   Las categorías con armas despliegan sus tipos. La redacción utiliza nombres
   comprensibles como pistola, rifle o escopeta, sin exigir el modelo exacto.
 - **Transporte:** seleccionar coche, a pie o vehículo no visto. El catálogo actual
-  incluye 921 modelos, búsqueda por nombre/marca, categorías y favoritos.
+  incluye 936 modelos (15 addon), búsqueda por nombre/marca, categorías y favoritos.
+  Un campo manual permite escribir modelos que falten.
   Al elegir un vehículo se pliega el catálogo; «Ver catálogo» permite cambiarlo.
   Color y acabado quedan accesibles fuera de la lista plegada.
 - **Detalles adicionales:** casillas observables y un texto libre opcional de hasta

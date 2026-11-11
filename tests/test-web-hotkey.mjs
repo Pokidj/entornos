@@ -31,7 +31,7 @@ async function create(version, events = false) {
     value: { writeText: async () => {} },
   });
   w.fetch = async (url, options) => {
-    if (url === "vehicles.json")
+    if (String(url).split("?")[0] === "vehicles.json")
       return {
         ok: true,
         json: async () =>

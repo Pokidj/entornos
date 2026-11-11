@@ -35,7 +35,7 @@ async function app({ delayCatalog = false, storage = {} } = {}) {
   let release;
   w.HTMLElement.prototype.scrollIntoView = function () {};
   w.fetch = async (url) => {
-    if (url === "vehicles.json") {
+    if (String(url).split("?")[0] === "vehicles.json") {
       if (delayCatalog) await new Promise((r) => (release = r));
       return { ok: true, json: async () => catalog.map((c) => ({ ...c })) };
     }
@@ -715,6 +715,52 @@ ok(ux.d.getElementById('usage-guide').hidden,'Guide closes with Escape');
 const ids=[...ux.d.querySelectorAll('[id]')].map(e=>e.id);
 ok(new Set(ids).size===ids.length,'No duplicate DOM IDs after widget creation');
 ok(ux.errors.length===0,'No guided experience runtime errors');ux.close();
+// Addon catalogue and manual vehicle persistence.
+const manualCar = await app();
+scene(manualCar, "atracando una farmacia");
+set(manualCar, "travel", "vehicle");
+manualCar.d.getElementById("category").value = "ADDON";
+manualCar.w.renderCars();
+ok(manualCar.d.querySelectorAll("#cars .vehicle").length === 15, "Addon filter contains sourced models");
+manualCar.d.getElementById("search").value = "maibatsu archer";
+manualCar.w.renderCars();
+ok(manualCar.d.querySelectorAll("#cars .vehicle").length === 1, "Addon searchable by brand and model");
+manualCar.d.querySelector("#cars .choose").click();
+ok(output(manualCar).includes("Archer Pro II"), "Addon model in generated environment");
+manualCar.d.querySelector("#cars .star").click();
+ok(JSON.parse(manualCar.w.localStorage.getItem("entorno-favs")).includes("addon:archer-pro-ii"), "Addon favourite stored");
+manualCar.d.getElementById("custom-vehicle").value = "   Mi   coche exclusivo   ";
+manualCar.d.getElementById("use-custom-vehicle").click();
+ok(output(manualCar).includes("Mi coche exclusivo"), "Manual model normalized and generated");
+const manualSnap = manualCar.w.snapshot();
+ok(manualSnap.customVehicleName === "Mi coche exclusivo", "Manual model captured in snapshot");
+presetDialogAction(manualCar, "Coche propio");
+const manualSaved = JSON.parse(manualCar.w.localStorage.getItem("entorno-configs-v2"))[0];
+ok(manualSaved.data.customVehicleName === "Mi coche exclusivo", "Manual model saved persistently");
+manualCar.d.getElementById("reset").click();
+ok(!manualCar.d.getElementById("custom-vehicle").value, "Reset clears manual model");
+manualCar.w.loadConfig(manualSaved.data);
+ok(output(manualCar).includes("Mi coche exclusivo"), "Saved manual vehicle restored");
+ok(manualCar.w.presetSummary(manualSaved.data).vehicle.includes("Mi coche exclusivo"), "Manual vehicle in saved summary");
+manualCar.d.getElementById("custom-vehicle").value = " ";
+manualCar.d.getElementById("use-custom-vehicle").click();
+ok(manualCar.w.snapshot().customVehicleName === "Mi coche exclusivo", "Empty manual name preserves selection");
+manualCar.d.getElementById("custom-vehicle").value = "Modelo con Intro";
+const enterCar = new manualCar.w.KeyboardEvent("keydown", {key:"Enter",bubbles:true,cancelable:true});
+manualCar.d.getElementById("custom-vehicle").dispatchEvent(enterCar);
+ok(enterCar.defaultPrevented && output(manualCar).includes("Modelo con Intro"), "Enter selects without submitting form");
+manualCar.d.getElementById("custom-vehicle").value = '<img src=x onerror=alert(1)>; Prueba';
+manualCar.d.getElementById("use-custom-vehicle").click();
+ok(!manualCar.d.querySelector("#selected img") && !manualCar.w.snapshot().customVehicleName.includes(";"), "Manual name treated as text and no semicolon");
+manualCar.d.querySelector("#cars .choose").click();
+ok(manualCar.w.snapshot().customVehicleName === "" && !manualCar.d.getElementById("custom-vehicle").value, "Catalogue selection clears manual model");
+ok(!manualCar.errors.length, "No manual vehicle runtime errors");
+manualCar.close();
+const slowManualCar = await app({delayCatalog:true});
+slowManualCar.w.loadConfig(manualSnap);
+slowManualCar.release(); await tick(); await tick();
+ok(output(slowManualCar).includes("Mi coche exclusivo"), "Delayed catalogue preserves manual vehicle");
+slowManualCar.close();
 console.log(
   `PASS: ${checks} comprobaciones; ${total} situaciones; configuraciones, catálogo lento, filtros, cantidades, armas, longitudes, teclado y rotación.`,
 );

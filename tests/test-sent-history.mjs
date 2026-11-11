@@ -63,7 +63,7 @@ async function setup({ version = 2, storage = {}, mode = "success" } = {}) {
     });
   }
   w.fetch = async (url, options = {}) => {
-    if (url === "vehicles.json")
+    if (String(url).split("?")[0] === "vehicles.json")
       return {
         ok: true,
         json: async () =>
